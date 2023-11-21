@@ -5,7 +5,7 @@ import sys
 import optparse
 import random
 
-
+# from BicycleClass import BicycleClass
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -18,7 +18,6 @@ else:
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
 
-
 def get_options():
     opt_parser = optparse.OptionParser()
     opt_parser.add_option("--nogui", action="store_true",
@@ -27,35 +26,60 @@ def get_options():
     return options
 
 
+class BicycleClass:
+    def __init__(self, vehID):
+        self.vehID = vehID
+        self.drivenOnRoads = []
+    
+    def addRoad(self, roadId):
+        if roadId not in self.drivenOnRoads:
+            self.drivenOnRoads.append(roadId)
+            
+    def printRoads(self):
+        print("veh " + self.vehID + " has driven on " + str(self.drivenOnRoads))
+
 # contains TraCI control loop
 def run():
     step = 0
     RoadEdgeValues = assignValuesToRoadEdges()
-    print(RoadEdgeValues)
+    vehiclesInNetwork = {}
+    # print(RoadEdgeValues)
     while traci.simulation.getMinExpectedNumber() > 0: # type: ignore
         traci.simulationStep()
-        print(str(vehiclesInDisseminationDistance()))
+        inDistance = []
+        vehicleList = traci.vehicle.getIDList()
+        CurrentNoOfVehicle = 0; 
+        for vehID in vehicleList:
+            # creating instances of all vehicles and adding them to a list
+            if vehID not in vehiclesInNetwork:
+                vehiclesInNetwork[vehID] = BicycleClass(vehID)
+            
+            # add road to vehicle
+            vehiclesInNetwork[vehID].addRoad(traci.vehicle.getRoadID(vehID))
+            
+            CurrentNoOfVehicle+=1
+            ownPos = traci.vehicle.getPosition(vehID)
+            for otherID in range(len(vehicleList)-CurrentNoOfVehicle):
+                vehIDOther = vehicleList[otherID+CurrentNoOfVehicle]
+                otherPos = traci.vehicle.getPosition(vehIDOther)
+                dist = traci.simulation.getDistance2D(ownPos[0], ownPos[1], otherPos[0], otherPos[1], False, False)
+                if(dist < 25.0):
+                    # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther))
+                    inDistance.append(tuple((str(vehID), str(vehIDOther))))
         # print(step)
         step += 1
 
+    for veh in vehiclesInNetwork:
+        print(veh)
+        print(vehiclesInNetwork[veh].printRoads())
+        
+    print("end")
     traci.close()
     sys.stdout.flush()
 
 
 def vehiclesInDisseminationDistance():
-    inDistance = []
-    vehicleList = traci.vehicle.getIDList()
-    CurrentNoOfVehicle = 0; 
-    for vehID in vehicleList:
-        CurrentNoOfVehicle+=1
-        ownPos = traci.vehicle.getPosition(vehID)
-        for otherID in range(len(vehicleList)-CurrentNoOfVehicle):
-            vehIDOther = vehicleList[otherID+CurrentNoOfVehicle]
-            otherPos = traci.vehicle.getPosition(vehIDOther)
-            dist = traci.simulation.getDistance2D(ownPos[0], ownPos[1], otherPos[0], otherPos[1], False, False)
-            if(dist < 25.0):
-                # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther))
-                inDistance.append(tuple((str(vehID), str(vehIDOther))))
+    
     return inDistance
 
 def assignValuesToRoadEdges():
