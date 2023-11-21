@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-11-17 23:51:15 by Eclipse SUMO netedit Version 1.19.0
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- VTypes -->
+    <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
+    <!-- Vehicles, persons and containers (sorted by depart) -->
+    <vehicle id="0" type="bicycle" depart="0.00">
+        <route edges="E44 E45 E46 E48 -E47 -E43 -E20 E21 E25 E26 E27 -E15 -E14 -E12"/>
+    </vehicle>
+    <vehicle id="1" type="bicycle" depart="1.00">
+        <route edges="-E69 -E68 -E66 -E65 -E64 E30 E31 E32 E36 E62 -E60 -E59 -E58"/>
+    </vehicle>
+    <vehicle id="2" type="bicycle" depart="2.00">
+        <route edges="E59 E60 E61 -E37 -E36 -E39 E41 E42 -E13 E14 E15 E16 E17 E18 E44 E45 E46 E48"/>
+    </vehicle>
+    <vehicle id="3" type="bicycle" depart="3.00">
+        <route edges="E84 E85 E86 E87 E88 E89 E101 E102 E103 -E96 E97 E98 -E83 -E82 -E47 -E43 -E20 E21 -E24"/>
+    </vehicle>
+    <vehicle id="4" type="bicycle" depart="4.00">
+        <route edges="E103 -E96 E97 E98 -E83 -E82 E49 E53 E54 E55 E56 -E40 E38 E41 E42 -E13"/>
+    </vehicle>
+    <vehicle id="5" type="bicycle" depart="5.00">
+        <route edges="-E58 -E57 -E49 -E47 -E43 -E20 E21"/>
+    </vehicle>
+    <vehicle id="6" type="bicycle" depart="6.00">
+        <route edges="-E14 -E12 E10 E11 -E20 -E19 E44 E45 E46 E48 -E47"/>
+    </vehicle>
+    <vehicle id="7" type="bicycle" depart="7.00">
+        <route edges="E46 E48 -E47 -E43 -E20 E21 -E24 -E23 E28"/>
+    </vehicle>
+    <vehicle id="8" type="bicycle" depart="8.00">
+        <route edges="-E58 -E57 E53 E54 E55 E56 -E40 E38 E39 E36 E37 E33 E34 E35"/>
+    </vehicle>
+    <vehicle id="9" type="bicycle" depart="9.00">
+        <route edges="E71 E70 -E69 -E68 -E66 -E65 -E64 -E29 -E13 -E12 -E28 E22 -E10"/>
+    </vehicle>
+    <vehicle id="10" type="bicycle" depart="10.00">
+        <route edges="E70 -E69 -E68 -E66 -E65 -E64 -E29 -E42 -E41 -E38 E40 E50 E51 E52"/>
+    </vehicle>
+    <vehicle id="11" type="bicycle" depart="11.00">
+        <route edges="-E84 -E83 -E82 E49 E53 E54 E55 E56 -E40"/>
+    </vehicle>
+    <vehicle id="12" type="bicycle" depart="12.00">
+        <route edges="E93 E97 E98 -E83"/>
+    </vehicle>
+    <vehicle id="13" type="bicycle" depart="13.00">
+        <route edges="-E26"/>
+    </vehicle>
+    <vehicle id="14" type="bicycle" depart="14.00">
+        <route edges="E77 E78 -E79 E71 E70 -E69 -E68 -E66 -E65 -E64 E30 E31 E32 E36 E37"/>
+    </vehicle>
+    <vehicle id="15" type="bicycle" depart="15.00">
+        <route edges="E70 -E69 -E68 -E66 -E65 -E64 -E29 -E13 -E12 E10 E11 E43 E47 E49 E57"/>
+    </vehicle>
+    <vehicle id="16" type="bicycle" depart="16.00">
+        <route edges="E28 E10 E11 E43 E47 E49 E57 E58 E59 E91 E94 E95"/>
+    </vehicle>
+    <vehicle id="17" type="bicycle" depart="17.00">
+        <route edges="-E90 E77 E78 -E79 E71 E74 E75 E76 -E63 -E37 -E36 -E39 E41 E42 E29"/>
+    </vehicle>
+    <vehicle id="18" type="bicycle" depart="18.00">
+        <route edges="E74 E75 E76 -E63 E33 E34 E35 -E30 -E29 -E42 -E41 E39"/>
+    </vehicle>
+    <vehicle id="19" type="bicycle" depart="19.00">
+        <route edges="E79 -E78 -E77 E90 -E91 E60 E61 E33"/>
+    </vehicle>
+</routes>

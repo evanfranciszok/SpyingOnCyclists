@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-11-17 23:46:04.758807 by randomTrips.py v1_19_0+0000-baa66a0f364
+<configuration>
+    <net-file value="dualRoad.net.xml"/>
+    <output-trip-file value="dualRoadTrips.xml"/>
+    <route-file value="dualRoadRoutes.rou.xml"/>
+    <trip-attributes value="maxSpeed=&quot;20.0&quot;"/>
+    <vehicle-class value="bicycle"/>
+    <end value="20.0"/>
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="bicycle" vClass="bicycle" maxSpeed="20.0"/>
+    <trip id="0" depart="0.00" from="E44" to="-E12" type="bicycle"/>
+    <trip id="1" depart="1.00" from="-E69" to="-E58" type="bicycle"/>
+    <trip id="2" depart="2.00" from="E59" to="E48" type="bicycle"/>
+    <trip id="3" depart="3.00" from="E84" to="-E24" type="bicycle"/>
+    <trip id="4" depart="4.00" from="E103" to="-E13" type="bicycle"/>
+    <trip id="5" depart="5.00" from="-E58" to="E21" type="bicycle"/>
+    <trip id="6" depart="6.00" from="-E14" to="-E47" type="bicycle"/>
+    <trip id="7" depart="7.00" from="E46" to="E28" type="bicycle"/>
+    <trip id="8" depart="8.00" from="-E58" to="E35" type="bicycle"/>
+    <trip id="9" depart="9.00" from="E71" to="-E10" type="bicycle"/>
+    <trip id="10" depart="10.00" from="E70" to="E52" type="bicycle"/>
+    <trip id="11" depart="11.00" from="-E84" to="-E40" type="bicycle"/>
+    <trip id="12" depart="12.00" from="E93" to="-E83" type="bicycle"/>
+    <trip id="13" depart="13.00" from="-E26" to="-E26" type="bicycle"/>
+    <trip id="14" depart="14.00" from="E77" to="E37" type="bicycle"/>
+    <trip id="15" depart="15.00" from="E70" to="E57" type="bicycle"/>
+    <trip id="16" depart="16.00" from="E28" to="E95" type="bicycle"/>
+    <trip id="17" depart="17.00" from="-E90" to="E29" type="bicycle"/>
+    <trip id="18" depart="18.00" from="E74" to="E39" type="bicycle"/>
+    <trip id="19" depart="19.00" from="E79" to="E33" type="bicycle"/>
+</routes>
