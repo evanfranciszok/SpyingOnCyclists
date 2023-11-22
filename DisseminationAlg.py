@@ -4,8 +4,7 @@ import os
 import sys
 import optparse
 import random
-
-# from BicycleClass import BicycleClass
+from BicycleClass import BicycleClass
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -25,18 +24,6 @@ def get_options():
     options, args = opt_parser.parse_args()
     return options
 
-
-class BicycleClass:
-    def __init__(self, vehID):
-        self.vehID = vehID
-        self.drivenOnRoads = []
-    
-    def addRoad(self, roadId):
-        if roadId not in self.drivenOnRoads:
-            self.drivenOnRoads.append(roadId)
-            
-    def printRoads(self):
-        print("veh " + self.vehID + " has driven on " + str(self.drivenOnRoads))
 
 # contains TraCI control loop
 def run():
@@ -64,7 +51,7 @@ def run():
                 otherPos = traci.vehicle.getPosition(vehIDOther)
                 dist = traci.simulation.getDistance2D(ownPos[0], ownPos[1], otherPos[0], otherPos[1], False, False)
                 if(dist < 25.0):
-                    # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther))
+                    print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther))
                     inDistance.append(tuple((str(vehID), str(vehIDOther))))
         # print(step)
         step += 1
@@ -76,11 +63,7 @@ def run():
     print("end")
     traci.close()
     sys.stdout.flush()
-
-
-def vehiclesInDisseminationDistance():
     
-    return inDistance
 
 def assignValuesToRoadEdges():
     roadEdges = {}
