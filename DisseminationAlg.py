@@ -59,14 +59,16 @@ def run():
                 if(dist < 25.0):
                     # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther)) # print what what vehicles are in connection with oneanother
                     
-                    vehiclesInNetwork[vehNameOther].recieveDesseminationData(vehiclesInNetwork[vehName].getDisseminationData())
-                    vehiclesInNetwork[vehName].recieveDesseminationData(vehiclesInNetwork[vehNameOther].getDisseminationData())
+                    vehiclesInNetwork[vehNameOther].recieveDesseminationData(vehiclesInNetwork[vehName].getDisseminationData(), vehName)
+                    vehiclesInNetwork[vehName].recieveDesseminationData(vehiclesInNetwork[vehNameOther].getDisseminationData(), vehNameOther)
         # print(step)
         step += 1
 
     for veh in vehiclesInNetwork:
-        print(str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + " and has itself driven on " + str(len(vehiclesInNetwork[veh].getRoads())))
-        print(str(veh) + " has recieved " + str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues))) + "% of total road Network")
+        # print(str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + " and has itself driven on " + str(len(vehiclesInNetwork[veh].getRoads())))
+        # print(str(veh) + " has recieved " + str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues))) + "% of total road Network")
+        print(str(veh) + " has recieved " +str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues)))+ "% (" + str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + ") and has collected " + str(len(vehiclesInNetwork[veh].getRoads())))
+        print("       and has connected with " + str(vehiclesInNetwork[veh].getConnections()))
         
     print("end")
     traci.close()
