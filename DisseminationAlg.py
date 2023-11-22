@@ -31,34 +31,42 @@ def run():
     RoadEdgeValues = assignValuesToRoadEdges()
     vehiclesInNetwork = {}
     # print(RoadEdgeValues)
-    while traci.simulation.getMinExpectedNumber() > 0: # type: ignore
+    while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        inDistance = []
-        vehicleList = traci.vehicle.getIDList()
+        # inDistance = []
+        allVehicleNames = traci.vehicle.getIDList()
+        
+        # creating instances of all vehicles and adding them to a list
+        if len(allVehicleNames) != len(vehiclesInNetwork):
+            for vehName in allVehicleNames:
+                if vehName not in vehiclesInNetwork:
+                    # print("adding veh " + str(vehName))
+                    vehiclesInNetwork[vehName] = BicycleClass(vehName)
+        
+        # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
-        for vehID in vehicleList:
-            # creating instances of all vehicles and adding them to a list
-            if vehID not in vehiclesInNetwork:
-                vehiclesInNetwork[vehID] = BicycleClass(vehID)
+        for vehName in allVehicleNames:
             
             # add road to vehicle
-            vehiclesInNetwork[vehID].addRoad(traci.vehicle.getRoadID(vehID))
+            vehiclesInNetwork[vehName].addRoad(traci.vehicle.getRoadID(vehName))
             
             CurrentNoOfVehicle+=1
-            ownPos = traci.vehicle.getPosition(vehID)
-            for otherID in range(len(vehicleList)-CurrentNoOfVehicle):
-                vehIDOther = vehicleList[otherID+CurrentNoOfVehicle]
-                otherPos = traci.vehicle.getPosition(vehIDOther)
+            ownPos = traci.vehicle.getPosition(vehName)
+            for otherVeh in range(len(allVehicleNames)-CurrentNoOfVehicle):
+                vehNameOther = allVehicleNames[otherVeh+CurrentNoOfVehicle]
+                otherPos = traci.vehicle.getPosition(vehNameOther)
                 dist = traci.simulation.getDistance2D(ownPos[0], ownPos[1], otherPos[0], otherPos[1], False, False)
                 if(dist < 25.0):
-                    print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther))
-                    inDistance.append(tuple((str(vehID), str(vehIDOther))))
+                    # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther)) # print what what vehicles are in connection with oneanother
+                    
+                    vehiclesInNetwork[vehNameOther].recieveDesseminationData(vehiclesInNetwork[vehName].getDisseminationData())
+                    vehiclesInNetwork[vehName].recieveDesseminationData(vehiclesInNetwork[vehNameOther].getDisseminationData())
         # print(step)
         step += 1
 
     for veh in vehiclesInNetwork:
-        print(veh)
-        print(vehiclesInNetwork[veh].printRoads())
+        print(str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + " and has itself driven on " + str(len(vehiclesInNetwork[veh].getRoads())))
+        print(str(veh) + " has recieved " + str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues))) + "% of total road Network")
         
     print("end")
     traci.close()
