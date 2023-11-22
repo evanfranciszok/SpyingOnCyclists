@@ -83,6 +83,6 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
-    traci.start([sumoBinary, "-c", "DualRoad.sumocfg",
+    traci.start([sumoBinary, "-c", "sumoFiles/DualRoad.sumocfg",
                              "--tripinfo-output", "tripinfo.xml"])
     run()
