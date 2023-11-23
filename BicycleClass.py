@@ -30,5 +30,6 @@ class BicycleClass:
         self.roadsReceivedFromOthers = self.roadsReceivedFromOthers | dataFromOtherVehicle
     
     # this is what the bike will disseminate
+    # algorithm for disseminating the data
     def getDisseminationData(self):
         return self.drivenOnRoads
