@@ -1,3 +1,7 @@
+import random
+
+random.seed(10)
+
 class BicycleClass:
     def __init__(self, vehID):
         self.vehID = vehID
@@ -36,4 +40,16 @@ class BicycleClass:
     # this is what the bike will disseminate
     # algorithm for disseminating the data
     def getDisseminationData(self):
-        return self.drivenOnRoads
+        # return self.drivenOnRoads # case 0 (no method)
+        return sramble()
+    
+    def sramble(self):
+        returnDict = {}
+        for i in range(random.randint(1,5)):
+            if random.randint(1,4) == 1:
+                roadSegment = random.choice(list(self.drivenOnRoads.values()))
+                returnDict[roadSegment] = roadSegment
+            else:
+                roadSegment = random.choice(list(self.roadsReceivedFromOthers.values()))
+                returnDict[roadSegment] = roadSegment
+        return returnDict
