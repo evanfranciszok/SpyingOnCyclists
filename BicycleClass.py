@@ -50,6 +50,7 @@ class BicycleClass:
                 roadSegment = random.choice(list(self.drivenOnRoads.values()))
                 returnDict[roadSegment] = roadSegment
             else:
-                roadSegment = random.choice(list(self.roadsReceivedFromOthers.values()))
-                returnDict[roadSegment] = roadSegment
+                if len(self.roadsReceivedFromOthers) > 0:
+                    roadSegment = random.choice(list(self.roadsReceivedFromOthers.values()))
+                    returnDict[roadSegment] = roadSegment
         return returnDict
