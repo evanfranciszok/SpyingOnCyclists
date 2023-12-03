@@ -41,9 +41,9 @@ class BicycleClass:
     # algorithm for disseminating the data
     def getDisseminationData(self):
         # return self.drivenOnRoads # case 0 (no method)
-        return sramble()
+        return self.scramble()
     
-    def sramble(self):
+    def scramble(self):
         returnDict = {}
         for i in range(random.randint(1,5)):
             if random.randint(1,4) == 1:
