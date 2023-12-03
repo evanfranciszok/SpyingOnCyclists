@@ -33,7 +33,6 @@ def run():
     step = 0
     RoadEdgeValues = assignValuesToRoadEdges()
     vehiclesInNetwork = {}
-    print(str(data) + " test json")
     # looping for all the steps in de simuation
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
@@ -46,8 +45,8 @@ def run():
                 if vehName not in vehiclesInNetwork:
                     # print("adding veh " + str(vehName))
                     vehiclesInNetwork[vehName] = BicycleClass(vehName)
-                    # vehiclesInNetwork[vehName].setDrivenOnRoads()
-        
+                    vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1))
+ # minus one because the index of the file starts with 0 and the length of the array is one more        
         # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
         for vehName in allVehicleNames:
@@ -86,6 +85,15 @@ def assignValuesToRoadEdges():
     for roadId in traci.edge.getIDList():
         roadEdges[roadId] = random.randint(1,9)#value of 1 to (and including) 9 to simulate the road score
     return roadEdges
+
+def generateListWithRoadsFromJson(indexInJsonFile):
+    currentJSONElement = JSONBackGroundData[str(indexInJsonFile)]
+    returnValue = {}
+    for attribute, value in currentJSONElement.items(): # attribute is not used but is necessary to remove the attributes of the json file
+        for roadSegment in value:
+            if roadSegment not in returnValue:
+                returnValue[roadSegment] = roadSegment
+    return returnValue
 
 # main entry point
 if __name__ == "__main__":
