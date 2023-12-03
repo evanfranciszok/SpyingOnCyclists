@@ -41,12 +41,13 @@ def run():
         
         # creating instances of all vehicles and adding them to a list
         if len(allVehicleNames) != len(vehiclesInNetwork):
+            # following code should only run once as it is only on spawning of a new vehicle
             for vehName in allVehicleNames:
                 if vehName not in vehiclesInNetwork:
                     # print("adding veh " + str(vehName))
                     vehiclesInNetwork[vehName] = BicycleClass(vehName)
-                    vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1))
- # minus one because the index of the file starts with 0 and the length of the array is one more        
+                    vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1)) # minus one because the index of the file starts with 0 and the length of the array is one more        
+        
         # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
         for vehName in allVehicleNames:
@@ -60,17 +61,15 @@ def run():
                 vehNameOther = allVehicleNames[otherVeh+CurrentNoOfVehicle]
                 otherPos = traci.vehicle.getPosition(vehNameOther)
                 dist = traci.simulation.getDistance2D(ownPos[0], ownPos[1], otherPos[0], otherPos[1], False, False)
+                # 25 represents the distance between vehicles for dissemination in meters
                 if(dist < 25.0):
                     # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther)) # print what what vehicles are in connection with oneanother
                     
                     vehiclesInNetwork[vehNameOther].recieveDesseminationData(vehiclesInNetwork[vehName].getDisseminationData(), vehName)
                     vehiclesInNetwork[vehName].recieveDesseminationData(vehiclesInNetwork[vehNameOther].getDisseminationData(), vehNameOther)
-        # print(step)
         step += 1
 
     for veh in vehiclesInNetwork:
-        # print(str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + " and has itself driven on " + str(len(vehiclesInNetwork[veh].getRoads())))
-        # print(str(veh) + " has recieved " + str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues))) + "% of total road Network")
         print(str(veh) + " has recieved " +str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues)))+ "% (" + str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + ") and has collected " + str(len(vehiclesInNetwork[veh].getRoads())))
         print("       and has connected with " + str(vehiclesInNetwork[veh].getConnections()))
         
@@ -83,7 +82,9 @@ def assignValuesToRoadEdges():
     roadEdges = {}
     random.seed(10) #make sure the random numbers are the same everytime. Remove this if this is not wanted behaviour
     for roadId in traci.edge.getIDList():
-        roadEdges[roadId] = random.randint(1,9)#value of 1 to (and including) 9 to simulate the road score
+        # prevent junctions being added to the list
+        if roadId[0] != ':':
+            roadEdges[roadId] = random.randint(1,9)#value of 1 to (and including) 9 to simulate the road score
     return roadEdges
 
 def generateListWithRoadsFromJson(indexInJsonFile):
@@ -106,6 +107,7 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     # traci starts sumo as a subprocess and then this script connects and runs
+    # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
     traci.start([sumoBinary, "-c", "sumoFiles/DualRoad.sumocfg",
                              "--tripinfo-output", "tripinfo.xml", "--start", "--quit-on-end"])
     run()

@@ -6,7 +6,8 @@ class BicycleClass:
         self.connectedWithCars = {}
 
     def addRoad(self, roadId):
-        if roadId not in self.drivenOnRoads:
+        # prevent junctions being added to the list
+        if roadId not in self.drivenOnRoads and roadId[0] != ':':
             self.drivenOnRoads[roadId] = roadId
             
     def setDrivenOnRoads(self, roads):
