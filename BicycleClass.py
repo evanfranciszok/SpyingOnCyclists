@@ -8,6 +8,9 @@ class BicycleClass:
     def addRoad(self, roadId):
         if roadId not in self.drivenOnRoads:
             self.drivenOnRoads[roadId] = roadId
+            
+    def setDrivenOnRoads(self, roads):
+        self.drivenOnRoads = roads
 
     def printRoads(self):
         print("veh " + self.vehID + " has driven on " + str(self.drivenOnRoads) + "\n     - and recieved from others " + str(self.roadsReceivedFromOthers))

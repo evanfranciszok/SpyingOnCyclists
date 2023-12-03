@@ -4,6 +4,8 @@ import os
 import sys
 import optparse
 import random
+import json
+
 from BicycleClass import BicycleClass
 
 # we need to import some python modules from the $SUMO_HOME/tools directory
@@ -12,7 +14,8 @@ if 'SUMO_HOME' in os.environ:
     sys.path.append(tools)
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
-
+    
+JSONBackGroundData = json.load(open('TEST.json'))
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
@@ -30,7 +33,8 @@ def run():
     step = 0
     RoadEdgeValues = assignValuesToRoadEdges()
     vehiclesInNetwork = {}
-    # print(RoadEdgeValues)
+    print(str(data) + " test json")
+    # looping for all the steps in de simuation
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         # inDistance = []
@@ -42,6 +46,7 @@ def run():
                 if vehName not in vehiclesInNetwork:
                     # print("adding veh " + str(vehName))
                     vehiclesInNetwork[vehName] = BicycleClass(vehName)
+                    # vehiclesInNetwork[vehName].setDrivenOnRoads()
         
         # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
