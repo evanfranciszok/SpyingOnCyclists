@@ -6,6 +6,8 @@ import optparse
 import random
 import json
 import pandas as pd
+# displaying all columns
+pd.set_option('display.max_columns', None)
 
 from BicycleClass import BicycleClass
 
@@ -34,9 +36,8 @@ def run():
     step = 0
     RoadEdgeValues = assignValuesToRoadEdges()
     vehiclesInNetwork = {}
-    #create a dataframe to put in the generated
-    df = pd.DataFrame()
-    #df = pd.DataFrame(columns=['Name', 'position'])
+    # create an empty dataframe
+    df = pd.DataFrame(columns=['Vehicle','Collected Roads Count', 'Connections'])
 
     # looping for all the steps in de simuation
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -78,21 +79,16 @@ def run():
         print(str(veh) + " has recieved " +str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues)))+ "% (" + str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + ") and has collected " + str(len(vehiclesInNetwork[veh].getRoads())))
         print("       and has connected with " + str(vehiclesInNetwork[veh].getConnections()))
         
-        # Create an empty dataframe
-        df = pd.DataFrame(columns=['Vehicle', 'Received Roads Percentage', 'Received Roads Count', 'Collected Roads Count', 'Connections'])
-
         # Create a list to store the data
         data = []
 
         # Iterate over the vehiclesInNetwork list
         for veh in vehiclesInNetwork:
-            received_roads_percentage = vehiclesInNetwork[veh].getRecievedRoads()
-            received_roads_count = vehiclesInNetwork[veh].getRecievedRoads()
-            collected_roads_count = vehiclesInNetwork[veh].getRoads()
+            collected_roads_count = len(vehiclesInNetwork[veh].getRoads())
             connections = vehiclesInNetwork[veh].getConnections()
 
             # Append the data to the list
-            data.append([veh, received_roads_percentage, received_roads_count, collected_roads_count, connections])
+            data.append([veh, collected_roads_count, connections])
 
         # Concatenate the data to the dataframe
         df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
