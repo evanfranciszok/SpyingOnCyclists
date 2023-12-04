@@ -73,29 +73,32 @@ def run():
                     vehiclesInNetwork[vehNameOther].recieveDesseminationData(vehiclesInNetwork[vehName].getDisseminationData(), vehName)
                     vehiclesInNetwork[vehName].recieveDesseminationData(vehiclesInNetwork[vehNameOther].getDisseminationData(), vehNameOther)
         step += 1
-    # Create an empty dataframe
-    df = pd.DataFrame(columns=['Vehicle', 'Received Roads Percentage', 'Received Roads Count', 'Collected Roads Count', 'Connections'])
 
-    # Create a list to store the data
-    data = []
     for veh in vehiclesInNetwork:
         print(str(veh) + " has recieved " +str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues)))+ "% (" + str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + ") and has collected " + str(len(vehiclesInNetwork[veh].getRoads())))
         print("       and has connected with " + str(vehiclesInNetwork[veh].getConnections()))
         
-   
-    received_roads_percentage = vehiclesInNetwork[veh].getRecievedRoads()
-    received_roads_count = vehiclesInNetwork[veh].getRecievedRoads()
-    collected_roads_count = vehiclesInNetwork[veh].getRoads()
-    connections = vehiclesInNetwork[veh].getConnections()
+        # Create an empty dataframe
+        df = pd.DataFrame(columns=['Vehicle', 'Received Roads Percentage', 'Received Roads Count', 'Collected Roads Count', 'Connections'])
 
-        # Append the data to the list
-    data.append([veh, received_roads_percentage, received_roads_count, collected_roads_count, connections])
+        # Create a list to store the data
+        data = []
+
+        # Iterate over the vehiclesInNetwork list
+        for veh in vehiclesInNetwork:
+            received_roads_percentage = vehiclesInNetwork[veh].getRecievedRoads()
+            received_roads_count = vehiclesInNetwork[veh].getRecievedRoads()
+            collected_roads_count = vehiclesInNetwork[veh].getRoads()
+            connections = vehiclesInNetwork[veh].getConnections()
+
+            # Append the data to the list
+            data.append([veh, received_roads_percentage, received_roads_count, collected_roads_count, connections])
 
         # Concatenate the data to the dataframe
-    df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
+        df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
 
-    # Print the dataframe
-    print(df)
+        # Print the dataframe
+        print(df)
 
 
     print("end")
