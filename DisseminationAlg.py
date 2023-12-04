@@ -37,7 +37,7 @@ def run():
     RoadEdgeValues = assignValuesToRoadEdges()
     vehiclesInNetwork = {}
     # create an empty dataframe
-    df = pd.DataFrame(columns=['Vehicle','Collected Roads Count', 'Connections'])
+    df = pd.DataFrame(columns=['Vehicle','Collected Roads', 'Connections', 'Position'])
 
     # looping for all the steps in de simuation
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -82,20 +82,20 @@ def run():
         # Create a list to store the data
         data = []
 
-        # Iterate over the vehiclesInNetwork list
-        for veh in vehiclesInNetwork:
-            collected_roads_count = len(vehiclesInNetwork[veh].getRoads())
-            connections = vehiclesInNetwork[veh].getConnections()
+    # Iterate over the vehiclesInNetwork list
+    for veh in vehiclesInNetwork:
+        collected_roads = vehiclesInNetwork[veh].getRoads()
+        connections = vehiclesInNetwork[veh].getConnections()
+        position = traci.vehicle.getPosition(vehName)
 
-            # Append the data to the list
-            data.append([veh, collected_roads_count, connections])
+        # Append the data to the list
+        data.append([veh, collected_roads, connections, position])
 
-        # Concatenate the data to the dataframe
-        df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
+    # Concatenate the data to the dataframe
+    df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
 
-        # Print the dataframe
-        print(df)
-
+    # Print the dataframe
+    print(df)
 
     print("end")
     traci.close()
