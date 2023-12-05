@@ -75,28 +75,25 @@ def run():
                     vehiclesInNetwork[vehName].recieveDesseminationData(vehiclesInNetwork[vehNameOther].getDisseminationData(), vehNameOther)
         step += 1
 
-    for veh in vehiclesInNetwork:
-        print(str(veh) + " has recieved " +str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues)))+ "% (" + str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + ") and has collected " + str(len(vehiclesInNetwork[veh].getRoads())))
-        print("       and has connected with " + str(vehiclesInNetwork[veh].getConnections()))
-        
-        # Create a list to store the data
-        data = []
+    # Create a list to store the data
+    data = []
 
-    # Iterate over the vehiclesInNetwork list
     for veh in vehiclesInNetwork:
+        #print(str(veh) + " has recieved " +str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues)))+ "% (" + str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + ") and has collected " + str(len(vehiclesInNetwork[veh].getRoads())))
+        #print("       and has connected with " + str(vehiclesInNetwork[veh].getConnections()))
+
         collected_roads = vehiclesInNetwork[veh].getRoads()
         connections = vehiclesInNetwork[veh].getConnections()
-        #position = traci.vehicle.getPosition(vehName)
 
         # Append the data to the list
         data.append([veh, collected_roads, connections])
-
+        
     # Concatenate the data to the dataframe
     df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
 
     # Print the dataframe
     print(df)
-
+    df.to_csv('disseminatedData.csv')
     print("end")
     traci.close()
     sys.stdout.flush()
@@ -108,7 +105,7 @@ def assignValuesToRoadEdges():
     for roadId in traci.edge.getIDList():
         # prevent junctions being added to the list
         if roadId[0] != ':':
-            roadEdges[roadId] = random.randint(1,9)#value of 1 to (and including) 9 to simulate the road score
+            roadEdges[roadId] = random.randint(1,9) #value of 1 to (and including) 9 to simulate the road score
     return roadEdges
 
 def generateListWithRoadsFromJson(indexInJsonFile):
