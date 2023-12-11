@@ -8,12 +8,14 @@ class BicycleClass:
         self.drivenOnRoads = {}
         self.roadsReceivedFromOthers = {}
         self.connectedWithCars = {}
+        self.amountOfDoubleDataSent = 0
+        self.roadsCollected = 0
 
     def addRoad(self, roadId):
         # prevent junctions being added to the list
         if roadId not in self.drivenOnRoads and roadId[0] != ':':
-            self.drivenOnRoads[roadId] = roadId
-            
+            self.drivenOnRoads[roadId] = [self.vehID]
+                        
     def setDrivenOnRoads(self, roads):
         self.drivenOnRoads = roads
 
@@ -28,6 +30,10 @@ class BicycleClass:
     
     def getConnections(self):
         return self.connectedWithCars
+    
+    def printData(self):
+        if self.roadsCollected != 0:
+            print(str(self.amountOfDoubleDataSent) + " of " + str(self.roadsCollected) + " is " + str(round(self.amountOfDoubleDataSent*100/self.roadsCollected)) + "%.")
         
     def recieveDesseminationData(self, dataFromOtherVehicle, vehIDOther):
         # print("veh " + self.vehID + " has recieved " + str(dataFromOtherVehicle))
@@ -35,6 +41,20 @@ class BicycleClass:
             self.connectedWithCars[vehIDOther] = 1
         else:
             self.connectedWithCars[vehIDOther] += 1
+
+        for recievedRoadSegment in dataFromOtherVehicle:
+            self.roadsCollected +=1
+            if recievedRoadSegment in self.roadsReceivedFromOthers:
+                for senderName in dataFromOtherVehicle[recievedRoadSegment]:
+                    if senderName not in self.roadsReceivedFromOthers[recievedRoadSegment]:
+                        # If the road is already been recieved but is has been collected by another person origionally
+                        self.roadsReceivedFromOthers[recievedRoadSegment].append(senderName)
+                    else:
+                        self.amountOfDoubleDataSent += 1
+                        # If the road is already been collected from the same original source (eventhough it possibly came from another person)
+                        # print("double data recieved")
+            else:
+                self.roadsReceivedFromOthers[recievedRoadSegment] = dataFromOtherVehicle[recievedRoadSegment]        
         self.roadsReceivedFromOthers = self.roadsReceivedFromOthers | dataFromOtherVehicle
     
     # this is what the bike will disseminate
@@ -47,10 +67,10 @@ class BicycleClass:
         returnDict = {}
         for i in range(random.randint(1,5)):
             if random.randint(1,4) == 1:
-                roadSegment = random.choice(list(self.drivenOnRoads.values()))
-                returnDict[roadSegment] = roadSegment
+                roadSegment = random.choice(list(self.drivenOnRoads))
+                returnDict[roadSegment] = self.drivenOnRoads[str(roadSegment)]
             else:
                 if len(self.roadsReceivedFromOthers) > 0:
-                    roadSegment = random.choice(list(self.roadsReceivedFromOthers.values()))
-                    returnDict[roadSegment] = roadSegment
-        return returnDict
+                    roadSegment = random.choice(list(self.roadsReceivedFromOthers))
+                    returnDict[roadSegment] = self.roadsReceivedFromOthers[str(roadSegment)]
+        return returnDict 
