@@ -33,7 +33,7 @@ class BicycleClass:
     
     def printData(self):
         if self.roadsCollected != 0:
-            print(str(self.amountOfDoubleDataSent) + " of " + str(self.roadsCollected) + " is " + str(round(self.amountOfDoubleDataSent*100/self.roadsCollected)) + "%.")
+            print(str(self.vehID) + ": " + str(self.amountOfDoubleDataSent) + " of " + str(self.roadsCollected) + ":" + str(len(self.roadsReceivedFromOthers)) + " is " + str(round(self.amountOfDoubleDataSent*100/self.roadsCollected)) + "%.")
         
     def recieveDesseminationData(self, dataFromOtherVehicle, vehIDOther):
         # print("veh " + self.vehID + " has recieved " + str(dataFromOtherVehicle))
@@ -52,7 +52,8 @@ class BicycleClass:
                     else:
                         self.amountOfDoubleDataSent += 1
                         # If the road is already been collected from the same original source (eventhough it possibly came from another person)
-                        # print("double data recieved")
+                        # if(self.vehID == "Janet_8"):
+                            # print(str(self.vehID) + " double data recieved on " + senderName + " : " + recievedRoadSegment + "\n\t::" + str(self.roadsReceivedFromOthers) + "\n\t::" + str(dataFromOtherVehicle))
             else:
                 self.roadsReceivedFromOthers[recievedRoadSegment] = dataFromOtherVehicle[recievedRoadSegment]        
         self.roadsReceivedFromOthers = self.roadsReceivedFromOthers | dataFromOtherVehicle
@@ -65,8 +66,9 @@ class BicycleClass:
     
     def scramble(self):
         returnDict = {}
-        for i in range(random.randint(1,5)):
-            if random.randint(1,4) == 1:
+        # for i in range(random.randint(1,5)):
+        for i in range(4):
+            if random.randint(1,2) == 1:
                 roadSegment = random.choice(list(self.drivenOnRoads))
                 returnDict[roadSegment] = self.drivenOnRoads[str(roadSegment)]
             else:
