@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-12-20 20:14:02 by Eclipse SUMO GUI Version 1.19.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="sumoFiles/dualRoad.net.xml"/>
+        <route-files value="sumoFiles/dualRoadRoutes.rou.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="tripinfo.xml&#45;&#45;quit-on-end"/>
+    </output>
+
+    <traci_server>
+        <remote-port value="56205"/>
+    </traci_server>
+
+    <gui_only>
+        <gui-settings-file value="sumoFiles/style.xml"/>
+    </gui_only>
+
+</configuration>
+-->
+
+<tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+    <tripinfo id="Dalton_1" depart="0.00" departLane="E44_0" departPos="1.70" departSpeed="0.00" departDelay="0.00" arrival="87.00" arrivalLane="-E12_0" arrivalPos="43.48" arrivalSpeed="10.74" duration="87.00" routeLength="688.71" waitingTime="0.00" waitingCount="0" stopTime="0.00" timeLoss="34.44" rerouteNo="0" devices="tripinfo_Dalton_1" vType="bicycle" speedFactor="1.06" vaporized=""/>
+</tripinfos>

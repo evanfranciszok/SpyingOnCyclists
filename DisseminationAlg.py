@@ -21,6 +21,8 @@ else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
     
 JSONBackGroundData = json.load(open('TEST.json'))
+continueUntilFullyMapped = True
+RoadEdgeValues = {}
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
@@ -36,12 +38,12 @@ def get_options():
 # contains TraCI control loop
 def run(case):
     step = 0
-    RoadEdgeValues = assignValuesToRoadEdges()
     vehiclesInNetwork = {}
     # create an empty dataframe
     df = pd.DataFrame(columns=['Vehicle','Collected Roads', 'Connections'])
     disseminationLog = pd.DataFrame(columns=['Simulation step','sender', 'recipient','data'])
     disseminationLogData = []
+    RoadEdgeValues = assignValuesToRoadEdges()
 
     # looping for all the steps in de simuation
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -57,6 +59,8 @@ def run(case):
                     # ("adding veh " + str(vehName))
                     vehiclesInNetwork[vehName] = BicycleClass(vehName, case)
                     vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1,vehName)) # minus one because the index of the file starts with 0 and the length of the array is one more        
+                    if continueUntilFullyMapped:
+                        setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
         
         # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
@@ -64,6 +68,8 @@ def run(case):
             
             # add road to vehicle
             vehiclesInNetwork[vehName].addRoad(traci.vehicle.getRoadID(vehName))
+            if vehiclesInNetwork[vehName].checkIfTarget(traci.vehicle.getRoadID(vehName)) and continueUntilFullyMapped:
+                setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
             
             CurrentNoOfVehicle+=1
             ownPos = traci.vehicle.getPosition(vehName)
@@ -127,6 +133,10 @@ def generateListWithRoadsFromJson(indexInJsonFile,vehName):
                 returnValue[roadSegment] = [vehName]
     return returnValue
 
+def setSegmentTarget(vehicle, segment):
+    vehicle.setTarget(segment)
+    traci.vehicle.changeTarget(vehicle.getName(),segment)
+
 # main entry point
 if __name__ == "__main__":
     options = get_options()
@@ -142,7 +152,7 @@ if __name__ == "__main__":
     for case in SimulationMode:
         print(case)
         traci.start([sumoBinary, "-c", "sumoFiles/DualRoad.sumocfg",
-                                "--tripinfo-output", "tripinfo.xml", "--start", "--quit-on-end"])
+                                "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         
         run(case)
     

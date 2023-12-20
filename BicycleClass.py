@@ -33,6 +33,15 @@ class BicycleClass:
     def getConnections(self):
         return self.connectedWithCars
     
+    def getName(self):
+            return self.vehID
+        
+    def setTarget(self, target):
+        self.target = target
+        
+    def checkIfTarget(self, possibleTarget):
+        return possibleTarget == self.target
+    
     def printData(self):
         if self.roadsCollected != 0:
             print(str(self.vehID) + ": " + str(self.amountOfDoubleDataSent) + " of " + str(self.roadsCollected) + ":" + str(len(self.roadsReceivedFromOthers)) + " is " + str(round(self.amountOfDoubleDataSent*100/self.roadsCollected)) + "%.")
