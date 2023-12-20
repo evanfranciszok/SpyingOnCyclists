@@ -75,6 +75,7 @@ class BicycleClass:
                 roadSegment = random.choice(list(self.drivenOnRoads))
                 returnDict[roadSegment] = self.drivenOnRoads[str(roadSegment)]
             else:
+                # data from other people
                 if len(self.roadsReceivedFromOthers) > 0:
                     roadSegment = random.choice(list(self.roadsReceivedFromOthers))
                     returnDict[roadSegment] = self.roadsReceivedFromOthers[str(roadSegment)]

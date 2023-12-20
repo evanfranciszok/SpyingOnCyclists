@@ -139,8 +139,10 @@ if __name__ == "__main__":
 
     # traci starts sumo as a subprocess and then this script connects and runs
     # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
-    traci.start([sumoBinary, "-c", "sumoFiles/DualRoad.sumocfg",
-                             "--tripinfo-output", "tripinfo.xml", "--start", "--quit-on-end"])
-    
-    run(SimulationMode.K_ONE)
+    for case in SimulationMode:
+        print(case)
+        traci.start([sumoBinary, "-c", "sumoFiles/DualRoad.sumocfg",
+                                "--tripinfo-output", "tripinfo.xml", "--start", "--quit-on-end"])
+        
+        run(case)
     
