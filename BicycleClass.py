@@ -1,10 +1,12 @@
 import random
 
 random.seed(10)
+disseminationAmount = 4
 
 class BicycleClass:
-    def __init__(self, vehID):
+    def __init__(self, vehID, disseminationCase):
         self.vehID = vehID
+        self.disseminationCase = disseminationCase
         self.drivenOnRoads = {}
         self.roadsReceivedFromOthers = {}
         self.connectedWithCars = {}
@@ -62,13 +64,14 @@ class BicycleClass:
     # algorithm for disseminating the data
     def getDisseminationData(self):
         # return self.drivenOnRoads # case 0 (no method)
-        return self.scramble()
+        return self.scramble(self.disseminationCase)
     
-    def scramble(self):
+    def scramble(self, case):
         returnDict = {}
         # for i in range(random.randint(1,5)):
-        for i in range(4):
-            if random.randint(1,2) == 1:
+        amountOfOwnData = disseminationAmount*(case.value/100)
+        for i in range(disseminationAmount):
+            if amountOfOwnData > i:
                 roadSegment = random.choice(list(self.drivenOnRoads))
                 returnDict[roadSegment] = self.drivenOnRoads[str(roadSegment)]
             else:

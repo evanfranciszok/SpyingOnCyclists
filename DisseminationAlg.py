@@ -6,11 +6,13 @@ import optparse
 import random
 import json
 import pandas as pd
+
 # displaying all columns
 pd.set_option('display.max_columns', None)
 
+from SimulationMode import SimulationMode
 from BicycleClass import BicycleClass
-
+ 
 # we need to import some python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
@@ -32,7 +34,7 @@ def get_options():
 
 
 # contains TraCI control loop
-def run():
+def run(case):
     step = 0
     RoadEdgeValues = assignValuesToRoadEdges()
     vehiclesInNetwork = {}
@@ -52,8 +54,8 @@ def run():
             # following code should only run once as it is only on spawning of a new vehicle
             for vehName in allVehicleNames:
                 if vehName not in vehiclesInNetwork:
-                    # print("adding veh " + str(vehName))
-                    vehiclesInNetwork[vehName] = BicycleClass(vehName)
+                    # ("adding veh " + str(vehName))
+                    vehiclesInNetwork[vehName] = BicycleClass(vehName, case)
                     vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1,vehName)) # minus one because the index of the file starts with 0 and the length of the array is one more        
         
         # looping through all vehicles currently on the map
@@ -99,7 +101,7 @@ def run():
     disseminationLog = pd.concat([disseminationLog, pd.DataFrame(disseminationLogData, columns=disseminationLog.columns)], ignore_index=True)
 
     # Print the dataframe
-    print(df)
+    # print(df)
     df.to_csv('disseminatedData.csv')
     disseminationLog.to_csv('disseminatedData_ForSteps.csv')
     print("end")
@@ -139,4 +141,6 @@ if __name__ == "__main__":
     # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
     traci.start([sumoBinary, "-c", "sumoFiles/DualRoad.sumocfg",
                              "--tripinfo-output", "tripinfo.xml", "--start", "--quit-on-end"])
-    run()
+    
+    run(SimulationMode.K_ONE)
+    
