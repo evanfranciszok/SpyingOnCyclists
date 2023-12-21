@@ -121,7 +121,7 @@ def run(case):
 
     # Print the dataframe
     # print(df)
-    df.to_csv('disseminatedData.csv')
+    # df.to_csv('disseminatedData.csv')
     disseminationLog.to_csv('disseminatedData_ForSteps.csv')
     # printing the step when the simulation ended
     print("end on step " + str(step))
