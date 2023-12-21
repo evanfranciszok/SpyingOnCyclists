@@ -63,7 +63,7 @@ def run(case):
                 if vehName not in vehiclesInNetwork:
                     # ("adding veh " + str(vehName))
                     vehiclesInNetwork[vehName] = BicycleClass(vehName, case)
-                    vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1,vehName)) # minus one because the index of the file starts with 0 and the length of the array is one more        
+                    # vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1,vehName)) # minus one because the index of the file starts with 0 and the length of the array is one more        
                     if continueUntilFullyMapped:
                         setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
         
