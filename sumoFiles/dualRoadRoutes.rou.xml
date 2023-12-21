@@ -10,10 +10,10 @@
     <vehicle id="Dalton_1" type="bicycle" depart="0.00">
         <route edges="E44 E45 E46 E48 -E47 -E43 -E20 E21 E25 E26 E27 -E15 -E14 -E12"/>
     </vehicle>
-    <!-- <vehicle id="Kendra_2" type="bicycle" depart="1.00">
+    <vehicle id="Kendra_2" type="bicycle" depart="1.00">
         <route edges="-E69 -E68 -E66 -E65 -E64 E30 E31 E32 E36 E62 -E60 -E59 -E58"/>
     </vehicle>
-    <vehicle id="Tommy_3" type="bicycle" depart="2.00">
+    <!-- <vehicle id="Tommy_3" type="bicycle" depart="2.00">
         <route edges="E59 E60 E61 -E37 -E36 -E39 E41 E42 -E13 E14 E15 E16 E17 E18 E44 E45 E46 E48"/>
     </vehicle>
     <vehicle id="Fabio_4" type="bicycle" depart="3.00">

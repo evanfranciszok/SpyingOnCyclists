@@ -1020,9 +1020,9 @@
     <edge id="-E96" from="J76" to="J74" priority="-1">
         <lane id="-E96_0" index="0" speed="13.89" length="65.02" shape="248.65,-208.84 184.97,-195.73"/>
     </edge>
-    <!-- <edge id="E0" from="J0" to="J1" priority="-1">
+    <edge id="E0" from="J0" to="J1" priority="-1">
         <lane id="E0_0" index="0" speed="13.89" length="23.61" shape="13.38,60.26 36.98,59.40"/>
-    </edge> -->
+    </edge>
     <edge id="E1" from="J1" to="J2" priority="-1">
         <lane id="E1_0" index="0" speed="13.89" length="60.61" shape="40.38,58.92 99.34,44.89"/>
     </edge>

@@ -44,9 +44,11 @@ def run(case):
     disseminationLog = pd.DataFrame(columns=['Simulation step','sender', 'recipient','data'])
     disseminationLogData = []
     RoadEdgeValues = assignValuesToRoadEdges()
+    allKnownRoadSegments = {}
+    endSimulation = False
 
     # looping for all the steps in de simuation
-    while traci.simulation.getMinExpectedNumber() > 0:
+    while traci.simulation.getMinExpectedNumber() > 0 and not endSimulation:
         traci.simulationStep()
         # inDistance = []
         allVehicleNames = traci.vehicle.getIDList()
@@ -86,6 +88,10 @@ def run(case):
                     vehiclesInNetwork[vehName].recieveDesseminationData(dataVehOther, vehNameOther)
                     disseminationLogData.append([step, vehName, vehNameOther, dataVeh])
                     disseminationLogData.append([step, vehNameOther, vehName, dataVehOther])
+                    
+            allKnownRoadSegments = allKnownRoadSegments | vehiclesInNetwork[vehName].getRoads()
+        if len(allKnownRoadSegments) == len(RoadEdgeValues):
+            endSimulation = True
         step += 1
 
     # Create a list to store the data
@@ -110,14 +116,14 @@ def run(case):
     # print(df)
     df.to_csv('disseminatedData.csv')
     disseminationLog.to_csv('disseminatedData_ForSteps.csv')
-    print("end")
+    print("end on step " + str(step))
     traci.close()
     sys.stdout.flush()
     
 
 def assignValuesToRoadEdges():
     roadEdges = {}
-    random.seed(10) #make sure the random numbers are the same everytime. Remove this if this is not wanted behaviour
+    random.seed(12) #make sure the random numbers are the same everytime. Remove this if this is not wanted behaviour
     for roadId in traci.edge.getIDList():
         # prevent junctions being added to the list
         if roadId[0] != ':':

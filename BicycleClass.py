@@ -45,6 +45,8 @@ class BicycleClass:
     def printData(self):
         if self.roadsCollected != 0:
             print(str(self.vehID) + ": " + str(self.amountOfDoubleDataSent) + " of " + str(self.roadsCollected) + ":" + str(len(self.roadsReceivedFromOthers)) + " is " + str(round(self.amountOfDoubleDataSent*100/self.roadsCollected)) + "%.")
+        else:
+            print(str(self.vehID) + " no roads collected")
         
     def recieveDesseminationData(self, dataFromOtherVehicle, vehIDOther):
         # print("veh " + self.vehID + " has recieved " + str(dataFromOtherVehicle))

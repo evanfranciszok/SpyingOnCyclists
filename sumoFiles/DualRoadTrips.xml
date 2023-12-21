@@ -13,8 +13,8 @@
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="bicycle" vClass="bicycle" maxSpeed="20.0"/>
-    <!-- <trip id="0" depart="0.00" from="E44" to="-E12" type="bicycle"/>
-    <trip id="1" depart="1.00" from="-E69" to="-E58" type="bicycle"/> -->
+    <trip id="0" depart="0.00" from="E44" to="-E12" type="bicycle"/>
+    <!-- <trip id="1" depart="1.00" from="-E69" to="-E58" type="bicycle"/> -->
     <!-- <trip id="2" depart="2.00" from="E59" to="E48" type="bicycle"/> -->
     <!-- <trip id="3" depart="3.00" from="E84" to="-E24" type="bicycle"/> -->
     <!-- <trip id="4" depart="4.00" from="E103" to="-E13" type="bicycle"/> -->
