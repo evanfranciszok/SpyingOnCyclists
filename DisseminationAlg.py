@@ -141,13 +141,15 @@ def assignValuesToRoadEdges():
     return roadEdges
 
 def generateListWithRoadsFromJson(indexInJsonFile,vehName):
-    currentJSONElement = JSONBackGroundData[str(indexInJsonFile)]
-    returnValue = {}
-    for attribute, value in currentJSONElement.items(): # attribute is not used but is necessary to remove the attributes of the json file
-        for roadSegment in value:
-            if roadSegment not in returnValue:
-                returnValue[roadSegment] = [vehName]
-    return returnValue
+    if len(JSONBackGroundData) < indexInJsonFile
+        currentJSONElement = JSONBackGroundData[str(indexInJsonFile)]
+        returnValue = {}
+        for attribute, value in currentJSONElement.items(): # attribute is not used but is necessary to remove the attributes of the json file
+            for roadSegment in value:
+                if roadSegment not in returnValue:
+                    returnValue[roadSegment] = [vehName]
+        return returnValue
+    return {}
 
 def setSegmentTarget(vehicle, segment):
     vehicle.setTarget(segment)
