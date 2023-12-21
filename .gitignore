@@ -167,3 +167,6 @@ cython_debug/
 #.idea/
 disseminatedData_ForSteps.csv
 disseminatedData.csv
+
+# Macbook stuff
+.DS_Store
