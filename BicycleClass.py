@@ -82,7 +82,7 @@ class BicycleClass:
         # for i in range(random.randint(1,5)):
         amountOfOwnData = disseminationAmount*(case.value/100)
         for i in range(disseminationAmount):
-            if amountOfOwnData > i:
+            if amountOfOwnData > i and len(self.drivenOnRoads)>0:
                 roadSegment = random.choice(list(self.drivenOnRoads))
                 returnDict[roadSegment] = self.drivenOnRoads[str(roadSegment)]
             else:

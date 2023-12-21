@@ -21,7 +21,7 @@ if 'SUMO_HOME' in os.environ:
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
     
-JSONBackGroundData = json.load(open('TEST.json'))
+# JSONBackGroundData = json.load(open('TEST.json'))
 # for testing how long it will take to index the whole map, True to continue until fully indexed
 continueUntilFullyMapped = True
 RoadEdgeValues = {}
@@ -94,13 +94,14 @@ def run(case):
                     disseminationLogData.append([step, vehNameOther, vehName, dataVehOther])
                     
             # collecting all collected roads from all vehicles
-            allKnownRoadSegments = allKnownRoadSegments | vehiclesInNetwork[vehName].getRoads()
+            # allKnownRoadSegments = allKnownRoadSegments | vehiclesInNetwork[vehName].getRecievedRoads()
+            if len(vehiclesInNetwork[vehName].getRecievedRoads()) == len(RoadEdgeValues) and continueUntilFullyMapped:
+                endSimulation = True
             
         # checking if all the roads are collected in the network. They do not need to be disseminated for this to happen
-        if len(allKnownRoadSegments) == len(RoadEdgeValues) and continueUntilFullyMapped:
-            endSimulation = True
+            if step > 1000:
+                endSimulation = True
         step += 1
-
     # Create a list to store the data
     data = []
 
@@ -170,7 +171,7 @@ if __name__ == "__main__":
         print(case)
         # traci starts sumo as a subprocess and then this script connects and runs
         # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
-        traci.start([sumoBinary, "-c", "sumoFiles/DualRoad.sumocfg",
+        traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
                                 "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         
         run(case)
