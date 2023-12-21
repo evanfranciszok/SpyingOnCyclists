@@ -10,6 +10,7 @@ import pandas as pd
 # displaying all columns
 pd.set_option('display.max_columns', None)
 
+# include the other files of this project
 from SimulationMode import SimulationMode
 from BicycleClass import BicycleClass
  
@@ -21,6 +22,7 @@ else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
     
 JSONBackGroundData = json.load(open('TEST.json'))
+# for testing how long it will take to index the whole map, True to continue until fully indexed
 continueUntilFullyMapped = True
 RoadEdgeValues = {}
 
@@ -45,6 +47,7 @@ def run(case):
     disseminationLogData = []
     RoadEdgeValues = assignValuesToRoadEdges()
     allKnownRoadSegments = {}
+    # Only necesary when testing for completion of the simulation
     endSimulation = False
 
     # looping for all the steps in de simuation
@@ -86,20 +89,24 @@ def run(case):
                     dataVehOther = vehiclesInNetwork[vehNameOther].getDisseminationData()
                     vehiclesInNetwork[vehNameOther].recieveDesseminationData(dataVeh, vehName)
                     vehiclesInNetwork[vehName].recieveDesseminationData(dataVehOther, vehNameOther)
+                    # for logging reasons
                     disseminationLogData.append([step, vehName, vehNameOther, dataVeh])
                     disseminationLogData.append([step, vehNameOther, vehName, dataVehOther])
                     
+            # collecting all collected roads from all vehicles
             allKnownRoadSegments = allKnownRoadSegments | vehiclesInNetwork[vehName].getRoads()
-        if len(allKnownRoadSegments) == len(RoadEdgeValues):
+            
+        # checking if all the roads are collected in the network. They do not need to be disseminated for this to happen
+        if len(allKnownRoadSegments) == len(RoadEdgeValues) and continueUntilFullyMapped:
             endSimulation = True
         step += 1
 
     # Create a list to store the data
     data = []
 
-    for veh in vehiclesInNetwork:
-        #print(str(veh) + " has recieved " +str(round(len(vehiclesInNetwork[veh].getRecievedRoads())*100/len(RoadEdgeValues)))+ "% (" + str(len(vehiclesInNetwork[veh].getRecievedRoads())) + " of " + str(len(RoadEdgeValues)) + ") and has collected " + str(len(vehiclesInNetwork[veh].getRoads())))
-        #print("       and has connected with " + str(vehiclesInNetwork[veh].getConnections()))
+    # looping through all the vehicles that existed in the simulation
+    for veh in vehiclesInNetwork:        
+        # printing the data from all the vehicles in the simulation
         vehiclesInNetwork[veh].printData()
 
         collected_roads = vehiclesInNetwork[veh].getRoads()
@@ -116,6 +123,7 @@ def run(case):
     # print(df)
     df.to_csv('disseminatedData.csv')
     disseminationLog.to_csv('disseminatedData_ForSteps.csv')
+    # printing the step when the simulation ended
     print("end on step " + str(step))
     traci.close()
     sys.stdout.flush()
@@ -123,11 +131,13 @@ def run(case):
 
 def assignValuesToRoadEdges():
     roadEdges = {}
-    random.seed(12) #make sure the random numbers are the same everytime. Remove this if this is not wanted behaviour
+    #make sure the random numbers are the same everytime. Remove this if this is not wanted behaviour
+    random.seed(12) 
     for roadId in traci.edge.getIDList():
         # prevent junctions being added to the list
         if roadId[0] != ':':
-            roadEdges[roadId] = random.randint(1,9) #value of 1 to (and including) 9 to simulate the road score
+            #value of 1 to (and including) 9 to simulate the road score
+            roadEdges[roadId] = random.randint(1,9)
     return roadEdges
 
 def generateListWithRoadsFromJson(indexInJsonFile,vehName):
@@ -153,10 +163,11 @@ if __name__ == "__main__":
     else:
         sumoBinary = checkBinary('sumo-gui')
 
-    # traci starts sumo as a subprocess and then this script connects and runs
-    # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
+    # looping through all the dissemination cases
     for case in SimulationMode:
         print(case)
+        # traci starts sumo as a subprocess and then this script connects and runs
+        # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
         traci.start([sumoBinary, "-c", "sumoFiles/DualRoad.sumocfg",
                                 "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         
