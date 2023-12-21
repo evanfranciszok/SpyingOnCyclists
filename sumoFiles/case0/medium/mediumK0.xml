@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-12-21 09:01:58.094645 by randomTrips.py v1_19_0+0143-4ff360ee235
+<configuration>
+    <net-file value="mediumK0.net.xml"/>
+    <output-trip-file value="mediumK0.xml"/>
+    <route-file value="mediumK0.rou.xml"/>
+    <trip-attributes value="maxSpeed=&quot;20.0&quot;"/>
+    <vehicle-class value="bicycle"/>
+    <end value="50.0"/>
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="bicycle" vClass="bicycle" maxSpeed="20.0"/>
+    <trip id="0" depart="0.00" from="18701" to="-11903" type="bicycle"/>
+    <trip id="1" depart="1.00" from="-33805" to="-31069" type="bicycle"/>
+    <trip id="2" depart="2.00" from="29962" to="27674" type="bicycle"/>
+    <trip id="3" depart="3.00" from="4484" to="-1620" type="bicycle"/>
+    <trip id="4" depart="4.00" from="-47995" to="-1228" type="bicycle"/>
+    <trip id="5" depart="5.00" from="-29357" to="12202" type="bicycle"/>
+    <trip id="6" depart="6.00" from="-12021" to="-28759" type="bicycle"/>
+    <trip id="7" depart="7.00" from="1990" to="14847" type="bicycle"/>
+    <trip id="8" depart="8.00" from="-2950" to="1791" type="bicycle"/>
+    <trip id="9" depart="9.00" from="3651" to="-10348" type="bicycle"/>
+    <trip id="10" depart="10.00" from="36101" to="29535" type="bicycle"/>
+    <trip id="11" depart="11.00" from="-40158" to="-22437" type="bicycle"/>
+    <trip id="12" depart="12.00" from="6526" to="-4166" type="bicycle"/>
+    <trip id="13" depart="13.00" from="-16397" to="-16966" type="bicycle"/>
+    <trip id="14" depart="14.00" from="41115" to="19488" type="bicycle"/>
+    <trip id="15" depart="15.00" from="36150" to="3208" type="bicycle"/>
+    <trip id="16" depart="16.00" from="1061" to="7404" type="bicycle"/>
+    <trip id="17" depart="17.00" from="-42724" to="15167" type="bicycle"/>
+    <trip id="18" depart="18.00" from="38513" to="20941" type="bicycle"/>
+    <trip id="19" depart="19.00" from="41788" to="17126" type="bicycle"/>
+    <trip id="20" depart="20.00" from="26386" to="-13613" type="bicycle"/>
+    <trip id="21" depart="21.00" from="-30139" to="-37009" type="bicycle"/>
+    <trip id="22" depart="22.00" from="-15498" to="-31590" type="bicycle"/>
+    <trip id="23" depart="23.00" from="-17126" to="-35539" type="bicycle"/>
+    <trip id="24" depart="24.00" from="1840" to="-44409" type="bicycle"/>
+    <trip id="25" depart="25.00" from="-42267" to="-29533" type="bicycle"/>
+    <trip id="26" depart="26.00" from="-33261" to="5376" type="bicycle"/>
+    <trip id="27" depart="27.00" from="19813" to="19997" type="bicycle"/>
+    <trip id="28" depart="28.00" from="-23109" to="31900" type="bicycle"/>
+    <trip id="29" depart="29.00" from="-22440" to="-46739" type="bicycle"/>
+    <trip id="30" depart="30.00" from="9381" to="22441" type="bicycle"/>
+    <trip id="31" depart="31.00" from="12617" to="28498" type="bicycle"/>
+    <trip id="32" depart="32.00" from="40604" to="35979" type="bicycle"/>
+    <trip id="33" depart="33.00" from="-30249" to="-12604" type="bicycle"/>
+    <trip id="34" depart="34.00" from="-37445" to="-3431" type="bicycle"/>
+    <trip id="35" depart="35.00" from="-2876" to="5822" type="bicycle"/>
+    <trip id="36" depart="36.00" from="43057" to="-39881" type="bicycle"/>
+    <trip id="37" depart="37.00" from="20587" to="-49559" type="bicycle"/>
+    <trip id="38" depart="38.00" from="4871" to="-8575" type="bicycle"/>
+    <trip id="39" depart="39.00" from="-33122" to="-32947" type="bicycle"/>
+    <trip id="40" depart="40.00" from="12899" to="-33988" type="bicycle"/>
+    <trip id="41" depart="41.00" from="14508" to="47989" type="bicycle"/>
+    <trip id="42" depart="42.00" from="-45026" to="-30691" type="bicycle"/>
+    <trip id="43" depart="43.00" from="985" to="126" type="bicycle"/>
+    <trip id="44" depart="44.00" from="-16355" to="-1370" type="bicycle"/>
+    <trip id="45" depart="45.00" from="-17777" to="21557" type="bicycle"/>
+    <trip id="46" depart="46.00" from="34363" to="-5856" type="bicycle"/>
+    <trip id="47" depart="47.00" from="-1453" to="-47243" type="bicycle"/>
+    <trip id="48" depart="48.00" from="9825" to="13958" type="bicycle"/>
+    <trip id="49" depart="49.00" from="7265" to="4336" type="bicycle"/>
+</routes>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-12-21 09:48:27.121662 by randomTrips.py v1_19_0+0143-4ff360ee235
+<configuration>
+    <net-file value="smallMediumK1.net.xml"/>
+    <output-trip-file value="smallMediumK1.xml"/>
+    <route-file value="smallMediumK1.rou.xml"/>
+    <trip-attributes value="maxSpeed=&quot;20.0&quot;"/>
+    <vehicle-class value="bicycle"/>
+    <end value="50.0"/>
+</configuration>
+-->
+
+<!-- generated on 2023-12-21 09:48:27 by Eclipse SUMO duarouter Version v1_19_0+0143-4ff360ee235
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
+
+    <input>
+        <net-file value="smallMediumK1.net.xml"/>
+        <route-files value="smallMediumK1.xml"/>
+    </input>
+
+    <output>
+        <output-file value="smallMediumK1.rou.xml"/>
+        <alternatives-output value="NUL"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="50.0"/>
+    </time>
+
+    <report>
+        <no-warnings value="true"/>
+        <ignore-errors value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
+    <vehicle id="0" type="bicycle" depart="0.00">
+        <route edges="14266 14627 20388 -14267 -3261 -3160 -485 495 538 1061 -1061"/>
+    </vehicle>
+    <vehicle id="1" type="bicycle" depart="1.00">
+        <route edges="-20009 -12658 12626 -13540 -12604 12592 -5555 -5036 -3139 -3076 -1429 1295 -99 -89 -62 52 72 -230 273 412 438 487 535 1224 1288 1453 1648 1942 4871 7127 7960 -7963 -19813 -19042"/>
+    </vehicle>
+    <vehicle id="2" type="bicycle" depart="2.00">
+        <route edges="1791 -1791 3160 3261 -3477 4133 4317 14505 14884 -15136 14489 14849 17809 -16998 16964"/>
+    </vehicle>
+    <vehicle id="3" type="bicycle" depart="3.00">
+        <route edges="5830 -3943 -3431 -3213 -3116 -422 -273 230 -72 -52 62 89 99 -1350"/>
+    </vehicle>
+    <vehicle id="4" type="bicycle" depart="4.00">
+        <route edges="-5970 -5805 -5386 8226 8690 -3429 -3213 -3116 -422 -273 229 978 1033 1089 -1082"/>
+    </vehicle>
+    <vehicle id="5" type="bicycle" depart="5.00">
+        <route edges="-17609 17609 -16645 -15703 3420 -3208 -460 482 526 -1027 1033 1093"/>
+    </vehicle>
+    <vehicle id="6" type="bicycle" depart="6.00">
+        <route edges="-1061 -538 -495 -438 -412 -273 230 -72 -52 62 89 99 -1350 1352 1391 1418 2890 2952 3131 3449 3672 4189 4486 6906 7402 -17769 -17767"/>
+    </vehicle>
+    <vehicle id="7" type="bicycle" depart="7.00">
+        <route edges="14508 16398 -16390 14505 14884 -15136 -11897 -11045 11051 11903 12893 -12899 -10368 10372 12910 13739 -13615 -12768 12768"/>
+    </vehicle>
+    <vehicle id="8" type="bicycle" depart="8.00">
+        <route edges="-1768 -1471 1461 2229 -2174 -514 -62 52 72 80 241 400 435 482 530 2845 4133 4319 10378 14266"/>
+    </vehicle>
+    <vehicle id="9" type="bicycle" depart="9.00">
+        <route edges="3209 -3420 5376 -11105 -10124"/>
+    </vehicle>
+    <vehicle id="10" type="bicycle" depart="10.00">
+        <route edges="3139 -3139 -3076 -1474 1391 1418 2824 2876 -2902 -2841 -1278 -1245 1778"/>
+    </vehicle>
+    <vehicle id="11" type="bicycle" depart="11.00">
+        <route edges="-3477 4133 4317 16395 17270 18087 18091 -15548"/>
+    </vehicle>
+    <vehicle id="12" type="bicycle" depart="12.00">
+        <route edges="7963 -7960 -7127 -4871 -1942 -1648 -1453 -1288 -1224 -535 -487 -438 -412 -273 230 -72 -52 62 89 99 -1295 1429 3076 3139 5036 -5036"/>
+    </vehicle>
+    <vehicle id="13" type="bicycle" depart="13.00">
+        <route edges="-1342 -1339 1445 1492 -1791 3160 3261 -3477 6832 12916 13746 -13746"/>
+    </vehicle>
+    <vehicle id="14" type="bicycle" depart="14.00">
+        <route edges="4189 -4189 -3672 -3449 -3131 -2952 -2890 -1418 -1391 -1352 1350 985 1101 1461"/>
+    </vehicle>
+    <vehicle id="15" type="bicycle" depart="15.00">
+        <route edges="3160 -3160 -485 -438 -412 -273 230 -72 -52 62 514 2174 -2229 -1461 1471 1764 -5232 5555 -12592 12604 13540 -12626 -11677 11679 -12612 12616 13555 18694 19340"/>
+    </vehicle>
+    <vehicle id="16" type="bicycle" depart="16.00">
+        <route edges="10157 -10510 -3423 3431 4471 -4879 -2218 2206 4166 7154 8575 15692 16584 -17476 8555 8993"/>
+    </vehicle>
+    <vehicle id="17" type="bicycle" depart="17.00">
+        <route edges="-485 -438 -460 482 526 -1027 1033 1093 1215 1303 8377 8838 9515 9977 10372 12910"/>
+    </vehicle>
+    <vehicle id="18" type="bicycle" depart="18.00">
+        <route edges="3672 -3672 -3449 -3131 -2952 -2890 -1418 -1391 -1352 1350 -99 -89 -62 52 72 -230 273 412 438 495 538 1952 6863 -7130 7134 7662 8571 14669 14942"/>
+    </vehicle>
+    <vehicle id="19" type="bicycle" depart="19.00">
+        <route edges="4902 5201 -5376 -1228 -1061 1952 14412 -14660 10440 11095 -3632 -1622 1620 -1370 1380"/>
+    </vehicle>
+    <vehicle id="20" type="bicycle" depart="20.00">
+        <route edges="16397 -18087 -17270 -16395 -4317 -4133 -2845 -530 -482 -435 -400 -229 -208 233 -245 246 389 -1756 1764 -5232 5555 -12592 12604 13540 -12626 -11677 11679 -12612 -11670"/>
+    </vehicle>
+    <vehicle id="21" type="bicycle" depart="21.00">
+        <route edges="-17782 -16094 16090 16804 17779 -4486 -4189 6102 -6343 4481 4918 6676 9381 11659 12592 -5555 5232 3655 -3436"/>
+    </vehicle>
+    <vehicle id="22" type="bicycle" depart="22.00">
+        <route edges="-12895 -11907 -11053 -9975 -1303 -1215 -1093 -1033 1027 -526 -482 460 3208 -3420 -1228 1226 1808 1857 -9556 9564 -10096 -19839"/>
+    </vehicle>
+    <vehicle id="23" type="bicycle" depart="23.00">
+        <route edges="-13617 13615 -13739 -12910 -10372 -9977 -9515 -8838 -8377 -1303 -1215 -1093 -1033 1027 3801 -3803 3477 -3261 -3160"/>
+    </vehicle>
+    <vehicle id="24" type="bicycle" depart="24.00">
+        <route edges="1418 2890 2970 3237 3457 5888 -5555 5232 3655 3658 5212 5524 -5839"/>
+    </vehicle>
+    <vehicle id="25" type="bicycle" depart="25.00">
+        <route edges="-438 438 487 535 1224 1288 1453 1648 -1800"/>
+    </vehicle>
+    <vehicle id="26" type="bicycle" depart="26.00">
+        <route edges="-19803 -3261 -3160 -485 495 538 1061 1226 2149 2206 4166 7154"/>
+    </vehicle>
+    <vehicle id="27" type="bicycle" depart="27.00">
+        <route edges="14501 -14501 2841 2902 -2876 -2824 2890 2970 5546 5860 -4918 4916 9379 -10757 10767 11677 12630 14050 14465 14811"/>
+    </vehicle>
+    <vehicle id="28" type="bicycle" depart="28.00">
+        <route edges="-15692 -8575 -7154 7150 8569 9111 -6076 6074 -6526 -6184 6190 6528 -12190 -11544 -9839 -1768 1764 -5232 5555 -12592 12604 13540 -12626 -11677 11679 -12612 12616 13555 18694 19340"/>
+    </vehicle>
+    <vehicle id="29" type="bicycle" depart="29.00">
+        <route edges="-15496 -6378 -218 -5 3 72 -230 273 422 3116 3213 3429 -8690 -8226 12250 13291 6524 -6190"/>
+    </vehicle>
+    <vehicle id="30" type="bicycle" depart="30.00">
+        <route edges="9566 -9676 9676 -9566 -9102 -4157 -3632 -1622 1620 -1370 1376 8863 9539 -13973 -15162 -14899 14895 15160 15549"/>
+    </vehicle>
+    <vehicle id="31" type="bicycle" depart="31.00">
+        <route edges="10767 11677 12626 -13540 -12604 12592 -5555 5232 -1764 1756"/>
+    </vehicle>
+    <vehicle id="32" type="bicycle" depart="32.00">
+        <route edges="4122 -4122 -216 -5 3 72 -230 273 412 438 487 535 1224 1288 1453 1620 -1370 1376 1617 2804"/>
+    </vehicle>
+    <vehicle id="33" type="bicycle" depart="33.00">
+        <route edges="-17784 -16094 16090 16804 17779 -4486 -4189 -3672 -3449 -3131 -3120 -2874 2876 -2902 -2841 -1278 -1245 -1215 -1093"/>
+    </vehicle>
+    <vehicle id="34" type="bicycle" depart="34.00">
+        <route edges="-2970 -2890 2824 2876 2948 -2948"/>
+    </vehicle>
+    <vehicle id="35" type="bicycle" depart="35.00">
+        <route edges="-17312 -16395 -4317 -4133 -2845 -530 -482 -435 -400 -241 -23 -11 5 216 -6372 6373 -6339 -3955 -2888 2874 3120 3131 3449 3672 4189 4486 6906 7398"/>
+    </vehicle>
+    <vehicle id="36" type="bicycle" depart="36.00">
+        <route edges="535 -535 -532 3160 3261 10074 -10378 -4319 -4133"/>
+    </vehicle>
+    <vehicle id="37" type="bicycle" depart="37.00">
+        <route edges="1471 1756 -389 -246 245 -233 208 229 978 1027 3801 5920 6811 -6832"/>
+    </vehicle>
+    <vehicle id="38" type="bicycle" depart="38.00">
+        <route edges="6373 -6339 6339 -6373 6372 -216 -5 11 23 241 400 435 460 3208 -3420 -1228 1226 1808 1857 -9556"/>
+    </vehicle>
+    <vehicle id="39" type="bicycle" depart="39.00">
+        <route edges="-19678 -16966 -16146 -15517 -13734 -12895 -11907 -11053 -9975 -1248 -1086 202 -15 3 -52 62 514 2174 -2229"/>
+    </vehicle>
+    <vehicle id="40" type="bicycle" depart="40.00">
+        <route edges="1093 1215 1245 1278 2841 2902 -2876"/>
+    </vehicle>
+    <vehicle id="41" type="bicycle" depart="41.00">
+        <route edges="12191 -12191 11210 -11544 -9839 -1768 -1471 1461 2229 -2174 -514 -62 52 -3 5 218 6139"/>
+    </vehicle>
+    <vehicle id="42" type="bicycle" depart="42.00">
+        <route edges="-538 -495 -438 -412 -273 230 -72 -52 62 514 2174 -2229 -1461 1471 1764 -5232 5555 -12592 12604 13546 19968 19997 14050 14465 14815 18705 -18701"/>
+    </vehicle>
+    <vehicle id="43" type="bicycle" depart="43.00">
+        <route edges="9856 10755 -10755 -9856 -6909 -6683 -6348 -6102 -3958 -3775 3777 3965 12768 13615 -13739 -12910 -10372 10368 12899 -12893 -11903 -11051 11045"/>
+    </vehicle>
+    <vehicle id="44" type="bicycle" depart="44.00">
+        <route edges="-13291 -12250 12250 13291 6524 6528 -12190 -11544 -9839 -1768 1764 -5232 5555 -12592 12604 13540 -12626 -11677"/>
+    </vehicle>
+    <vehicle id="45" type="bicycle" depart="45.00">
+        <route edges="-13972 -13136 -12154 13144 15167 -15174 15174"/>
+    </vehicle>
+    <vehicle id="46" type="bicycle" depart="46.00">
+        <route edges="2876 2948 -3143 -3081 -216 -5 3 72 -230 273 412 438 487 535 1224 1288 1453 1648 1942 4871 7126 -7653"/>
+    </vehicle>
+    <vehicle id="47" type="bicycle" depart="47.00">
+        <route edges="-1228 1228 3420 -3209 -3116 -422 -273 230 -72 -52 62 89 99 -1350 1352 1391 1420 -3456 -3237 5546 5860 -4918 -4481 6343 -6343"/>
+    </vehicle>
+    <vehicle id="48" type="bicycle" depart="48.00">
+        <route edges="9853 -14053 -13613 -11673 11677 12626 -13540 -12604 12592 -5555 5232 -1764 1768 9839 11544 -11210 12191"/>
+    </vehicle>
+    <vehicle id="49" type="bicycle" depart="49.00">
+        <route edges="8838 -8838 -8377 -1303 -1215 -1093 -1033 1027 -526 -482 460 3208 -3420 5376 -5201 5193"/>
+    </vehicle>
+</routes>
