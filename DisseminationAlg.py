@@ -133,7 +133,7 @@ def run(case):
 def assignValuesToRoadEdges():
     roadEdges = {}
     #make sure the random numbers are the same everytime. Remove this if this is not wanted behaviour
-    random.seed(12) 
+    random.seed(11) 
     for roadId in traci.edge.getIDList():
         # prevent junctions being added to the list
         if roadId[0] != ':':
