@@ -24,9 +24,8 @@ else:
 # JSONBackGroundData = json.load(open('TEST.json'))
 # for testing how long it will take to index the whole map, True to continue until fully indexed
 continueUntilFullyMapped = True
+# visualizeCoverage = True traci.gui.toggleSelection(segment, "edge")
 RoadEdgeValues = {}
-# Due to a bug in the software and no way to prevent it do we need to replace vehicles sometimes as they can disapear. to detect this happening we use this var
-HighestAmountOfCars = 0 
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
@@ -41,6 +40,8 @@ def get_options():
 
 # contains TraCI control loop
 def run(case, vehAmount):
+    # Due to a bug in the software and no way to prevent it do we need to replace vehicles sometimes as they can disapear. to detect this happening we use this var
+    highestAmountOfVehicles = 0 
     step = 0
     vehiclesInNetwork = {}
     # create an empty dataframe
@@ -68,13 +69,28 @@ def run(case, vehAmount):
                         traci.vehicle.remove(vehName)
                         allVehicleNames = traci.vehicle.getIDList()
                     else:
+                        highestAmountOfVehicles = highestAmountOfVehicles + 1
                         # ("adding veh " + str(vehName))
                         vehiclesInNetwork[vehName] = BicycleClass(vehName, case)
                         # vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1,vehName)) # minus one because the index of the file starts with 0 and the length of the array is one more        
                         if continueUntilFullyMapped:
                             setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
         
-        
+        if continueUntilFullyMapped and len(allVehicleNames) < highestAmountOfVehicles:
+            routeID = random.choice(list(RoadEdgeValues))
+            traci.route.add(str(step), [routeID])
+            missingName = ""
+            for vehicle in vehiclesInNetwork:
+                if vehicle not in allVehicleNames:
+                    missingName = vehicle
+            if step == 2477:
+                print(str(4))
+            print(str(missingName) + " at step " + str(step))
+            try:
+                traci.vehicle.add(vehID=missingName,routeID=str(step), typeID="bicycle")
+                setSegmentTarget(vehiclesInNetwork[missingName], random.choice(list(RoadEdgeValues)))
+            except:
+                print("error adding will try again next step")
         
         # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
@@ -116,8 +132,9 @@ def run(case, vehAmount):
             if step > 10000:
                 endSimulation = True
                 print("ending because the simulation max has expired")
+                break
+                    
         step += 1
-        print(step)
     # Create a list to store the data
     data = []
 
@@ -184,6 +201,7 @@ if __name__ == "__main__":
 
     # looping through all the dissemination cases
     for case in SimulationMode:
+        case = SimulationMode.K_TWO
         vehAmount = 4
         print(case)
         # traci starts sumo as a subprocess and then this script connects and runs
