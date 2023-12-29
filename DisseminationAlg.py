@@ -25,6 +25,8 @@ else:
 # for testing how long it will take to index the whole map, True to continue until fully indexed
 continueUntilFullyMapped = True
 RoadEdgeValues = {}
+# Due to a bug in the software and no way to prevent it do we need to replace vehicles sometimes as they can disapear. to detect this happening we use this var
+HighestAmountOfCars = 0 
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
@@ -38,7 +40,7 @@ def get_options():
 
 
 # contains TraCI control loop
-def run(case):
+def run(case, vehAmount):
     step = 0
     vehiclesInNetwork = {}
     # create an empty dataframe
@@ -61,14 +63,23 @@ def run(case):
             # following code should only run once as it is only on spawning of a new vehicle
             for vehName in allVehicleNames:
                 if vehName not in vehiclesInNetwork:
-                    # ("adding veh " + str(vehName))
-                    vehiclesInNetwork[vehName] = BicycleClass(vehName, case)
-                    # vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1,vehName)) # minus one because the index of the file starts with 0 and the length of the array is one more        
-                    if continueUntilFullyMapped:
-                        setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
+                    # limiting the amount of veh in the network. Ignore if continueUntilFullyMapped is false
+                    if len(allVehicleNames) > vehAmount:
+                        traci.vehicle.remove(vehName)
+                        allVehicleNames = traci.vehicle.getIDList()
+                    else:
+                        # ("adding veh " + str(vehName))
+                        vehiclesInNetwork[vehName] = BicycleClass(vehName, case)
+                        # vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1,vehName)) # minus one because the index of the file starts with 0 and the length of the array is one more        
+                        if continueUntilFullyMapped:
+                            setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
+        
+        
         
         # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
+        if step == 5301:
+            print(0)
         for vehName in allVehicleNames:
             
             # add road to vehicle
@@ -95,13 +106,18 @@ def run(case):
                     
             # collecting all collected roads from all vehicles
             # allKnownRoadSegments = allKnownRoadSegments | vehiclesInNetwork[vehName].getRecievedRoads()
+            lengthRec = len(vehiclesInNetwork[vehName].getRecievedRoads())
+            lenRoad = round(len(RoadEdgeValues)/2)
             if len(vehiclesInNetwork[vehName].getRecievedRoads()) == len(RoadEdgeValues) and continueUntilFullyMapped:
                 endSimulation = True
+                print("simulation ended because some bike has collected alle roads (" + str(vehName) + ')')
             
         # checking if all the roads are collected in the network. They do not need to be disseminated for this to happen
-            if step > 1000:
+            if step > 10000:
                 endSimulation = True
+                print("ending because the simulation max has expired")
         step += 1
+        print(step)
     # Create a list to store the data
     data = []
 
@@ -122,8 +138,8 @@ def run(case):
 
     # Print the dataframe
     # print(df)
-    # df.to_csv('disseminatedData.csv')
-    disseminationLog.to_csv('disseminatedData_ForSteps.csv')
+    # df.to_csv('dataLog/disseminatedData.csv')
+    disseminationLog.to_csv('dataLog/disseminatedData_ForSteps.csv')
     # printing the step when the simulation ended
     print("end on step " + str(step))
     traci.close()
@@ -142,14 +158,14 @@ def assignValuesToRoadEdges():
     return roadEdges
 
 def generateListWithRoadsFromJson(indexInJsonFile,vehName):
-    if len(JSONBackGroundData) < indexInJsonFile:
-        currentJSONElement = JSONBackGroundData[str(indexInJsonFile)]
-        returnValue = {}
-        for attribute, value in currentJSONElement.items(): # attribute is not used but is necessary to remove the attributes of the json file
-            for roadSegment in value:
-                if roadSegment not in returnValue:
-                    returnValue[roadSegment] = [vehName]
-        return returnValue
+    # if len(JSONBackGroundData) < indexInJsonFile:
+    #     currentJSONElement = JSONBackGroundData[str(indexInJsonFile)]
+    #     returnValue = {}
+    #     for attribute, value in currentJSONElement.items(): # attribute is not used but is necessary to remove the attributes of the json file
+    #         for roadSegment in value:
+    #             if roadSegment not in returnValue:
+    #                 returnValue[roadSegment] = [vehName]
+    #     return returnValue
     return {}
 
 def setSegmentTarget(vehicle, segment):
@@ -168,11 +184,13 @@ if __name__ == "__main__":
 
     # looping through all the dissemination cases
     for case in SimulationMode:
+        vehAmount = 4
         print(case)
         # traci starts sumo as a subprocess and then this script connects and runs
         # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
         traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
                                 "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         
-        run(case)
+        run(case, vehAmount)
+        break
     

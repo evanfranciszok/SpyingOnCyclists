@@ -10,7 +10,7 @@
     <vehicle id="0" type="bicycle" depart="0.00">
         <route edges="1284 1445 1492 -1791 -485 -438 -460 482 526 -1027 1033 1054 -1054"/>
     </vehicle>
-    <!-- <vehicle id="1" type="bicycle" depart="1.00">
+    <vehicle id="1" type="bicycle" depart="1.00">
         <route edges="-1838 -1786"/>
     </vehicle>
     <vehicle id="2" type="bicycle" depart="2.00">
@@ -156,5 +156,5 @@
     </vehicle>
     <vehicle id="49" type="bicycle" depart="49.00">
         <route edges="538 -538 -495 -438 -412 -273 230 -72 27"/>
-    </vehicle> -->
+    </vehicle>
 </routes>
