@@ -27,6 +27,7 @@ continueUntilFullyMapped = True
 # visualizeCoverage = True traci.gui.toggleSelection(segment, "edge")
 RoadEdgeValues = {}
 
+
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
 
@@ -52,6 +53,7 @@ def run(case, vehAmount):
     allKnownRoadSegments = {}
     # Only necesary when testing for completion of the simulation
     endSimulation = False
+    oldStrOutput = ""
 
     # looping for all the steps in de simuation
     while traci.simulation.getMinExpectedNumber() > 0 and not endSimulation:
@@ -133,6 +135,18 @@ def run(case, vehAmount):
                 endSimulation = True
                 print("ending because the simulation max has expired")
                 break
+            
+            if True:
+                longest = 0
+                longestName = ""
+                for vehName in allVehicleNames:
+                    if len(vehiclesInNetwork[vehName].getRecievedRoads()) > longest:
+                        longest = len(vehiclesInNetwork[vehName].getRecievedRoads())
+                        longestName = vehName
+                output = str(longestName) + " has the most roads collected: " + str(longest)+ " ("+ str(round((longest/(len(RoadEdgeValues)+1))*100)) + "%)"
+                if output != oldStrOutput:
+                    oldStrOutput = output
+                    print(output)
                     
         step += 1
     # Create a list to store the data
@@ -202,7 +216,7 @@ if __name__ == "__main__":
     # looping through all the dissemination cases
     for case in SimulationMode:
         case = SimulationMode.K_TWO
-        vehAmount = 4
+        vehAmount = 15
         print(case)
         # traci starts sumo as a subprocess and then this script connects and runs
         # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
