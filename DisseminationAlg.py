@@ -152,13 +152,13 @@ def run(case, vehAmount):
                         longest = len(vehiclesInNetwork[vehName].getRecievedRoads())
                         longestName = vehName
                 output = str(longestName) + " has the most roads collected: " + str(longest)+ " ("+ str(round((longest/(len(RoadEdgeValues)+1))*100)) + "%)"
-                dfResults = pd.concat(str(vehName), int(step))
+                # dfResults = pd.concat(str(vehName), int(step))
                 if output != oldStrOutput:
                     oldStrOutput = output
                     print(output)
                     
         step += 1
-    print(dfResults)
+    # print(dfResults)
     # Create a list to store the data
     data = []
 
