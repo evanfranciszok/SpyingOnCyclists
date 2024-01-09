@@ -49,6 +49,7 @@ def run(case, vehAmount):
     vehiclesInNetwork = {}
     # create an empty dataframe
     df = pd.DataFrame(columns=['Vehicle','Collected Roads', 'Connections'])
+    dfResults = pd.DataFrame(columns=['Vehicle Nr.' 'Total steps taken before completely mapped'])
     disseminationLog = pd.DataFrame(columns=['Simulation step','sender', 'recipient','data'])
     disseminationLogData = []
     RoadEdgeValues = assignValuesToRoadEdges()
@@ -105,7 +106,6 @@ def run(case, vehAmount):
         # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
         for vehName in allVehicleNames:
-            
             # add road to vehicle
             vehiclesInNetwork[vehName].addRoad(traci.vehicle.getRoadID(vehName))
             if vehiclesInNetwork[vehName].checkIfTarget(traci.vehicle.getRoadID(vehName)) and continueUntilFullyMapped:
@@ -152,11 +152,13 @@ def run(case, vehAmount):
                         longest = len(vehiclesInNetwork[vehName].getRecievedRoads())
                         longestName = vehName
                 output = str(longestName) + " has the most roads collected: " + str(longest)+ " ("+ str(round((longest/(len(RoadEdgeValues)+1))*100)) + "%)"
+                dfResults = pd.concat(str(vehName), int(step))
                 if output != oldStrOutput:
                     oldStrOutput = output
                     print(output)
                     
         step += 1
+    print(dfResults)
     # Create a list to store the data
     data = []
 
@@ -181,7 +183,7 @@ def run(case, vehAmount):
     # Print the dataframe
     # print(df)
     # df.to_csv('dataLog/disseminatedData.csv')
-    disseminationLog.to_csv('dataLog/disseminatedData_ForSteps.csv')
+    # disseminationLog.to_csv('dataLog/disseminatedData_ForSteps.csv')
     # printing the step when the simulation ended
     print("end on step " + str(step))
     traci.close()
