@@ -1,47 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- generated on 2023-12-21 09:01:58.930449 by randomTrips.py v1_19_0+0143-4ff360ee235
-<configuration>
-    <net-file value="mediumK0.net.xml"/>
-    <output-trip-file value="mediumK0.xml"/>
-    <route-file value="mediumK0.rou.xml"/>
-    <trip-attributes value="maxSpeed=&quot;20.0&quot;"/>
-    <vehicle-class value="bicycle"/>
-    <end value="50.0"/>
-</configuration>
--->
-
-<!-- generated on 2023-12-21 09:01:58 by Eclipse SUMO duarouter Version v1_19_0+0143-4ff360ee235
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
-
-    <input>
-        <net-file value="mediumK0.net.xml"/>
-        <route-files value="mediumK0.xml"/>
-    </input>
-
-    <output>
-        <output-file value="mediumK0.rou.xml"/>
-        <alternatives-output value="NUL"/>
-    </output>
-
-    <time>
-        <begin value="0"/>
-        <end value="50.0"/>
-    </time>
-
-    <report>
-        <no-warnings value="true"/>
-        <ignore-errors value="true"/>
-        <no-step-log value="true"/>
-    </report>
-
-</configuration>
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
+    <!-- The first bicycle cycles only in the left bottom area -->
     <vehicle id="0" type="bicycle" depart="0.00">
-        <route edges="18701 -18705 -14815 -14465 -14050 -12630 -11677 -10767 10757 -9379 -6346 -6102 4189 4484 -25871 -25860 -14472 14473 32954 -32956 12899 -12893 -11903"/>
+        <route edges="34835 -33832 -48486 1948 -50239 -51039 -15354 33238 24349 38350 38350 7659 51004 48487 -26386 50239 42394 -7136 51047 -41267 38947 8549 -45434 4879"/>
     </vehicle>
     <vehicle id="1" type="bicycle" depart="1.00">
         <route edges="-33805 33805 -8526 -7960 -7085 7089 -10392 -10090 10084 -13973 -15162 -47997 -46436 46444 47999 -32973 19791 27060 27684 49682 -49683 -31069"/>

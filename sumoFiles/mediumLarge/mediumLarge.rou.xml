@@ -1,47 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2023-12-21 09:06:08.618330 by randomTrips.py v1_19_0+0143-4ff360ee235
-<configuration>
-    <net-file value="mediumLargeK0.net.xml"/>
-    <output-trip-file value="mediumLargeK0.xml"/>
-    <route-file value="mediumLargeK0.rou.xml"/>
-    <trip-attributes value="maxSpeed=&quot;20.0&quot;"/>
-    <vehicle-class value="bicycle"/>
-    <end value="50.0"/>
-</configuration>
--->
-
-<!-- generated on 2023-12-21 09:06:08 by Eclipse SUMO duarouter Version v1_19_0+0143-4ff360ee235
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
-
-    <input>
-        <net-file value="mediumLargeK0.net.xml"/>
-        <route-files value="mediumLargeK0.xml"/>
-    </input>
-
-    <output>
-        <output-file value="mediumLargeK0.rou.xml"/>
-        <alternatives-output value="NUL"/>
-    </output>
-
-    <time>
-        <begin value="0"/>
-        <end value="50.0"/>
-    </time>
-
-    <report>
-        <no-warnings value="true"/>
-        <ignore-errors value="true"/>
-        <no-step-log value="true"/>
-    </report>
-
-</configuration>
--->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
+    <!-- The first bicycle cycles only in the left bottom area -->
     <vehicle id="0" type="bicycle" depart="0.00">
-        <route edges="161278 -161278 -152773 -151074 -121316 -121314 -118025 -118023 -114928 -60617 60616 -51393 -43928 -42724 42722 -29972 -29030 -16649 -22447 -22445 -14430 -14023 -5822 -5392 -5191 -4888 4902 5193 10467 -11326"/>
+        <route edges="-238821 243855 -164429 -152938 275582 -278231 238821 -253244 -118060 -225757 -257886 -271618 -280295 220777 -253227"/>
     </vehicle>
     <vehicle id="1" type="bicycle" depart="1.00">
         <route edges="-233 208 273 412 438 487 535 1224 1288 1453 1648 1942 4871 7127 7960 8502 33086 -33104 33817 63314 -91780 -91776 -83883 -82845 -63209 57876 60377 -61829 61845 95435 -120659 120661 122589 -137214 137228 145987 147222 -153891 -150382 150378 151994 171876 173363 212955 -212950"/>

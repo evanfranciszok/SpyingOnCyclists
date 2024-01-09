@@ -1,47 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- generated on 2023-12-21 09:06:44.480433 by randomTrips.py v1_19_0+0143-4ff360ee235
-<configuration>
-    <net-file value="largeK0.net.xml"/>
-    <output-trip-file value="largeK0.xml"/>
-    <route-file value="largeK0.rou.xml"/>
-    <trip-attributes value="maxSpeed=&quot;20.0&quot;"/>
-    <vehicle-class value="bicycle"/>
-    <end value="50.0"/>
-</configuration>
--->
-
-<!-- generated on 2023-12-21 09:06:43 by Eclipse SUMO duarouter Version v1_19_0+0143-4ff360ee235
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
-
-    <input>
-        <net-file value="largeK0.net.xml"/>
-        <route-files value="largeK0.xml"/>
-    </input>
-
-    <output>
-        <output-file value="largeK0.rou.xml"/>
-        <alternatives-output value="NUL"/>
-    </output>
-
-    <time>
-        <begin value="0"/>
-        <end value="50.0"/>
-    </time>
-
-    <report>
-        <no-warnings value="true"/>
-        <ignore-errors value="true"/>
-        <no-step-log value="true"/>
-    </report>
-
-</configuration>
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
+    <!-- The first bicycle cycles only in the left bottom area -->
     <vehicle id="0" type="bicycle" depart="0.00">
-        <route edges="222681 -187233 -185428 -183934 -182407 -179758 -105448 105444 -134460 -110339 -108287 -95184 -93383 91776 91780 -63314 -33817 33104 -33086 -8502 -7960 -7127 -4871 -1942 -1648 -1453 -1288 -1224 -535 -487 -438 -412 -273 230 -72 -52 62 89 99 -1350 1352 1391 1418 2890 2952 3131 3449 3672 4189 4486 6906 7402 -17769 17775 18585 30675 31201 -34149 45819 45938 52195 53331 56861 57622 94315 120094 -118386 124119 -124141 88533 89766 127093 -127093"/>
+        <route edges="-295764 168952 -244127 -521810 -521384 548454 215780 -174479 143866 346805 512547 -460754 314342 -531221 -490727 250389 436240 -105663 -201068 506799 -301338 -429080 83145 220308 275605 301279 418165 450064 535043 98945 391655 -301279 275605 -133010 182707 -347632"/>
     </vehicle>
     <vehicle id="1" type="bicycle" depart="1.00">
         <route edges="-371678 371678 376119 380541 384230 423247 -426964 -283152 -280949 -276227 -274463 -197136 -194168 -194164 -139927 139929 -141495 -127103 127115 -129562 -127093 -89766 -88533 124141 -124119 118386 -120094 -94315 -57622 57628 73409 -74745 -66156 -35155 -32585 -31315 -31308 -26784 -25836 -17784 -16094 16088 17777 37190 38388 -37454 -25862 -14472 14473 33783 -33783"/>

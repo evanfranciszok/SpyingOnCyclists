@@ -7,8 +7,9 @@
     <!-- VTypes -->
     <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
     <!-- Vehicles, persons and containers (sorted by depart) -->
+    <!-- The first bicycle cycles only in the left bottom area -->
     <vehicle id="0" type="bicycle" depart="0.00">
-        <route edges="14266 14627 20388 -14267 -3261 -3160 -485 495 538 1061 -1061"/>
+        <route edges="8983 8993 -17604 -7134 -10440 1937 -10096 9676 6848 17598 19839 14669 -8993 6848"/>
     </vehicle>
     <vehicle id="1" type="bicycle" depart="1.00">
         <route edges="-20009 -12658 12626 -13540 -12604 12592 -5555 -5036 -3139 -3076 -1429 1295 -99 -89 -62 52 72 -230 273 412 438 487 535 1224 1288 1453 1648 1942 4871 7127 7960 -7963 -19813 -19042"/>
