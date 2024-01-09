@@ -26,6 +26,8 @@ else:
 continueUntilFullyMapped = True
 # visualizeCoverage = True traci.gui.toggleSelection(segment, "edge")
 RoadEdgeValues = {}
+endresultLog = pd.DataFrame(columns=['case','# of bikes', 'duration','size'])
+endresultLogData = []
 
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
@@ -67,7 +69,7 @@ def run(case, vehAmount):
             for vehName in allVehicleNames:
                 if vehName not in vehiclesInNetwork:
                     # limiting the amount of veh in the network. Ignore if continueUntilFullyMapped is false
-                    if len(allVehicleNames) > vehAmount:
+                    if len(allVehicleNames) > vehAmount or (vehName not in vehiclesInNetwork and len(vehiclesInNetwork)>vehAmount):
                         traci.vehicle.remove(vehName)
                         allVehicleNames = traci.vehicle.getIDList()
                     else:
@@ -78,26 +80,30 @@ def run(case, vehAmount):
                         if continueUntilFullyMapped:
                             setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
         
-        if continueUntilFullyMapped and len(allVehicleNames) < highestAmountOfVehicles:
-            routeID = random.choice(list(RoadEdgeValues))
-            traci.route.add(str(step), [routeID])
-            missingName = ""
-            for vehicle in vehiclesInNetwork:
-                if vehicle not in allVehicleNames:
-                    missingName = vehicle
-            if step == 2477:
-                print(str(4))
-            print(str(missingName) + " at step " + str(step))
-            try:
-                traci.vehicle.add(vehID=missingName,routeID=str(step), typeID="bicycle")
-                setSegmentTarget(vehiclesInNetwork[missingName], random.choice(list(RoadEdgeValues)))
-            except:
-                print("error adding will try again next step")
+        if continueUntilFullyMapped: 
+            for vehName in allVehicleNames:
+                if vehName not in vehiclesInNetwork and len(allVehicleNames) == vehAmount:
+                    traci.vehicle.remove(vehName)
+                    allVehicleNames = traci.vehicle.getIDList()
+                
+            if len(allVehicleNames) < highestAmountOfVehicles:
+                routeID = random.choice(list(RoadEdgeValues))
+                traci.route.add(str(step), [routeID])
+                missingName = ""
+                for vehicle in vehiclesInNetwork:
+                    if vehicle not in allVehicleNames:
+                        missingName = vehicle
+
+                print(str(missingName) + " at step " + str(step))
+                try:
+                    traci.vehicle.add(vehID=missingName,routeID=str(step), typeID="bicycle")
+                    setSegmentTarget(vehiclesInNetwork[missingName], random.choice(list(RoadEdgeValues)))
+                except:
+                    # it does sometimes happen that it doesnt work. But for simulation purposes does this not matter
+                    print("error adding will try again next step")
         
         # looping through all vehicles currently on the map
         CurrentNoOfVehicle = 0; 
-        if step == 5301:
-            print(0)
         for vehName in allVehicleNames:
             
             # add road to vehicle
@@ -124,19 +130,21 @@ def run(case, vehAmount):
                     
             # collecting all collected roads from all vehicles
             # allKnownRoadSegments = allKnownRoadSegments | vehiclesInNetwork[vehName].getRecievedRoads()
-            lengthRec = len(vehiclesInNetwork[vehName].getRecievedRoads())
-            lenRoad = round(len(RoadEdgeValues)/2)
-            if len(vehiclesInNetwork[vehName].getRecievedRoads()) == len(RoadEdgeValues) and continueUntilFullyMapped:
-                endSimulation = True
-                print("simulation ended because some bike has collected alle roads (" + str(vehName) + ')')
+            # if len(vehiclesInNetwork[vehName].getRecievedRoads()) == len(RoadEdgeValues) and continueUntilFullyMapped:
+            #     endSimulation = True
+            #     print("simulation ended because some bike has collected alle roads (" + str(vehName) + ')')
             
-        # checking if all the roads are collected in the network. They do not need to be disseminated for this to happen
+            if len(vehiclesInNetwork[vehName].getRecievedRoads()) >= len(RoadEdgeValues)*0.1 and continueUntilFullyMapped:
+                endSimulation = True
+                print("simulation ended because some bike has collected 10 procent of roads (" + str(vehName) + ')')
+                
+            # checking if all the roads are collected in the network. They do not need to be disseminated for this to happen
             if step > 10000:
                 endSimulation = True
                 print("ending because the simulation max has expired")
                 break
             
-            if True:
+            if continueUntilFullyMapped:
                 longest = 0
                 longestName = ""
                 for vehName in allVehicleNames:
@@ -162,6 +170,9 @@ def run(case, vehAmount):
 
         # Append the data to the list
         data.append([veh, collected_roads, connections])
+        
+        
+    endresultLogData.append([case, vehAmount, step, "small"])    
         
     # Concatenate the data to the dataframe
     df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
@@ -202,7 +213,7 @@ def generateListWithRoadsFromJson(indexInJsonFile,vehName):
 def setSegmentTarget(vehicle, segment):
     vehicle.setTarget(segment)
     traci.vehicle.changeTarget(vehicle.getName(),segment)
-
+    
 # main entry point
 if __name__ == "__main__":
     options = get_options()
@@ -215,7 +226,7 @@ if __name__ == "__main__":
 
     # looping through all the dissemination cases
     for case in SimulationMode:
-        case = SimulationMode.K_TWO
+        case = SimulationMode.K_FOUR
         vehAmount = 15
         print(case)
         # traci starts sumo as a subprocess and then this script connects and runs
@@ -224,5 +235,5 @@ if __name__ == "__main__":
                                 "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         
         run(case, vehAmount)
-        break
+    print('\033[94m'+str(endresultLogData)+'\033[0m')
     
