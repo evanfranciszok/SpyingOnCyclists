@@ -1,0 +1,51 @@
+   ,case                  ,# of bikes ,duration ,size
+ 0 ,SimulationMode.K_ZERO ,         0 ,      50 ,small
+ 1 ,SimulationMode.K_ONE  ,         0 ,      50 ,small
+ 2 ,SimulationMode.K_TWO  ,         0 ,      50 ,small
+ 3 ,SimulationMode.K_TREE ,         0 ,      50 ,small
+ 4 ,SimulationMode.K_FOUR ,         0 ,      50 ,small
+ 5 ,SimulationMode.K_ZERO ,         1 ,    1002 ,small
+ 6 ,SimulationMode.K_ONE  ,         1 ,    1002 ,small
+ 7 ,SimulationMode.K_TWO  ,         1 ,    1002 ,small
+ 8 ,SimulationMode.K_TREE ,         1 ,    1002 ,small
+ 9 ,SimulationMode.K_FOUR ,         1 ,    1002 ,small
+10 ,SimulationMode.K_ZERO ,         2 ,     956 ,small
+11 ,SimulationMode.K_ONE  ,         2 ,    1002 ,small
+12 ,SimulationMode.K_TWO  ,         2 ,     799 ,small
+13 ,SimulationMode.K_TREE ,         2 ,     517 ,small
+14 ,SimulationMode.K_FOUR ,         2 ,    1002 ,small
+15 ,SimulationMode.K_ZERO ,         3 ,     262 ,small
+16 ,SimulationMode.K_ONE  ,         3 ,     431 ,small
+17 ,SimulationMode.K_TWO  ,         3 ,     275 ,small
+18 ,SimulationMode.K_TREE ,         3 ,     659 ,small
+19 ,SimulationMode.K_FOUR ,         3 ,    1002 ,small
+20 ,SimulationMode.K_ZERO ,         4 ,     168 ,small
+21 ,SimulationMode.K_ONE  ,         4 ,     108 ,small
+22 ,SimulationMode.K_TWO  ,         4 ,     182 ,small
+23 ,SimulationMode.K_TREE ,         4 ,     465 ,small
+24 ,SimulationMode.K_FOUR ,         4 ,    1002 ,small
+25 ,SimulationMode.K_ZERO ,         5 ,     191 ,small
+26 ,SimulationMode.K_ONE  ,         5 ,      99 ,small
+27 ,SimulationMode.K_TWO  ,         5 ,      85 ,small
+28 ,SimulationMode.K_TREE ,         5 ,     192 ,small
+29 ,SimulationMode.K_FOUR ,         5 ,    1002 ,small
+30 ,SimulationMode.K_ZERO ,         6 ,     126 ,small
+31 ,SimulationMode.K_ONE  ,         6 ,     163 ,small
+32 ,SimulationMode.K_TWO  ,         6 ,      70 ,small
+33 ,SimulationMode.K_TREE ,         6 ,     144 ,small
+34 ,SimulationMode.K_FOUR ,         6 ,    1002 ,small
+35 ,SimulationMode.K_ZERO ,         7 ,      71 ,small
+36 ,SimulationMode.K_ONE  ,         7 ,      69 ,small
+37 ,SimulationMode.K_TWO  ,         7 ,      71 ,small
+38 ,SimulationMode.K_TREE ,         7 ,      83 ,small
+39 ,SimulationMode.K_FOUR ,         7 ,    1002 ,small
+40 ,SimulationMode.K_ZERO ,         8 ,      71 ,small
+41 ,SimulationMode.K_ONE  ,         8 ,      71 ,small
+42 ,SimulationMode.K_TWO  ,         8 ,      70 ,small
+43 ,SimulationMode.K_TREE ,         8 ,      79 ,small
+44 ,SimulationMode.K_FOUR ,         8 ,    1002 ,small
+45 ,SimulationMode.K_ZERO ,         9 ,      72 ,small
+46 ,SimulationMode.K_ONE  ,         9 ,      72 ,small
+47 ,SimulationMode.K_TWO  ,         9 ,      74 ,small
+48 ,SimulationMode.K_TREE ,         9 ,     107 ,small
+49 ,SimulationMode.K_FOUR ,         9 ,    1002 ,small
