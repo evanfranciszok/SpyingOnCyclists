@@ -9,7 +9,7 @@
     <!-- Vehicles, persons and containers (sorted by depart) -->
     <!-- The first bicycle cycles only in the left bottom area -->
     <vehicle id="0_fietser" type="bicycle" depart="0.00">
-        <route edges="-1838 -1786 1808 -1857"/>
+        <route edges="1226 -1226 -1061"/>
     </vehicle>
     <vehicle id="1_fietser" type="bicycle" depart="1.00">
         <route edges="1948 2149 1228 -1952 -2206"/>

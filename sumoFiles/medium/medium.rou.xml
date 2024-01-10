@@ -7,7 +7,7 @@
     <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
     <!-- The first bicycle cycles only in the left bottom area -->
     <vehicle id="0" type="bicycle" depart="0.00">
-        <route edges="34835 -33832 -48486 1948 -50239 -51039 -15354 33238 24349 38350 38350 7659 51004 48487 -26386 50239 42394 -7136 51047 -41267 38947 8549 -45434 4879"/>
+        <route edges="-38939 38939 -37751 -36796 36796 37751 -38939 38939"/>
     </vehicle>
     <vehicle id="1" type="bicycle" depart="1.00">
         <route edges="-33805 33805 -8526 -7960 -7085 7089 -10392 -10090 10084 -13973 -15162 -47997 -46436 46444 47999 -32973 19791 27060 27684 49682 -49683 -31069"/>

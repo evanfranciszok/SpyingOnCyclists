@@ -6,6 +6,7 @@ import optparse
 import random
 import json
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # displaying all columns
 pd.set_option('display.max_columns', None)
@@ -238,5 +239,8 @@ if __name__ == "__main__":
             run(case, vehAmount)
     print('\033[94m'+str(endresultLogData)+'\033[0m')
     dataFrame = pd.concat([endresultLog, pd.DataFrame(endresultLogData, columns=endresultLog.columns)], ignore_index=True)
+    print("Line graph: ") 
+    plt.plot(endresultLog["X"], endresultLog["Y"]) 
+    plt.show()
     dataFrame.to_csv('dataLog/FinalDataFromCompletion.csv')
     
