@@ -60,7 +60,12 @@ def run(case, vehAmount):
 
     # looping for all the steps in de simuation
     while traci.simulation.getMinExpectedNumber() > 0 and not endSimulation:
-        traci.simulationStep()
+        # traci.simulationStep()
+        try:
+            traci.simulationStep()
+        except traci.exceptions.FatalTraCIError as e:
+            print(f"FatalTraCIError: {e}")
+            break  # or handle the exception as needed
         # inDistance = []
         allVehicleNames = traci.vehicle.getIDList()
         
@@ -232,11 +237,11 @@ if __name__ == "__main__":
             print(case)
             # traci starts sumo as a subprocess and then this script connects and runs
             # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
-            traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
+            traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
                                     "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
             
             run(case, vehAmount)
     print('\033[94m'+str(endresultLogData)+'\033[0m')
     dataFrame = pd.concat([endresultLog, pd.DataFrame(endresultLogData, columns=endresultLog.columns)], ignore_index=True)
-    dataFrame.to_csv('dataLog/FinalDataFromCompletion.csv')
+    dataFrame.to_csv('dataLog/FinalDataFromCompletion.csv', mode='a', header=False, index=False)
     
