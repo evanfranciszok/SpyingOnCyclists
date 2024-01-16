@@ -6,9 +6,9 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
     <!-- The first bicycle cycles only in the left bottom area -->
-    <vehicle id="0" type="bicycle" depart="0.00">
+    <!-- <vehicle id="0" type="bicycle" depart="0.00">
         <route edges="-38939 38939 -37751 -36796 36796 37751 -38939 38939"/>
-    </vehicle>
+    </vehicle> -->
     <vehicle id="1" type="bicycle" depart="1.00">
         <route edges="-33805 33805 -8526 -7960 -7085 7089 -10392 -10090 10084 -13973 -15162 -47997 -46436 46444 47999 -32973 19791 27060 27684 49682 -49683 -31069"/>
     </vehicle>
