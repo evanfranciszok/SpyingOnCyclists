@@ -6,4 +6,4 @@ class SimulationMode(Enum):
     K_ONE = 75
     K_TWO = 50
     K_TREE = 25
-    K_FOUR = 0
+    # K_FOUR = 0

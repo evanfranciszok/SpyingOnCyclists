@@ -179,7 +179,7 @@ def run(case, vehAmount):
         data.append([veh, collected_roads, connections])
         
         
-    endresultLogData.append([case, vehAmount, step, "small"])    
+    endresultLogData.append([case, vehAmount, step, "mediumLarge"])    
         
     # Concatenate the data to the dataframe
     df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
@@ -237,7 +237,7 @@ if __name__ == "__main__":
             print(case)
             # traci starts sumo as a subprocess and then this script connects and runs
             # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
-            traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
+            traci.start([sumoBinary, "-c", "sumoFiles/medium/mediumLarge.sumocfg",
                                     "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
             
             run(case, vehAmount)
