@@ -144,7 +144,7 @@ def run(case, vehAmount):
                 print("simulation ended because some bike has collected 10 procent of roads (" + str(vehName) + ')')
                 
             # checking if all the roads are collected in the network. They do not need to be disseminated for this to happen
-            if step > 1000:
+            if step > 50000:
                 endSimulation = True
                 print("ending because the simulation max has expired")
                 break
@@ -179,7 +179,7 @@ def run(case, vehAmount):
         data.append([veh, collected_roads, connections])
         
         
-    endresultLogData.append([case, vehAmount, step, "mediumLarge"])    
+    endresultLogData.append([case, vehAmount, step, "mediumLarge"])
         
     # Concatenate the data to the dataframe
     df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
@@ -232,16 +232,15 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     # looping through all the dissemination cases
-    for vehAmount in range(10):
+    for vehAmount in range(1,10):
         for case in SimulationMode:
             print(case)
             # traci starts sumo as a subprocess and then this script connects and runs
             # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
-            traci.start([sumoBinary, "-c", "sumoFiles/medium/mediumLarge.sumocfg",
+            traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
                                     "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-            
             run(case, vehAmount)
     print('\033[94m'+str(endresultLogData)+'\033[0m')
     dataFrame = pd.concat([endresultLog, pd.DataFrame(endresultLogData, columns=endresultLog.columns)], ignore_index=True)
-    dataFrame.to_csv('dataLog/FinalDataFromCompletion.csv', mode='a', header=False, index=False)
+    #dataFrame.to_csv('dataLog/FinalDataFromCompletion.csv', mode='a', header=False, index=False)
     
