@@ -59,7 +59,7 @@ def run(case, vehAmount, mapSize, seed):
         
         ListOfTheBikeObjectsInNetwork = list(traciActualBikesInNetwork)
         bikeIndex = 0
-        mostIndexed = ["0",-1]
+        mostIndexed = ["0",-1] # [0] is the name of the bike [2] is the amount of roadsegments collected
         for nameOfBike in ListOfTheBikeObjectsInNetwork:
             bikeObject = bikeObjectsInNetwork[nameOfBike]
             bikePosition = traci.vehicle.getPosition(nameOfBike)
