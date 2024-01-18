@@ -111,15 +111,15 @@ def addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, RoadEdgeV
     for bikeToBeAdded in lostAndMissingBikesInNetwork:
         if bikeToBeAdded not in bikeObjectsInNetwork.keys():
             bikeObjectsInNetwork[bikeToBeAdded] = BicycleClass(bikeToBeAdded, case)
-            # Adding random Route to bike
         else:
             try:
+                # Adding random Route to bike
                 routeID = random.choice(list(RoadEdgeValues))
                 traci.route.add(str(step), [routeID])
                 traci.vehicle.add(vehID=bikeToBeAdded,routeID=str(step), typeID="bicycle")
                 setSegmentTarget(bikeObjectsInNetwork[bikeToBeAdded], random.choice(list(RoadEdgeValues)))
             except:
-                    # it does sometimes happen that it doesnt work. But for simulation purposes does this not matter
+                # it does sometimes happen that it doesnt work. But for simulation purposes does this not matter
                 print("error adding will try again next step")
 
 def removeWrongBikesFromNetwork(bikeObjectsInNetwork, traciActualBikesInNetwork):
