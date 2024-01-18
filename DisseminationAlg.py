@@ -12,6 +12,7 @@ pd.set_option('display.max_columns', None)
 
 # include the other files of this project
 from SimulationMode import SimulationMode
+from Mapsize import Mapsize
 from BicycleClass import BicycleClass
  
 # we need to import some python modules from the $SUMO_HOME/tools directory
@@ -221,6 +222,23 @@ def setSegmentTarget(vehicle, segment):
     vehicle.setTarget(segment)
     traci.vehicle.changeTarget(vehicle.getName(),segment)
     
+
+def StartTraci(mapsize):
+    match mapsize:
+        case Mapsize.SMALL:
+            traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
+                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
+        case Mapsize.MEDIUMSMALL:
+            traci.start([sumoBinary, "-c", "sumoFiles/smallMedium/smallMedium.sumocfg",
+                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
+        case Mapsize.MEDIUM:
+            traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
+                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
+        case _:
+            return
+        
+        
+    
 # main entry point
 if __name__ == "__main__":
     options = get_options()
@@ -232,14 +250,14 @@ if __name__ == "__main__":
         sumoBinary = checkBinary('sumo-gui')
 
     # looping through all the dissemination cases
-    for vehAmount in range(1,10):
-        for case in SimulationMode:
-            print(case)
-            # traci starts sumo as a subprocess and then this script connects and runs
-            # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
-            traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
-                                    "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-            run(case, vehAmount)
+    for mapSize in Mapsize:
+        for vehAmount in range(2,10):
+            for case in SimulationMode:
+                print(case)
+                # traci starts sumo as a subprocess and then this script connects and runs
+                # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
+                StartTraci(mapSize)
+                run(case, vehAmount)
     print('\033[94m'+str(endresultLogData)+'\033[0m')
     dataFrame = pd.concat([endresultLog, pd.DataFrame(endresultLogData, columns=endresultLog.columns)], ignore_index=True)
     #dataFrame.to_csv('dataLog/FinalDataFromCompletion.csv', mode='a', header=False, index=False)
