@@ -4,7 +4,6 @@ import os
 import sys
 import optparse
 import random
-import json
 import pandas as pd
 
 # displaying all columns
@@ -22,14 +21,11 @@ if 'SUMO_HOME' in os.environ:
 else:
     sys.exit("please declare environment variable 'SUMO_HOME'")
     
-# JSONBackGroundData = json.load(open('TEST.json'))
-# for testing how long it will take to index the whole map, True to continue until fully indexed
-continueUntilFullyMapped = True
 # visualizeCoverage = True traci.gui.toggleSelection(segment, "edge")
 RoadEdgeValues = {}
-endresultLog = pd.DataFrame(columns=['case','# of bikes', 'duration','size'])
-endresultLogData = []
 
+# for writing data to a csv file
+completionData = []
 
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
@@ -41,16 +37,16 @@ def get_options():
     options, args = opt_parser.parse_args()
     return options
 
-
 # contains TraCI control loop
-def run(case, vehAmount):
-    random.seed(11)
+def run(case, vehAmount, mapSize, seed):
+    random.seed(seed)
     step = 0
     bikeObjectsInNetwork = {}
-    RoadEdgeValues = assignValuesToRoadEdges()
+    roadEdgeValues = assignValuesToRoadEdges()
     distancesBetweenBikes = {}
+    endSimulation = False
     
-    while traci.simulation.getMinExpectedNumber() > 0 and step < 10000:
+    while traci.simulation.getMinExpectedNumber() > 0 and step < 10000 and not endSimulation:
         traci.simulationStep()
         
         traciActualBikesInNetwork = set(traci.vehicle.getIDList())
@@ -59,7 +55,7 @@ def run(case, vehAmount):
         if len(bikeObjectsInNetwork) >= vehAmount:
             # Wrong bikes are bikes that are not supposed to be in the networ
             removeWrongBikesFromNetwork(bikeObjectsInNetwork, traciActualBikesInNetwork)
-        addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, RoadEdgeValues, traciActualBikesInNetwork)
+        addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, roadEdgeValues, traciActualBikesInNetwork)
         
         ListOfTheBikeObjectsInNetwork = list(traciActualBikesInNetwork)
         bikeIndex = 0
@@ -75,7 +71,7 @@ def run(case, vehAmount):
             
             #update route
             if bikeObject.checkIfTarget(traci.vehicle.getRoadID(nameOfBike)):
-                setSegmentTarget(bikeObject, random.choice(list(RoadEdgeValues)))
+                setSegmentTarget(bikeObject, random.choice(list(roadEdgeValues)))
                 
             # disseminate
             bikeIndex+=1
@@ -91,13 +87,18 @@ def run(case, vehAmount):
                     distanceBetweenBikeAndComparisonBike = traci.simulation.getDistance2D(bikePosition[0], bikePosition[1], comparisonBikePosition[0], comparisonBikePosition[1], False, False)
                     distancesBetweenBikes[hashOfBikes] = distanceBetweenBikeAndComparisonBike
                     # 25 represents the distance between vehicles for dissemination in meters
-                    if(distanceBetweenBikeAndComparisonBike < 25.0):
-                        # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther)) # print what what vehicles are in connection with oneanother
+                    if distanceBetweenBikeAndComparisonBike < 25.0:
                         dataVeh = bikeObject.getDisseminationData()
                         dataVehOther = comparisonBikeObject.getDisseminationData()
                         comparisonBikeObject.recieveDesseminationData(dataVeh, nameOfBike)
                         bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
-        print(str(mostIndexed))
+        
+        print(str(round(mostIndexed[1]/len(roadEdgeValues)*100)) + '%')
+        
+        if mostIndexed[1] >= len(roadEdgeValues)*0.1:
+            endSimulation = True
+            # 'name of dissemination case' 'number of bikes' 'duration' 'name of map' 'seed'
+            completionData.append([str(case), vehAmount, str(step), str(mapSize) ,seed])
         step += 1
     traci.close()
     sys.stdout.flush()
@@ -124,7 +125,6 @@ def removeWrongBikesFromNetwork(bikeObjectsInNetwork, traciActualBikesInNetwork)
         for wrongBike in wrongBikesInNetwork:
             traci.vehicle.remove(wrongBike)
             traciActualBikesInNetwork.remove(wrongBike)
-    
 
 def assignValuesToRoadEdges():
     roadEdges = {}
@@ -139,9 +139,9 @@ def assignValuesToRoadEdges():
 def setSegmentTarget(vehicle, segment):
     vehicle.setTarget(segment)
     traci.vehicle.changeTarget(vehicle.getName(),segment)
-    
 
 def StartTraci(mapsize):
+    # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
     match mapsize:
         case Mapsize.SMALL:
             traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
@@ -154,8 +154,6 @@ def StartTraci(mapsize):
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case _:
             return
-        
-        
     
 # main entry point
 if __name__ == "__main__":
@@ -167,16 +165,16 @@ if __name__ == "__main__":
     else:
         sumoBinary = checkBinary('sumo-gui')
 
+    dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','duration','name of map','seed'])
+
     # looping through all the dissemination cases
     for mapSize in Mapsize:
-        for vehAmount in range(5,10):
+        for vehAmount in range(2,10):
             for case in SimulationMode:
-                print(case)
-                # traci starts sumo as a subprocess and then this script connects and runs
-                # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
                 StartTraci(mapSize)
-                run(case, vehAmount)
-    print('\033[94m'+str(endresultLogData)+'\033[0m')
-    dataFrame = pd.concat([endresultLog, pd.DataFrame(endresultLogData, columns=endresultLog.columns)], ignore_index=True)
-    #dataFrame.to_csv('dataLog/FinalDataFromCompletion.csv', mode='a', header=False, index=False)
+                run(case, vehAmount, mapSize, 11)
+                
+                # dataframe = pd.concat([dataframeCompletionDuration, pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)], ignore_index=True)
+                dfer =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
+                dfer.to_csv('dataLog/completionTimeOptimized.csv')
     
