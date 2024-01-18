@@ -44,179 +44,97 @@ def get_options():
 
 # contains TraCI control loop
 def run(case, vehAmount):
-    # Due to a bug in the software and no way to prevent it do we need to replace vehicles sometimes as they can disapear. to detect this happening we use this var
-    highestAmountOfVehicles = 0 
+    random.seed(11)
     step = 0
-    vehiclesInNetwork = {}
-    # create an empty dataframe
-    df = pd.DataFrame(columns=['Vehicle','Collected Roads', 'Connections'])
-    dfResults = pd.DataFrame(columns=['Vehicle Nr.' 'Total steps taken before completely mapped'])
-    disseminationLog = pd.DataFrame(columns=['Simulation step','sender', 'recipient','data'])
-    disseminationLogData = []
+    bikeObjectsInNetwork = {}
     RoadEdgeValues = assignValuesToRoadEdges()
-    allKnownRoadSegments = {}
-    # Only necesary when testing for completion of the simulation
-    endSimulation = False
-    oldStrOutput = ""
-
-    # looping for all the steps in de simuation
-    while traci.simulation.getMinExpectedNumber() > 0 and not endSimulation:
-        # traci.simulationStep()
-        try:
-            traci.simulationStep()
-        except traci.exceptions.FatalTraCIError as e:
-            print(f"FatalTraCIError: {e}")
-            break  # or handle the exception as needed
-        # inDistance = []
-        allVehicleNames = traci.vehicle.getIDList()
+    distancesBetweenBikes = {}
+    
+    while traci.simulation.getMinExpectedNumber() > 0 and step < 10000:
+        traci.simulationStep()
         
-        # creating instances of all vehicles and adding them to a list
-        if len(allVehicleNames) != len(vehiclesInNetwork):
-            # following code should only run once as it is only on spawning of a new vehicle
-            for vehName in allVehicleNames:
-                if vehName not in vehiclesInNetwork:
-                    # limiting the amount of veh in the network. Ignore if continueUntilFullyMapped is false
-                    if len(allVehicleNames) > vehAmount or (vehName not in vehiclesInNetwork and len(vehiclesInNetwork)>vehAmount):
-                        traci.vehicle.remove(vehName)
-                        allVehicleNames = traci.vehicle.getIDList()
-                    else:
-                        highestAmountOfVehicles = highestAmountOfVehicles + 1
-                        # ("adding veh " + str(vehName))
-                        vehiclesInNetwork[vehName] = BicycleClass(vehName, case)
-                        # vehiclesInNetwork[vehName].setDrivenOnRoads(generateListWithRoadsFromJson(len(allVehicleNames)-1,vehName)) # minus one because the index of the file starts with 0 and the length of the array is one more        
-                        if continueUntilFullyMapped:
-                            setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
+        traciActualBikesInNetwork = set(traci.vehicle.getIDList())
         
-        if continueUntilFullyMapped: 
-            for vehName in allVehicleNames:
-                if vehName not in vehiclesInNetwork and len(allVehicleNames) == vehAmount:
-                    traci.vehicle.remove(vehName)
-                    allVehicleNames = traci.vehicle.getIDList()
+        # limit veh to vehamount
+        if len(bikeObjectsInNetwork) >= vehAmount:
+            # Wrong bikes are bikes that are not supposed to be in the networ
+            removeWrongBikesFromNetwork(bikeObjectsInNetwork, traciActualBikesInNetwork)
+        addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, RoadEdgeValues, traciActualBikesInNetwork)
+        
+        ListOfTheBikeObjectsInNetwork = list(traciActualBikesInNetwork)
+        bikeIndex = 0
+        mostIndexed = ["0",-1]
+        for nameOfBike in ListOfTheBikeObjectsInNetwork:
+            bikeObject = bikeObjectsInNetwork[nameOfBike]
+            bikePosition = traci.vehicle.getPosition(nameOfBike)
+            test = traci.vehicle.getRoadID(nameOfBike)
+            bikeObject.addRoad(test)
+            
+            if len(bikeObject.getRecievedRoads()) > mostIndexed[1]:
+                mostIndexed = [nameOfBike, len(bikeObject.getRecievedRoads())]
+            
+            #update route
+            if bikeObject.checkIfTarget(traci.vehicle.getRoadID(nameOfBike)):
+                setSegmentTarget(bikeObject, random.choice(list(RoadEdgeValues)))
                 
-            if len(allVehicleNames) < highestAmountOfVehicles:
-                routeID = random.choice(list(RoadEdgeValues))
-                traci.route.add(str(step), [routeID])
-                missingName = ""
-                for vehicle in vehiclesInNetwork:
-                    if vehicle not in allVehicleNames:
-                        missingName = vehicle
-
-                print(str(missingName) + " at step " + str(step))
-                try:
-                    traci.vehicle.add(vehID=missingName,routeID=str(step), typeID="bicycle")
-                    setSegmentTarget(vehiclesInNetwork[missingName], random.choice(list(RoadEdgeValues)))
-                except:
-                    # it does sometimes happen that it doesnt work. But for simulation purposes does this not matter
-                    print("error adding will try again next step")
-        
-        # looping through all vehicles currently on the map
-        CurrentNoOfVehicle = 0; 
-        for vehName in allVehicleNames:
-            # add road to vehicle
-            vehiclesInNetwork[vehName].addRoad(traci.vehicle.getRoadID(vehName))
-            if vehiclesInNetwork[vehName].checkIfTarget(traci.vehicle.getRoadID(vehName)) and continueUntilFullyMapped:
-                setSegmentTarget(vehiclesInNetwork[vehName], random.choice(list(RoadEdgeValues)))
-            
-            CurrentNoOfVehicle+=1
-            ownPos = traci.vehicle.getPosition(vehName)
-            for otherVeh in range(len(allVehicleNames)-CurrentNoOfVehicle):
-                vehNameOther = allVehicleNames[otherVeh+CurrentNoOfVehicle]
-                otherPos = traci.vehicle.getPosition(vehNameOther)
-                dist = traci.simulation.getDistance2D(ownPos[0], ownPos[1], otherPos[0], otherPos[1], False, False)
-                # 25 represents the distance between vehicles for dissemination in meters
-                if(dist < 25.0):
-                    # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther)) # print what what vehicles are in connection with oneanother
-                    dataVeh = vehiclesInNetwork[vehName].getDisseminationData()
-                    dataVehOther = vehiclesInNetwork[vehNameOther].getDisseminationData()
-                    vehiclesInNetwork[vehNameOther].recieveDesseminationData(dataVeh, vehName)
-                    vehiclesInNetwork[vehName].recieveDesseminationData(dataVehOther, vehNameOther)
-                    # for logging reasons
-                    disseminationLogData.append([step, vehName, vehNameOther, dataVeh])
-                    disseminationLogData.append([step, vehNameOther, vehName, dataVehOther])
-                    
-            # collecting all collected roads from all vehicles
-            # allKnownRoadSegments = allKnownRoadSegments | vehiclesInNetwork[vehName].getRecievedRoads()
-            # if len(vehiclesInNetwork[vehName].getRecievedRoads()) == len(RoadEdgeValues) and continueUntilFullyMapped:
-            #     endSimulation = True
-            #     print("simulation ended because some bike has collected alle roads (" + str(vehName) + ')')
-            
-            if len(vehiclesInNetwork[vehName].getRecievedRoads()) >= len(RoadEdgeValues)*0.1 and continueUntilFullyMapped:
-                endSimulation = True
-                print("simulation ended because some bike has collected 10 procent of roads (" + str(vehName) + ')')
+            # disseminate
+            bikeIndex+=1
+            for otherBikeIndex in range(len(traciActualBikesInNetwork)-bikeIndex):
+                nameOfComparisonBike = ListOfTheBikeObjectsInNetwork[otherBikeIndex+bikeIndex]
+                comparisonBikeObject = bikeObjectsInNetwork[nameOfComparisonBike]
+                comparisonBikePosition = traci.vehicle.getPosition(nameOfComparisonBike)
                 
-            # checking if all the roads are collected in the network. They do not need to be disseminated for this to happen
-            if step > 50000:
-                endSimulation = True
-                print("ending because the simulation max has expired")
-                break
-            
-            if continueUntilFullyMapped:
-                longest = 0
-                longestName = ""
-                for vehName in allVehicleNames:
-                    if len(vehiclesInNetwork[vehName].getRecievedRoads()) > longest:
-                        longest = len(vehiclesInNetwork[vehName].getRecievedRoads())
-                        longestName = vehName
-                output = str(longestName) + " has the most roads collected: " + str(longest)+ " ("+ str(round((longest/(len(RoadEdgeValues)+1))*100)) + "%)"
-                # dfResults = pd.concat(str(vehName), int(step))
-                if output != oldStrOutput:
-                    oldStrOutput = output
-                    print(output)
-                    
+                hashOfBikes = str(hash(nameOfBike) + hash(nameOfComparisonBike))
+                if hashOfBikes in distancesBetweenBikes and distancesBetweenBikes.get(hashOfBikes) > 100:
+                        distancesBetweenBikes[hashOfBikes] = distancesBetweenBikes.get(hashOfBikes)-30
+                else:
+                    distanceBetweenBikeAndComparisonBike = traci.simulation.getDistance2D(bikePosition[0], bikePosition[1], comparisonBikePosition[0], comparisonBikePosition[1], False, False)
+                    distancesBetweenBikes[hashOfBikes] = distanceBetweenBikeAndComparisonBike
+                    # 25 represents the distance between vehicles for dissemination in meters
+                    if(distanceBetweenBikeAndComparisonBike < 25.0):
+                        # print(str(round(dist)) + "m for " + str(vehID) + " and " + str(vehIDOther)) # print what what vehicles are in connection with oneanother
+                        dataVeh = bikeObject.getDisseminationData()
+                        dataVehOther = comparisonBikeObject.getDisseminationData()
+                        comparisonBikeObject.recieveDesseminationData(dataVeh, nameOfBike)
+                        bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
+        print(str(mostIndexed))
         step += 1
-    # print(dfResults)
-    # Create a list to store the data
-    data = []
-
-    # looping through all the vehicles that existed in the simulation
-    for veh in vehiclesInNetwork:        
-        # printing the data from all the vehicles in the simulation
-        vehiclesInNetwork[veh].printData()
-
-        collected_roads = vehiclesInNetwork[veh].getRoads()
-        connections = vehiclesInNetwork[veh].getConnections()
-
-        # Append the data to the list
-        data.append([veh, collected_roads, connections])
-        
-        
-    endresultLogData.append([case, vehAmount, step, "mediumLarge"])
-        
-    # Concatenate the data to the dataframe
-    df = pd.concat([df, pd.DataFrame(data, columns=df.columns)], ignore_index=True)
-    disseminationLog = pd.concat([disseminationLog, pd.DataFrame(disseminationLogData, columns=disseminationLog.columns)], ignore_index=True)
-
-    # Print the dataframe
-    # print(df)
-    # df.to_csv('dataLog/disseminatedData.csv')
-    # disseminationLog.to_csv('dataLog/disseminatedData_ForSteps.csv')
-    # printing the step when the simulation ended
-    print("end on step " + str(step))
     traci.close()
     sys.stdout.flush()
+
+def addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, RoadEdgeValues, traciActualBikesInNetwork):
+    lostAndMissingBikesInNetwork = set(bikeObjectsInNetwork.keys()).symmetric_difference(traciActualBikesInNetwork)
+    for bikeToBeAdded in lostAndMissingBikesInNetwork:
+        if bikeToBeAdded not in bikeObjectsInNetwork.keys():
+            bikeObjectsInNetwork[bikeToBeAdded] = BicycleClass(bikeToBeAdded, case)
+            # Adding random Route to bike
+        else:
+            try:
+                routeID = random.choice(list(RoadEdgeValues))
+                traci.route.add(str(step), [routeID])
+                traci.vehicle.add(vehID=bikeToBeAdded,routeID=str(step), typeID="bicycle")
+                setSegmentTarget(bikeObjectsInNetwork[bikeToBeAdded], random.choice(list(RoadEdgeValues)))
+            except:
+                    # it does sometimes happen that it doesnt work. But for simulation purposes does this not matter
+                print("error adding will try again next step")
+
+def removeWrongBikesFromNetwork(bikeObjectsInNetwork, traciActualBikesInNetwork):
+    wrongBikesInNetwork = traciActualBikesInNetwork.difference(set(bikeObjectsInNetwork.keys())) 
+    if len(wrongBikesInNetwork) != 0:
+        for wrongBike in wrongBikesInNetwork:
+            traci.vehicle.remove(wrongBike)
+            traciActualBikesInNetwork.remove(wrongBike)
     
 
 def assignValuesToRoadEdges():
     roadEdges = {}
     #make sure the random numbers are the same everytime. Remove this if this is not wanted behaviour
-    random.seed(11) 
     for roadId in traci.edge.getIDList():
         # prevent junctions being added to the list
         if roadId[0] != ':':
             #value of 1 to (and including) 9 to simulate the road score
             roadEdges[roadId] = random.randint(1,9)
     return roadEdges
-
-def generateListWithRoadsFromJson(indexInJsonFile,vehName):
-    # if len(JSONBackGroundData) < indexInJsonFile:
-    #     currentJSONElement = JSONBackGroundData[str(indexInJsonFile)]
-    #     returnValue = {}
-    #     for attribute, value in currentJSONElement.items(): # attribute is not used but is necessary to remove the attributes of the json file
-    #         for roadSegment in value:
-    #             if roadSegment not in returnValue:
-    #                 returnValue[roadSegment] = [vehName]
-    #     return returnValue
-    return {}
 
 def setSegmentTarget(vehicle, segment):
     vehicle.setTarget(segment)
@@ -251,7 +169,7 @@ if __name__ == "__main__":
 
     # looping through all the dissemination cases
     for mapSize in Mapsize:
-        for vehAmount in range(2,10):
+        for vehAmount in range(5,10):
             for case in SimulationMode:
                 print(case)
                 # traci starts sumo as a subprocess and then this script connects and runs

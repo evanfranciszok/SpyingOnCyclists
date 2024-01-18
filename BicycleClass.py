@@ -12,6 +12,7 @@ class BicycleClass:
         self.connectedWithCars = {}
         self.amountOfDoubleDataSent = 0
         self.roadsCollected = 0
+        self.target = 0
 
     def addRoad(self, roadId):
         # prevent junctions being added to the list
