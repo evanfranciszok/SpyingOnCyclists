@@ -63,8 +63,8 @@ def run(case, vehAmount, mapSize, seed):
         for nameOfBike in ListOfTheBikeObjectsInNetwork:
             bikeObject = bikeObjectsInNetwork[nameOfBike]
             bikePosition = traci.vehicle.getPosition(nameOfBike)
-            test = traci.vehicle.getRoadID(nameOfBike)
-            bikeObject.addRoad(test)
+            roadSegmentBikeIsCurrentlyOn = traci.vehicle.getRoadID(nameOfBike)
+            bikeObject.addRoad(roadSegmentBikeIsCurrentlyOn)
             
             if len(bikeObject.getRecievedRoads()) > mostIndexed[1]:
                 mostIndexed = [nameOfBike, len(bikeObject.getRecievedRoads())]
@@ -177,8 +177,6 @@ if __name__ == "__main__":
                 for case in SimulationMode:
                     StartTraci(mapSize)
                     run(case, vehAmount, mapSize, seed)
-                    
-                    # dataframe = pd.concat([dataframeCompletionDuration, pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)], ignore_index=True)
-                    dfer =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                    dfer.to_csv('dataLog/completionTimeOptimized.csv')
+                    dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
+                    dataForCompletion.to_csv('dataLog/completionTimeOptimized.csv')
     
