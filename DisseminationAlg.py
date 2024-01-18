@@ -46,7 +46,7 @@ def run(case, vehAmount, mapSize, seed):
     distancesBetweenBikes = {}
     endSimulation = False
     
-    while traci.simulation.getMinExpectedNumber() > 0 and step < 10000 and not endSimulation:
+    while traci.simulation.getMinExpectedNumber() > 0 and not endSimulation:
         traci.simulationStep()
         
         traciActualBikesInNetwork = set(traci.vehicle.getIDList())
@@ -95,10 +95,13 @@ def run(case, vehAmount, mapSize, seed):
         
         print(str(round(mostIndexed[1]/len(roadEdgeValues)*100)) + '%')
         
-        if mostIndexed[1] >= len(roadEdgeValues)*0.1:
+        if mostIndexed[1] >= len(roadEdgeValues) or step >= 43200:
             endSimulation = True
-            # 'name of dissemination case' 'number of bikes' 'duration' 'name of map' 'seed'
-            completionData.append([str(case), vehAmount, str(step), str(mapSize) ,seed])
+            if step >= 43200:
+                # undetermined because the simulation took more than 12 (simulated) hours to complete
+                completionData.append([str(case), vehAmount, "undetermined", str(mapSize) ,seed])
+            else:
+                completionData.append([str(case), vehAmount, str(step), str(mapSize) ,seed])
         step += 1
     traci.close()
     sys.stdout.flush()
@@ -168,8 +171,8 @@ if __name__ == "__main__":
     dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','duration','name of map','seed'])
 
     # looping through all the dissemination cases
-    for mapSize in Mapsize:
-        for vehAmount in range(2,10):
+    for vehAmount in range(2,20):
+        for mapSize in Mapsize:
             for case in SimulationMode:
                 StartTraci(mapSize)
                 run(case, vehAmount, mapSize, 11)

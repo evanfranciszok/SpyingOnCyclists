@@ -1,8 +1,5 @@
 ,name of dissemination case,number of bikes,duration,name of map,seed
-0,SimulationMode.K_ZERO,9,70,Mapsize.SMALL,11
-1,SimulationMode.K_ONE,9,70,Mapsize.SMALL,11
-2,SimulationMode.K_TWO,9,81,Mapsize.SMALL,11
-3,SimulationMode.K_TREE,9,86,Mapsize.SMALL,11
-4,SimulationMode.K_ZERO,9,837,Mapsize.MEDIUMSMALL,11
-5,SimulationMode.K_ONE,9,1398,Mapsize.MEDIUMSMALL,11
-6,SimulationMode.K_TWO,9,782,Mapsize.MEDIUMSMALL,11
+0,SimulationMode.K_ZERO,2,44750,Mapsize.SMALL,11
+1,SimulationMode.K_ONE,2,34237,Mapsize.SMALL,11
+2,SimulationMode.K_TWO,2,28722,Mapsize.SMALL,11
+3,SimulationMode.K_TREE,2,49654,Mapsize.SMALL,11
