@@ -171,13 +171,14 @@ if __name__ == "__main__":
     dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','duration','name of map','seed'])
 
     # looping through all the dissemination cases
-    for vehAmount in range(2,20):
-        for mapSize in Mapsize:
-            for case in SimulationMode:
-                StartTraci(mapSize)
-                run(case, vehAmount, mapSize, 11)
-                
-                # dataframe = pd.concat([dataframeCompletionDuration, pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)], ignore_index=True)
-                dfer =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                dfer.to_csv('dataLog/completionTimeOptimized.csv')
+    for seed in range(10,15):
+        for vehAmount in range(2,10):
+            for mapSize in Mapsize:
+                for case in SimulationMode:
+                    StartTraci(mapSize)
+                    run(case, vehAmount, mapSize, seed)
+                    
+                    # dataframe = pd.concat([dataframeCompletionDuration, pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)], ignore_index=True)
+                    dfer =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
+                    dfer.to_csv('dataLog/completionTimeOptimized.csv')
     
