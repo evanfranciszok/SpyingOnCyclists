@@ -1,7 +1,7 @@
 import random
 
 random.seed(10)
-disseminationAmount = 4
+disseminationAmount = 10
 
 class BicycleClass:
     def __init__(self, vehID, disseminationCase):
