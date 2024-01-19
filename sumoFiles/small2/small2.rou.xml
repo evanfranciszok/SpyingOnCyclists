@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2024-01-19 13:45:31.248826 by randomTrips.py v1_19_0+0143-4ff360ee235
+<!-- generated on 2024-01-19 13:54:09.834138 by randomTrips.py v1_19_0+0143-4ff360ee235
 <configuration>
     <net-file value="small2.net.xml"/>
     <output-trip-file value="small2.xml"/>
@@ -11,7 +11,7 @@
 </configuration>
 -->
 
-<!-- generated on 2024-01-19 13:45:31 by Eclipse SUMO duarouter Version v1_19_0+0143-4ff360ee235
+<!-- generated on 2024-01-19 13:54:09 by Eclipse SUMO duarouter Version v1_19_0+0143-4ff360ee235
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
 
     <input>
@@ -41,78 +41,78 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="bicycle" maxSpeed="20.00" vClass="bicycle"/>
     <vehicle id="0" type="bicycle" depart="0.00">
-        <route edges="1561 -1561 1182 -1182"/>
+        <route edges="1622 -1729 -1423 -1403 -1182"/>
     </vehicle>
     <vehicle id="1" type="bicycle" depart="1.00">
-        <route edges="-2336 -2167 -1805 -277 -253 -79 -60 -31 -23 -305 -293 -68 811 2312 -2312"/>
+        <route edges="-2704 2704 -2765 -811 68 293 305 23 31 60 79 253 277 1805 2171 2365 -2364"/>
     </vehicle>
     <vehicle id="2" type="bicycle" depart="2.00">
-        <route edges="2200 -2197 -1200 -1070 -924 -918 -544 -412 371 -75 79 253 277 1805 2171"/>
+        <route edges="2331 -2331 -2039 -269 -245 -129 -37 -23 -305 -293 -68 809 -1577 1593 1618 -2322 2324"/>
     </vehicle>
     <vehicle id="3" type="bicycle" depart="3.00">
-        <route edges="533 -533 932 -1185 1409 -1409"/>
+        <route edges="372 316 338 932 1333 1554 -1536 1540 -1540"/>
     </vehicle>
     <vehicle id="4" type="bicycle" depart="4.00">
-        <route edges="-533 932 -1185"/>
+        <route edges="-412 412 544 918 924 1050 -2746 -1200"/>
     </vehicle>
     <vehicle id="5" type="bicycle" depart="5.00">
-        <route edges="-2200 -1205 1211 -1408 -1379 1373 1729 1745 1182"/>
+        <route edges="-2333 -2063 -269 -253 -79 75 -371 412 544 918 924 1070 1200"/>
     </vehicle>
     <vehicle id="6" type="bicycle" depart="6.00">
-        <route edges="-1077 -926 -533 -338 -316 -372 371 -75 79 253 277 1805 2167 2336 -2187"/>
+        <route edges="-1182 1561 1593 1618 -2322"/>
     </vehicle>
     <vehicle id="7" type="bicycle" depart="7.00">
-        <route edges="1593 1622 -1729 -1373 1373"/>
+        <route edges="1745 1182 1403 -1409 -1407 1407"/>
     </vehicle>
     <vehicle id="8" type="bicycle" depart="8.00">
-        <route edges="-2202 -1540 1536 -1554 1554"/>
+        <route edges="-2335 -2167 -1805 -277 -253 -79 -60 -31 -23 -305 -293 -68 809 -1577 1593 1622"/>
     </vehicle>
     <vehicle id="9" type="bicycle" depart="9.00">
-        <route edges="253 -253 -79 -60 -31 -23 -11 5 542 1042 -1042"/>
+        <route edges="2737 -2377 -2171 -1805 -277 -253 -79 -60 -31 -23 -11 5 542 1044 -1044"/>
     </vehicle>
     <vehicle id="10" type="bicycle" depart="10.00">
-        <route edges="2514 -2402 -2200 2199 2205"/>
+        <route edges="2735 -2735 2333 -1803 1805 2167 2348"/>
     </vehicle>
     <vehicle id="11" type="bicycle" depart="11.00">
-        <route edges="-2708 -2321 2320 -1797"/>
+        <route edges="-2814 -2740 -2377 -2171 -1805 1803 -2333 -2063"/>
     </vehicle>
     <vehicle id="12" type="bicycle" depart="12.00">
-        <route edges="806 -542 -5 11 23 31 64 -371"/>
+        <route edges="75 -371 372 316 338 932 1333 -1211 1217 2958 -3095"/>
     </vehicle>
     <vehicle id="13" type="bicycle" depart="13.00">
-        <route edges="-1408 1407 -1044 -542 -5 15 -15"/>
+        <route edges="-1540 1536 -1554 -1408 1407 1409 -1403 -1182 1561 1583 -1583"/>
     </vehicle>
     <vehicle id="14" type="bicycle" depart="14.00">
-        <route edges="328 -328 338 806 1042 -1182 1561 1593"/>
+        <route edges="293 304 -71 812 -1577 1593 1624 1757"/>
     </vehicle>
     <vehicle id="15" type="bicycle" depart="15.00">
-        <route edges="2514 -2402 -2200 -1205 1211 -1408 -1379 1373 2328 -2324 2326"/>
+        <route edges="2737 -2377 -2171 -1805 -277 -253 253"/>
     </vehicle>
     <vehicle id="16" type="bicycle" depart="16.00">
-        <route edges="1044 1185 -932 -338 328 -658 659 917"/>
+        <route edges="1044 1409 -1403 -1182 -814 812"/>
     </vehicle>
     <vehicle id="17" type="bicycle" depart="17.00">
-        <route edges="-355 -139 139"/>
+        <route edges="-3089 -2814 -2740 -2377 -2171 -1805 -277 -253 -79 75 -371 372 316 338 932 1333 -1211 1217 1418"/>
     </vehicle>
     <vehicle id="18" type="bicycle" depart="18.00">
-        <route edges="304 -71 812 -1577 1593 1622"/>
+        <route edges="2773 -2727 -2326 -1797 1757 -1820 1820"/>
     </vehicle>
     <vehicle id="19" type="bicycle" depart="19.00">
-        <route edges="37 -37 -23 -11 15"/>
+        <route edges="3090 -2786 -2348 -2167 -1805 -277 -253 -79 -60 -31 -23 -305 -293 -68 809 -1577 1593"/>
     </vehicle>
     <vehicle id="20" type="bicycle" depart="20.00">
-        <route edges="1831 2320 2324 -2328 -1373 1379 1408 -1211 1217 -1217"/>
+        <route edges="2205 -2205 -1815 -1217 1211 -1333"/>
     </vehicle>
     <vehicle id="21" type="bicycle" depart="21.00">
-        <route edges="-23 -11 3 27 -27"/>
+        <route edges="-2364 -2167 -1805 -277 -253 -79 75 -371 412 544 918 924 1070 1204 2199 -2202 2513 2751 -2751"/>
     </vehicle>
     <vehicle id="22" type="bicycle" depart="22.00">
-        <route edges="-139 -92 -60 -31 -23 -305 -293 -68 809 -1577 1593 1618 -2322 -2320"/>
+        <route edges="-1418 1815 2205 2514 -2402"/>
     </vehicle>
     <vehicle id="23" type="bicycle" depart="23.00">
-        <route edges="-1418 -1217 1205 2200 2402 -2514"/>
+        <route edges="-1577 1577 -809 68 293 305 23 31 60 79 253 269 2039 -2782 -2735"/>
     </vehicle>
     <vehicle id="24" type="bicycle" depart="24.00">
-        <route edges="1554 -1536 -1418 -1217 -1077 -926 -533"/>
+        <route edges="1614 -1614 -1583 1577 -812 71 -3 15 -372"/>
     </vehicle>
 </routes>

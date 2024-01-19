@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2024-01-19 13:45:31.046288 by randomTrips.py v1_19_0+0143-4ff360ee235
+<!-- generated on 2024-01-19 13:54:09.453180 by randomTrips.py v1_19_0+0143-4ff360ee235
 <configuration>
     <net-file value="small2.net.xml"/>
     <output-trip-file value="small2.xml"/>
@@ -13,29 +13,29 @@
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="bicycle" vClass="bicycle" maxSpeed="20.0"/>
-    <trip id="0" depart="0.00" from="1561" to="-1182" type="bicycle"/>
-    <trip id="1" depart="1.00" from="-2336" to="-2312" type="bicycle"/>
-    <trip id="2" depart="2.00" from="2200" to="2171" type="bicycle"/>
-    <trip id="3" depart="3.00" from="533" to="-1409" type="bicycle"/>
-    <trip id="4" depart="4.00" from="-533" to="-1185" type="bicycle"/>
-    <trip id="5" depart="5.00" from="-2200" to="1182" type="bicycle"/>
-    <trip id="6" depart="6.00" from="-1077" to="-2187" type="bicycle"/>
-    <trip id="7" depart="7.00" from="1593" to="1373" type="bicycle"/>
-    <trip id="8" depart="8.00" from="-2202" to="1554" type="bicycle"/>
-    <trip id="9" depart="9.00" from="253" to="-1042" type="bicycle"/>
-    <trip id="10" depart="10.00" from="2514" to="2205" type="bicycle"/>
-    <trip id="11" depart="11.00" from="-2708" to="-1797" type="bicycle"/>
-    <trip id="12" depart="12.00" from="806" to="-371" type="bicycle"/>
-    <trip id="13" depart="13.00" from="-1408" to="-15" type="bicycle"/>
-    <trip id="14" depart="14.00" from="328" to="1593" type="bicycle"/>
-    <trip id="15" depart="15.00" from="2514" to="2326" type="bicycle"/>
-    <trip id="16" depart="16.00" from="1044" to="917" type="bicycle"/>
-    <trip id="17" depart="17.00" from="-355" to="139" type="bicycle"/>
-    <trip id="18" depart="18.00" from="304" to="1622" type="bicycle"/>
-    <trip id="19" depart="19.00" from="37" to="15" type="bicycle"/>
-    <trip id="20" depart="20.00" from="1831" to="-1217" type="bicycle"/>
-    <trip id="21" depart="21.00" from="-23" to="-27" type="bicycle"/>
-    <trip id="22" depart="22.00" from="-139" to="-2320" type="bicycle"/>
-    <trip id="23" depart="23.00" from="-1418" to="-2514" type="bicycle"/>
-    <trip id="24" depart="24.00" from="1554" to="-533" type="bicycle"/>
+    <trip id="0" depart="0.00" from="1622" to="-1182" type="bicycle"/>
+    <trip id="1" depart="1.00" from="-2704" to="-2364" type="bicycle"/>
+    <trip id="2" depart="2.00" from="2331" to="2324" type="bicycle"/>
+    <trip id="3" depart="3.00" from="372" to="-1540" type="bicycle"/>
+    <trip id="4" depart="4.00" from="-412" to="-1200" type="bicycle"/>
+    <trip id="5" depart="5.00" from="-2333" to="1200" type="bicycle"/>
+    <trip id="6" depart="6.00" from="-1182" to="-2322" type="bicycle"/>
+    <trip id="7" depart="7.00" from="1745" to="1407" type="bicycle"/>
+    <trip id="8" depart="8.00" from="-2335" to="1622" type="bicycle"/>
+    <trip id="9" depart="9.00" from="2737" to="-1044" type="bicycle"/>
+    <trip id="10" depart="10.00" from="2735" to="2348" type="bicycle"/>
+    <trip id="11" depart="11.00" from="-2814" to="-2063" type="bicycle"/>
+    <trip id="12" depart="12.00" from="75" to="-3095" type="bicycle"/>
+    <trip id="13" depart="13.00" from="-1540" to="-1583" type="bicycle"/>
+    <trip id="14" depart="14.00" from="293" to="1757" type="bicycle"/>
+    <trip id="15" depart="15.00" from="2737" to="253" type="bicycle"/>
+    <trip id="16" depart="16.00" from="1044" to="812" type="bicycle"/>
+    <trip id="17" depart="17.00" from="-3089" to="1418" type="bicycle"/>
+    <trip id="18" depart="18.00" from="2773" to="1820" type="bicycle"/>
+    <trip id="19" depart="19.00" from="3090" to="1593" type="bicycle"/>
+    <trip id="20" depart="20.00" from="2205" to="-1333" type="bicycle"/>
+    <trip id="21" depart="21.00" from="-2364" to="-2751" type="bicycle"/>
+    <trip id="22" depart="22.00" from="-1418" to="-2402" type="bicycle"/>
+    <trip id="23" depart="23.00" from="-1577" to="-2735" type="bicycle"/>
+    <trip id="24" depart="24.00" from="1614" to="-372" type="bicycle"/>
 </routes>
