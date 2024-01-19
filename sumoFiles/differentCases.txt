@@ -4,6 +4,13 @@ Small2 = 125
 Medium = 175
 Large = 250
 
+# Testing case
+10 different seeds
+4 cases
+4 maps
+11 different amount of bikes
+10*4*4*9=1460 different simulation
+
 Small:
 # Generate map
 netgenerate --rand --rand.grid --rand.max-distance=100 --rand.min-distance=40 --rand.iterations=100 --human-readable-time --alphanumerical-ids -o "small.net.xml"
