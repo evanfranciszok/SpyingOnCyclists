@@ -149,11 +149,14 @@ def StartTraci(mapsize):
         case Mapsize.SMALL:
             traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-        case Mapsize.MEDIUMSMALL:
-            traci.start([sumoBinary, "-c", "sumoFiles/smallMedium/smallMedium.sumocfg",
+        case Mapsize.SMALL2:
+            traci.start([sumoBinary, "-c", "sumoFiles/small2/small2.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case Mapsize.MEDIUM:
             traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
+                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
+        case Mapsize.LARGE:
+            traci.start([sumoBinary, "-c", "sumoFiles/large/large.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case _:
             return
