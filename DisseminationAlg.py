@@ -175,9 +175,10 @@ if __name__ == "__main__":
 
     # looping through all the dissemination cases
     mapSize = Mapsize.SMALL
+    bikeAmounts = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25]
     for seed in range(10,15):
     # seed = 10
-        for vehAmount in range(2,10):
+        for vehAmount in bikeAmounts:
             for case in SimulationMode:
                 StartTraci(mapSize)
                 run(case, vehAmount, mapSize, seed)
