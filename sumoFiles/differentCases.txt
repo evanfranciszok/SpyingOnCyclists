@@ -1,0 +1,33 @@
+# About of iterations 
+Small = 100
+Small2 = 100
+Medium = 175
+Large = 250
+
+Small:
+# Generate map
+netgenerate --rand --rand.grid --rand.max-distance=100 --rand.min-distance=40 --rand.iterations=100 --human-readable-time --alphanumerical-ids -o "small.net.xml"
+
+# Generate routes
+python3 /Users/yara/sumo/tools/randomTrips.py -n small.net.xml -r small.rou.xml -o small.xml -e 25 --vehicle-class bicycle --trip-attributes="maxSpeed=\"20.0\"" 
+
+Small2:
+# Generate map
+netgenerate --rand --rand.grid --rand.max-distance=100 --rand.min-distance=40 --rand.iterations=100 --human-readable-time --alphanumerical-ids -o "small2.net.xml"
+
+# Generate routes
+python3 /Users/yara/sumo/tools/randomTrips.py -n small2.net.xml -r small2.rou.xml -o small2.xml -e 25 --vehicle-class bicycle --trip-attributes="maxSpeed=\"20.0\""
+
+Medium:
+# Generate map
+netgenerate --rand --rand.grid --rand.max-distance=100 --rand.min-distance=40 --rand.iterations=175 --human-readable-time --alphanumerical-ids -o "medium.net.xml"
+
+# Generate routes
+python3 /Users/yara/sumo/tools/randomTrips.py -n medium.net.xml -r medium.rou.xml -o medium.xml -e 25 --vehicle-class bicycle --trip-attributes="maxSpeed=\"20.0\""
+
+Large:
+# Generate map
+netgenerate --rand --rand.grid --rand.max-distance=100 --rand.min-distance=40 --rand.iterations=250 --human-readable-time --alphanumerical-ids -o "large.net.xml"
+
+# Generate routes
+python3 /Users/yara/sumo/tools/randomTrips.py -n large.net.xml -r large.rou.xml -o large.xml -e 25 --vehicle-class bicycle --trip-attributes="maxSpeed=\"20.0\""

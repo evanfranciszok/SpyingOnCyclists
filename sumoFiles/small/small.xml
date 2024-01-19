@@ -1,66 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2023-12-21 09:49:19.905675 by randomTrips.py v1_19_0+0143-4ff360ee235
+<!-- generated on 2024-01-19 13:46:01.868333 by randomTrips.py v1_19_0+0143-4ff360ee235
 <configuration>
-    <net-file value="smallK1.net.xml"/>
-    <output-trip-file value="smallK1.xml"/>
-    <route-file value="smallK1.rou.xml"/>
+    <net-file value="small.net.xml"/>
+    <output-trip-file value="small.xml"/>
+    <route-file value="small.rou.xml"/>
     <trip-attributes value="maxSpeed=&quot;20.0&quot;"/>
     <vehicle-class value="bicycle"/>
-    <end value="50.0"/>
+    <end value="25.0"/>
 </configuration>
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="bicycle" vClass="bicycle" maxSpeed="20.0"/>
-    <trip id="0" depart="0.00" from="-1226" to="538" type="bicycle"/>
-    <trip id="1" depart="1.00" from="1948" to="-2206" type="bicycle"/>
-    <!-- <trip id="2" depart="2.00" from="1502" to="1502" type="bicycle"/>
-    <trip id="3" depart="3.00" from="389" to="-1238" type="bicycle"/>
-    <trip id="4" depart="4.00" from="-400" to="-1061" type="bicycle"/>
-    <trip id="5" depart="5.00" from="-1617" to="1086" type="bicycle"/>
-    <trip id="6" depart="6.00" from="-1054" to="-1620" type="bicycle"/>
-    <trip id="7" depart="7.00" from="1295" to="1228" type="bicycle"/>
-    <trip id="8" depart="8.00" from="-1617" to="1324" type="bicycle"/>
-    <trip id="9" depart="9.00" from="1952" to="-1021" type="bicycle"/>
-    <trip id="10" depart="10.00" from="1952" to="168" type="bicycle"/>
-    <trip id="11" depart="11.00" from="-2149" to="-1391" type="bicycle"/>
-    <trip id="12" depart="12.00" from="532" to="-273" type="bicycle"/>
-    <trip id="13" depart="13.00" from="-1245" to="-126" type="bicycle"/>
-    <trip id="14" depart="14.00" from="230" to="1350" type="bicycle"/>
-    <trip id="15" depart="15.00" from="1952" to="1800" type="bicycle"/>
-    <trip id="16" depart="16.00" from="-99" to="62" type="bicycle"/>
-    <trip id="17" depart="17.00" from="-233" to="1245" type="bicycle"/>
-    <trip id="18" depart="18.00" from="2203" to="1376" type="bicycle"/>
-    <trip id="19" depart="19.00" from="246" to="1295" type="bicycle"/>
-    <trip id="20" depart="20.00" from="1445" to="-1086" type="bicycle"/>
-    <trip id="21" depart="21.00" from="-1622" to="-2149" type="bicycle"/>
-    <trip id="22" depart="22.00" from="-1226" to="-1791" type="bicycle"/>
-    <trip id="23" depart="23.00" from="-126" to="-208" type="bicycle"/>
-    <trip id="24" depart="24.00" from="126" to="-412" type="bicycle"/>
-    <trip id="25" depart="25.00" from="-23" to="-1648" type="bicycle"/>
-    <trip id="26" depart="26.00" from="-1800" to="514" type="bicycle"/>
-    <trip id="27" depart="27.00" from="1295" to="1352" type="bicycle"/>
-    <trip id="28" depart="28.00" from="-1420" to="1800" type="bicycle"/>
-    <trip id="29" depart="29.00" from="-1391" to="-460" type="bicycle"/>
-    <trip id="30" depart="30.00" from="978" to="1445" type="bicycle"/>
-    <trip id="31" depart="31.00" from="1033" to="1620" type="bicycle"/>
-    <trip id="32" depart="32.00" from="23" to="1986" type="bicycle"/>
-    <trip id="33" depart="33.00" from="-1622" to="-1072" type="bicycle"/>
-    <trip id="34" depart="34.00" from="-1986" to="-1952" type="bicycle"/>
-    <trip id="35" depart="35.00" from="-15" to="52" type="bicycle"/>
-    <trip id="36" depart="36.00" from="273" to="-241" type="bicycle"/>
-    <trip id="37" depart="37.00" from="1315" to="-495" type="bicycle"/>
-    <trip id="38" depart="38.00" from="44" to="-99" type="bicycle"/>
-    <trip id="39" depart="39.00" from="-1791" to="-187" type="bicycle"/>
-    <trip id="40" depart="40.00" from="1049" to="-1948" type="bicycle"/>
-    <trip id="41" depart="41.00" from="1086" to="435" type="bicycle"/>
-    <trip id="42" depart="42.00" from="-27" to="-1778" type="bicycle"/>
-    <trip id="43" depart="43.00" from="99" to="1089" type="bicycle"/>
-    <trip id="44" depart="44.00" from="-1238" to="-1086" type="bicycle"/>
-    <trip id="45" depart="45.00" from="-1284" to="1418" type="bicycle"/>
-    <trip id="46" depart="46.00" from="189" to="-535" type="bicycle"/>
-    <trip id="47" depart="47.00" from="-1110" to="-482" type="bicycle"/>
-    <trip id="48" depart="48.00" from="99" to="1215" type="bicycle"/>
-    <trip id="49" depart="49.00" from="538" to="27" type="bicycle"/> -->
+    <trip id="0" depart="0.00" from="1561" to="-1182" type="bicycle"/>
+    <trip id="1" depart="1.00" from="-2336" to="-2312" type="bicycle"/>
+    <trip id="2" depart="2.00" from="2200" to="2171" type="bicycle"/>
+    <trip id="3" depart="3.00" from="533" to="-1409" type="bicycle"/>
+    <trip id="4" depart="4.00" from="-533" to="-1185" type="bicycle"/>
+    <trip id="5" depart="5.00" from="-2200" to="1182" type="bicycle"/>
+    <trip id="6" depart="6.00" from="-1077" to="-2187" type="bicycle"/>
+    <trip id="7" depart="7.00" from="1593" to="1373" type="bicycle"/>
+    <trip id="8" depart="8.00" from="-2202" to="1554" type="bicycle"/>
+    <trip id="9" depart="9.00" from="253" to="-1042" type="bicycle"/>
+    <trip id="10" depart="10.00" from="2514" to="2205" type="bicycle"/>
+    <trip id="11" depart="11.00" from="-2708" to="-1797" type="bicycle"/>
+    <trip id="12" depart="12.00" from="806" to="-371" type="bicycle"/>
+    <trip id="13" depart="13.00" from="-1408" to="-15" type="bicycle"/>
+    <trip id="14" depart="14.00" from="328" to="1593" type="bicycle"/>
+    <trip id="15" depart="15.00" from="2514" to="2326" type="bicycle"/>
+    <trip id="16" depart="16.00" from="1044" to="917" type="bicycle"/>
+    <trip id="17" depart="17.00" from="-355" to="139" type="bicycle"/>
+    <trip id="18" depart="18.00" from="304" to="1622" type="bicycle"/>
+    <trip id="19" depart="19.00" from="37" to="15" type="bicycle"/>
+    <trip id="20" depart="20.00" from="1831" to="-1217" type="bicycle"/>
+    <trip id="21" depart="21.00" from="-23" to="-27" type="bicycle"/>
+    <trip id="22" depart="22.00" from="-139" to="-2320" type="bicycle"/>
+    <trip id="23" depart="23.00" from="-1418" to="-2514" type="bicycle"/>
+    <trip id="24" depart="24.00" from="1554" to="-533" type="bicycle"/>
 </routes>
