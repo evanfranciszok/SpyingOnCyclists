@@ -174,7 +174,7 @@ if __name__ == "__main__":
     dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','duration','name of map','seed'])
 
     # looping through all the dissemination cases
-    mapSize = Mapsize.SMALL
+    mapSize = Mapsize.MEDIUM
     bikeAmounts = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25]
     for seed in range(10,15):
     # seed = 10
@@ -183,5 +183,5 @@ if __name__ == "__main__":
                 StartTraci(mapSize)
                 run(case, vehAmount, mapSize, seed)
                 dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                dataForCompletion.to_csv('dataLog/completionTimeSmall.csv')
+                dataForCompletion.to_csv('dataLog/completionTimeSmall2.csv')
     
