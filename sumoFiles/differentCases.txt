@@ -2,7 +2,7 @@
 Small = 100
 Small2 = 125
 Medium = 175
-Large = 250
+--Large = 250
 
 # Testing case
 10 different seeds

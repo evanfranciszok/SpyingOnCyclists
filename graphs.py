@@ -1,47 +1,67 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = pd.read_csv('dataLog/completionTimeSmall.csv')
+df = pd.read_csv('dataLog/completionTimeSmall.csv')
 
-# # Grouping data by 'name of dissemination case'
-# grouped_data = df.groupby('name of dissemination case')
+# Convert 'duration' column to numeric, coerce errors to NaN
+df['duration'] = pd.to_numeric(df['duration'], errors='coerce')
 
-# # Creating subplots
-# fig, axs = plt.subplots(len(grouped_data), 1, figsize=(8, 4 * len(grouped_data)), sharey=True)
+# Grouping data by 'name of dissemination case' and 'number of bikes'
+grouped_data = df.groupby(['name of dissemination case', 'number of bikes'])
 
-# # Plotting scatter plots for each case
-# for i, (name, group) in enumerate(grouped_data):
-#     axs[i].scatter(group['duration'], group['number of bikes'], label=name)
-#     axs[i].set_title(f'Scatter Plot for {name}')
-#     axs[i].set_xlabel('Duration')
-#     axs[i].set_ylabel('Number of Bikes')
-#     axs[i].legend()
+# Create a new DataFrame to store the average duration for each case and number of bikes
+average_duration_df = grouped_data['duration'].mean().reset_index()
 
-# # Adjust layout
-# plt.tight_layout()
+# # Create a new column 'undetermined' with value 43200 for the case 'undetermined'
+# average_duration_df.loc[average_duration_df['name of dissemination case'] == 'undetermined', 'duration'] = 43200
+
+# # Create a bar plot
+# fig, ax = plt.subplots(figsize=(10, 6))
+
+# # Plotting bars for each case
+# for name, group in average_duration_df.groupby('name of dissemination case'):
+#     ax.bar(group['number of bikes'], group['duration'], label=name)
+
+# # Set y-axis range
+# ax.set_ylim(0, 43200)
+
+# # Add light grey bar for 'undetermined'
+# undetermined_group = average_duration_df[average_duration_df['name of dissemination case'] == 'undetermined']
+# ax.bar(undetermined_group['number of bikes'], undetermined_group['duration'],
+#        color='lightgrey', label='undetermined')
+
+# # Set labels and title
+# ax.set_xlabel('Number of Bikes')
+# ax.set_ylabel('Average Duration')
+# ax.set_title('Average Duration for Different Cases and Number of Bikes')
+# ax.legend()
 
 # # Show the plot
 # plt.show()
 
-# Calculate average number of bikes for each combination of dissemination case and number of bikes
-average_data = data.groupby(['name of dissemination case', 'number of bikes']).mean().reset_index()
+# Set up a dictionary to store individual axes for each case
+axes_dict = {}
 
-# Set the y-axis to range from 0 to the maximum duration in the CSV file
-max_duration = data['duration'].max()
+# Create a separate bar plot for each case
+for name, group in average_duration_df.groupby('name of dissemination case'):
+    # Create a new figure and axis for each case
+    fig, ax = plt.subplots(figsize=(10, 6))
+    axes_dict[name] = ax
 
-# Create a color map for different seeds
-seed_colors = {10: 'red', 11: 'blue', 12: 'green', 13: 'orange', 14: 'purple'}
+    # Plotting bars for each case
+    ax.bar(group['number of bikes'], group['duration'], label=name)
 
-# Plot scatter plots for each dissemination case
-for case, group in average_data.groupby('name of dissemination case'):
-    plt.scatter(group['number of bikes'], group['duration'], c=group['seed'].map(seed_colors).fillna('gray'), label=f'{case}')
+    # Set y-axis range
+    ax.set_ylim(0, 43200)
 
-# Customize the plot
-plt.title('Scatter Plots for Different Dissemination Cases')
-plt.xlabel('Number of Bikes')
-plt.ylabel('Duration')
-plt.ylim(0, max_duration)  # Set y-axis limit
-plt.legend(title='Dissemination Cases')
+    # Set labels and title
+    ax.set_xlabel('Number of Bikes')
+    ax.set_ylabel('Average Duration')
+    ax.set_title(f'Average Duration for {name}')
+    ax.legend()
 
-# Show the plot
+# Adjust layout
+plt.tight_layout()
+
+# Show the plots
 plt.show()
