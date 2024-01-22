@@ -55,6 +55,8 @@ class BicycleClass:
             self.connectedWithCars[vehIDOther] = 1
         else:
             self.connectedWithCars[vehIDOther] += 1
+            
+        
 
         for recievedRoadSegment in dataFromOtherVehicle:
             self.roadsCollected +=1

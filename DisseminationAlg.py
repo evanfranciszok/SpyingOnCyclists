@@ -99,18 +99,28 @@ def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
                         bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
         step += 1
         
-    collectiveKnowledgeOfRoadSegmentsInSubArea = 0
-    collectedAmoundByBikeInSubarea = 0
+    collectiveKnowledgeOfRoadSegmentsInSubArea = {}
     for nameOfBike in bikeObjectsInNetwork:
             bikeObject = bikeObjectsInNetwork[nameOfBike]
             collectedRoads = bikeObject.getRoads()
             for roadSegmentFromBike in collectedRoads:
                 if roadSegmentFromBike in roadSegmentsFromJson:
-                    collectiveKnowledgeOfRoadSegmentsInSubArea+=1
-                    if nameOfBike == list(bikeObjectsInNetwork.keys())[0]:
-                        collectedAmoundByBikeInSubarea +=1
-    percentageBelongingToBike = round(collectedAmoundByBikeInSubarea/collectiveKnowledgeOfRoadSegmentsInSubArea*1000)/10
-    completionData.append([str(case),vehAmount,str(mapSize),seed,collectiveKnowledgeOfRoadSegmentsInSubArea, collectedAmoundByBikeInSubarea, percentageBelongingToBike, len(roadSegmentsFromJson), len(roadEdgeValues)])
+                    if roadSegmentFromBike not in collectiveKnowledgeOfRoadSegmentsInSubArea:
+                        collectiveKnowledgeOfRoadSegmentsInSubArea[roadSegmentFromBike] = []
+                    alskdjf = collectedRoads[roadSegmentFromBike]
+                    alzxlckjv = type(alskdjf)
+                    for originOfSegment in collectedRoads[roadSegmentFromBike]:
+                        if originOfSegment not in collectiveKnowledgeOfRoadSegmentsInSubArea[roadSegmentFromBike]: 
+                            collectiveKnowledgeOfRoadSegmentsInSubArea[roadSegmentFromBike].append(originOfSegment)
+    collectiveKnowledgeAmountInSubarea = 0
+    collectedAmoundByBikeInSubarea = 0
+    for segment in collectiveKnowledgeOfRoadSegmentsInSubArea:
+        if list(bikeObjectsInNetwork.keys())[0] in collectiveKnowledgeOfRoadSegmentsInSubArea[segment]:
+            collectedAmoundByBikeInSubarea += 1
+        collectiveKnowledgeAmountInSubarea += len(collectiveKnowledgeOfRoadSegmentsInSubArea[segment])
+        
+    percentageBelongingToBike = round(collectedAmoundByBikeInSubarea/collectiveKnowledgeAmountInSubarea*1000)/10
+    completionData.append([str(case),vehAmount,str(mapSize),seed,collectiveKnowledgeAmountInSubarea, collectedAmoundByBikeInSubarea, percentageBelongingToBike, len(roadSegmentsFromJson), len(roadEdgeValues)])
     
     traci.close()
     sys.stdout.flush()
