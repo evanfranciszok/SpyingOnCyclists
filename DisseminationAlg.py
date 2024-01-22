@@ -5,6 +5,7 @@ import sys
 import optparse
 import random
 import pandas as pd
+import json
 
 # displaying all columns
 pd.set_option('display.max_columns', None)
@@ -23,7 +24,6 @@ else:
     
 # visualizeCoverage = True traci.gui.toggleSelection(segment, "edge")
 RoadEdgeValues = {}
-
 # for writing data to a csv file
 completionData = []
 
@@ -38,15 +38,17 @@ def get_options():
     return options
 
 # contains TraCI control loop
-def run(case, vehAmount, mapSize, seed):
+def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
     random.seed(seed)
     step = 0
     bikeObjectsInNetwork = {}
     roadEdgeValues = assignValuesToRoadEdges()
     distancesBetweenBikes = {}
-    endSimulation = False
     
-    while traci.simulation.getMinExpectedNumber() > 0 and not endSimulation:
+    for roadSegmentFromJson in roadSegmentsFromJson:
+        traci.gui.toggleSelection(roadSegmentFromJson, "edge")
+    
+    while traci.simulation.getMinExpectedNumber() > 0 and step < 10000:
         traci.simulationStep()
         
         traciActualBikesInNetwork = set(traci.vehicle.getIDList())
@@ -71,7 +73,10 @@ def run(case, vehAmount, mapSize, seed):
             
             #update route
             if bikeObject.checkIfTarget(traci.vehicle.getRoadID(nameOfBike)):
-                setSegmentTarget(bikeObject, random.choice(list(roadEdgeValues)))
+                if nameOfBike == list(bikeObjectsInNetwork.keys())[0]:
+                    setSegmentTarget(bikeObject, random.choice(roadSegmentsFromJson))
+                else:
+                    setSegmentTarget(bikeObject, random.choice(list(roadEdgeValues)))
                 
             # disseminate
             bikeIndex+=1
@@ -92,17 +97,8 @@ def run(case, vehAmount, mapSize, seed):
                         dataVehOther = comparisonBikeObject.getDisseminationData()
                         comparisonBikeObject.recieveDesseminationData(dataVeh, nameOfBike)
                         bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
-        
-        print(str(round(mostIndexed[1]/len(roadEdgeValues)*100)) + '%')
-        
-        if mostIndexed[1] >= len(roadEdgeValues) or step >= 43200:
-            endSimulation = True
-            if step >= 43200:
-                # undetermined because the simulation took more than 12 (simulated) hours to complete
-                completionData.append([str(case), vehAmount, "undetermined", str(mapSize) ,seed])
-            else:
-                completionData.append([str(case), vehAmount, str(step), str(mapSize) ,seed])
-        step += 1
+        step += 1    
+    
     traci.close()
     sys.stdout.flush()
 
@@ -115,12 +111,13 @@ def addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, RoadEdgeV
             try:
                 # Adding random Route to bike
                 routeID = random.choice(list(RoadEdgeValues))
-                traci.route.add(str(step), [routeID])
-                traci.vehicle.add(vehID=bikeToBeAdded,routeID=str(step), typeID="bicycle")
+                routeName = str(step) + str(routeID)
+                traci.route.add(routeName, [routeID])
+                traci.vehicle.add(vehID=bikeToBeAdded,routeID=routeName, typeID="bicycle")
                 setSegmentTarget(bikeObjectsInNetwork[bikeToBeAdded], random.choice(list(RoadEdgeValues)))
-            except:
+            except Exception as error:
                 # it does sometimes happen that it doesnt work. But for simulation purposes does this not matter
-                print("error adding will try again next step")
+                print("error adding will try again next step" + str(error))
 
 def removeWrongBikesFromNetwork(bikeObjectsInNetwork, traciActualBikesInNetwork):
     wrongBikesInNetwork = traciActualBikesInNetwork.difference(set(bikeObjectsInNetwork.keys())) 
@@ -145,18 +142,28 @@ def setSegmentTarget(vehicle, segment):
 
 def StartTraci(mapsize):
     # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
+    jsonFileForSubArea = None
     match mapsize:
         case Mapsize.SMALL:
+            jsonFileForSubArea = open('sumoFiles/small/neighbourhood.json')
             traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-        case Mapsize.MEDIUM:
+        case Mapsize.SMALL2:
+            jsonFileForSubArea = open('sumoFiles/small2/neighbourhood.json')
             traci.start([sumoBinary, "-c", "sumoFiles/small2/small2.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-        case Mapsize.LARGE:
+        case Mapsize.MEDIUM:
+            jsonFileForSubArea = open('sumoFiles/medium/neighbourhood.json')
             traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
+        case Mapsize.LARGE:
+            jsonFileForSubArea = open('sumoFiles/large/neighbourhood.json')
+            traci.start([sumoBinary, "-c", "sumoFiles/large/large.sumocfg",
+                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case _:
-            return
+            print("incorrect mapSize Given")
+    return json.load(jsonFileForSubArea)
+            
     
 # main entry point
 if __name__ == "__main__":
@@ -171,14 +178,13 @@ if __name__ == "__main__":
     dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','duration','name of map','seed'])
 
     # looping through all the dissemination cases
-    mapSize = Mapsize.MEDIUM
+    mapSize = Mapsize.SMALL
     bikeAmounts = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25]
     for seed in range(10,15):
-    # seed = 10
         for vehAmount in bikeAmounts:
             for case in SimulationMode:
-                StartTraci(mapSize)
-                run(case, vehAmount, mapSize, seed)
+                roadSegmentsFromJson = StartTraci(mapSize)
+                run(case, vehAmount, mapSize, seed, roadSegmentsFromJson)
                 dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                dataForCompletion.to_csv('dataLog/completionTimeMedium.csv')
+                dataForCompletion.to_csv('dataLog/percentage.csv')
     
