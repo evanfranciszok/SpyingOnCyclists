@@ -149,14 +149,11 @@ def StartTraci(mapsize):
         case Mapsize.SMALL:
             traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-        case Mapsize.SMALL2:
+        case Mapsize.MEDIUM:
             traci.start([sumoBinary, "-c", "sumoFiles/small2/small2.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-        case Mapsize.MEDIUM:
-            traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
-                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case Mapsize.LARGE:
-            traci.start([sumoBinary, "-c", "sumoFiles/large/large.sumocfg",
+            traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case _:
             return
@@ -183,5 +180,5 @@ if __name__ == "__main__":
                 StartTraci(mapSize)
                 run(case, vehAmount, mapSize, seed)
                 dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                dataForCompletion.to_csv('dataLog/completionTimeSmall2.csv')
+                dataForCompletion.to_csv('dataLog/completionTimeMedium.csv')
     
