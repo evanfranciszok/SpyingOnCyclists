@@ -202,13 +202,14 @@ if __name__ == "__main__":
     dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','name of map','seed','collective data collection in area','collected by bike_','Percentage belonging to bike','size of subarea (# edges)','size of total map (# edges)'])
 
     # looping through all the dissemination cases
-    mapSize = Mapsize.SMALL
+    # mapSize = Mapsize.SMALL
     bikeAmounts = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25]
     for seed in range(10,15):
-        for vehAmount in bikeAmounts:
-            for case in SimulationMode:
-                roadSegmentsFromJson = StartTraci(mapSize)
-                run(case, vehAmount, mapSize, seed, roadSegmentsFromJson)
-                dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                dataForCompletion.to_csv('dataLog/percentage.csv')
+        for mapSize in Mapsize:
+            for vehAmount in bikeAmounts:
+                for case in SimulationMode:
+                    roadSegmentsFromJson = StartTraci(mapSize)
+                    run(case, vehAmount, mapSize, seed, roadSegmentsFromJson)
+                    dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
+                    dataForCompletion.to_csv('dataLog/percentage.csv')
     
