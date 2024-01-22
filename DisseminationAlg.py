@@ -48,7 +48,7 @@ def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
     for roadSegmentFromJson in roadSegmentsFromJson:
         traci.gui.toggleSelection(roadSegmentFromJson, "edge")
     
-    while traci.simulation.getMinExpectedNumber() > 0 and step < 10000:
+    while traci.simulation.getMinExpectedNumber() > 0 and step < 5000:
         traci.simulationStep()
         
         traciActualBikesInNetwork = set(traci.vehicle.getIDList())
@@ -57,7 +57,7 @@ def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
         if len(bikeObjectsInNetwork) >= vehAmount:
             # Wrong bikes are bikes that are not supposed to be in the networ
             removeWrongBikesFromNetwork(bikeObjectsInNetwork, traciActualBikesInNetwork)
-        addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, roadEdgeValues, traciActualBikesInNetwork)
+        addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, roadEdgeValues, traciActualBikesInNetwork,random.randint(0,1000))
         
         ListOfTheBikeObjectsInNetwork = list(traciActualBikesInNetwork)
         bikeIndex = 0
@@ -97,12 +97,26 @@ def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
                         dataVehOther = comparisonBikeObject.getDisseminationData()
                         comparisonBikeObject.recieveDesseminationData(dataVeh, nameOfBike)
                         bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
-        step += 1    
+        step += 1
+        
+    collectiveKnowledgeOfRoadSegmentsInSubArea = 0
+    collectedAmoundByBikeInSubarea = 0
+    for nameOfBike in bikeObjectsInNetwork:
+            bikeObject = bikeObjectsInNetwork[nameOfBike]
+            collectedRoads = bikeObject.getRoads()
+            for roadSegmentFromBike in collectedRoads:
+                if roadSegmentFromBike in roadSegmentsFromJson:
+                    collectiveKnowledgeOfRoadSegmentsInSubArea+=1
+                    if nameOfBike == list(bikeObjectsInNetwork.keys())[0]:
+                        collectedAmoundByBikeInSubarea +=1
+    percentageBelongingToBike = round(collectedAmoundByBikeInSubarea/collectiveKnowledgeOfRoadSegmentsInSubArea*1000)/10
+    completionData.append([str(case),vehAmount,str(mapSize),seed,collectiveKnowledgeOfRoadSegmentsInSubArea, collectedAmoundByBikeInSubarea, percentageBelongingToBike, len(roadSegmentsFromJson), len(roadEdgeValues)])
     
     traci.close()
     sys.stdout.flush()
 
-def addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, RoadEdgeValues, traciActualBikesInNetwork):
+def addingNewOrMissingBikesToNetwork(case, step, bikeObjectsInNetwork, RoadEdgeValues, traciActualBikesInNetwork,seed):
+    random.seed(seed)
     lostAndMissingBikesInNetwork = set(bikeObjectsInNetwork.keys()).symmetric_difference(traciActualBikesInNetwork)
     for bikeToBeAdded in lostAndMissingBikesInNetwork:
         if bikeToBeAdded not in bikeObjectsInNetwork.keys():
@@ -175,7 +189,7 @@ if __name__ == "__main__":
     else:
         sumoBinary = checkBinary('sumo-gui')
 
-    dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','duration','name of map','seed'])
+    dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','name of map','seed','collective data collection in area','collected by bike_','Percentage belonging to bike','size of subarea (# edges)','size of total map (# edges)'])
 
     # looping through all the dissemination cases
     mapSize = Mapsize.SMALL
