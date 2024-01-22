@@ -49,7 +49,7 @@ for name, group in average_duration_df.groupby('name of dissemination case'):
     axes_dict[name] = ax
 
     # Plotting bars for each case
-    ax.bar(group['number of bikes'], group['duration'], label=name)
+    bars = ax.bar(group['number of bikes'], group['duration'], label=name)
 
     # Set y-axis range
     ax.set_ylim(0, 43200)
@@ -59,6 +59,14 @@ for name, group in average_duration_df.groupby('name of dissemination case'):
     ax.set_ylabel('Average Duration')
     ax.set_title(f'Average Duration for {name}')
     ax.legend()
+
+    # Annotate average duration above each bar
+    for bar in bars:
+        height = bar.get_height()
+        ax.annotate(f'{height:.2f}', xy=(bar.get_x() + bar.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha='center', va='bottom', rotation='vertical')
 
 # Adjust layout
 plt.tight_layout()
