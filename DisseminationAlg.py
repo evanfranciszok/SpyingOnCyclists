@@ -93,8 +93,8 @@ def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
                     distancesBetweenBikes[hashOfBikes] = distanceBetweenBikeAndComparisonBike
                     # 25 represents the distance between vehicles for dissemination in meters
                     if distanceBetweenBikeAndComparisonBike < 25.0:
-                        dataVeh = bikeObject.getDisseminationData()
-                        dataVehOther = comparisonBikeObject.getDisseminationData()
+                        dataVeh = bikeObject.getDisseminationData(bikePosition, traci)
+                        dataVehOther = comparisonBikeObject.getDisseminationData(comparisonBikePosition, traci)
                         comparisonBikeObject.recieveDesseminationData(dataVeh, nameOfBike)
                         bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
         step += 1
@@ -107,8 +107,6 @@ def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
                 if roadSegmentFromBike in roadSegmentsFromJson:
                     if roadSegmentFromBike not in collectiveKnowledgeOfRoadSegmentsInSubArea:
                         collectiveKnowledgeOfRoadSegmentsInSubArea[roadSegmentFromBike] = []
-                    alskdjf = collectedRoads[roadSegmentFromBike]
-                    alzxlckjv = type(alskdjf)
                     for originOfSegment in collectedRoads[roadSegmentFromBike]:
                         if originOfSegment not in collectiveKnowledgeOfRoadSegmentsInSubArea[roadSegmentFromBike]: 
                             collectiveKnowledgeOfRoadSegmentsInSubArea[roadSegmentFromBike].append(originOfSegment)
@@ -207,9 +205,10 @@ if __name__ == "__main__":
     for seed in range(10,15):
         for mapSize in Mapsize:
             for vehAmount in bikeAmounts:
-                for case in SimulationMode:
-                    roadSegmentsFromJson = StartTraci(mapSize)
-                    run(case, vehAmount, mapSize, seed, roadSegmentsFromJson)
-                    dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                    dataForCompletion.to_csv('dataLog/percentage.csv')
+                # for case in SimulationMode:
+                case = SimulationMode.Surrounding
+                roadSegmentsFromJson = StartTraci(mapSize)
+                run(case, vehAmount, mapSize, seed, roadSegmentsFromJson)
+                dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
+                dataForCompletion.to_csv('dataLog/percentage.csv')
     

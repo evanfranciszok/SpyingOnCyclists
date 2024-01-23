@@ -1,0 +1,6 @@
+,name of dissemination case,number of bikes,name of map,seed,collective data collection in area,collected by bike_,Percentage belonging to bike,size of subarea (# edges),size of total map (# edges)
+0,SimulationMode.Surrounding,2,Mapsize.SMALL2,10,120,70,58.3,74,372
+1,SimulationMode.Surrounding,3,Mapsize.SMALL2,10,169,72,42.6,74,372
+2,SimulationMode.Surrounding,4,Mapsize.SMALL2,10,214,74,34.6,74,372
+3,SimulationMode.Surrounding,5,Mapsize.SMALL2,10,247,74,30.0,74,372
+4,SimulationMode.Surrounding,6,Mapsize.SMALL2,10,296,74,25.0,74,372
