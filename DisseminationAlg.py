@@ -43,6 +43,9 @@ def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
     step = 0
     bikeObjectsInNetwork = {}
     roadEdgeValues = assignValuesToRoadEdges()
+    roadEdgePositions = {}
+    for edge in roadEdgeValues:
+        roadEdgePositions[edge] = traci.lane.getShape(str(edge) + "_0")[0]
     distancesBetweenBikes = {}
     
     for roadSegmentFromJson in roadSegmentsFromJson:
@@ -93,8 +96,8 @@ def run(case, vehAmount, mapSize, seed, roadSegmentsFromJson):
                     distancesBetweenBikes[hashOfBikes] = distanceBetweenBikeAndComparisonBike
                     # 25 represents the distance between vehicles for dissemination in meters
                     if distanceBetweenBikeAndComparisonBike < 25.0:
-                        dataVeh = bikeObject.getDisseminationData(bikePosition, traci)
-                        dataVehOther = comparisonBikeObject.getDisseminationData(comparisonBikePosition, traci)
+                        dataVeh = bikeObject.getDisseminationData(bikePosition, traci, roadEdgePositions)
+                        dataVehOther = comparisonBikeObject.getDisseminationData(comparisonBikePosition, traci, roadEdgePositions)
                         comparisonBikeObject.recieveDesseminationData(dataVeh, nameOfBike)
                         bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
         step += 1
