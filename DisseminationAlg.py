@@ -168,10 +168,10 @@ def StartTraci(mapsize):
     # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
     jsonFileForSubArea = None
     match mapsize:
-        case Mapsize.SMALL:
-            jsonFileForSubArea = open('sumoFiles/small/neighbourhood.json')
-            traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
-                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
+        # case Mapsize.SMALL:
+        #     jsonFileForSubArea = open('sumoFiles/small/neighbourhood.json')
+        #     traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
+        #                                 "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case Mapsize.SMALL2:
             jsonFileForSubArea = open('sumoFiles/small2/neighbourhood.json')
             traci.start([sumoBinary, "-c", "sumoFiles/small2/small2.sumocfg",
@@ -180,10 +180,10 @@ def StartTraci(mapsize):
             jsonFileForSubArea = open('sumoFiles/medium/neighbourhood.json')
             traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-        case Mapsize.LARGE:
-            jsonFileForSubArea = open('sumoFiles/large/neighbourhood.json')
-            traci.start([sumoBinary, "-c", "sumoFiles/large/large.sumocfg",
-                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
+        # case Mapsize.LARGE:
+        #     jsonFileForSubArea = open('sumoFiles/large/neighbourhood.json')
+        #     traci.start([sumoBinary, "-c", "sumoFiles/large/large.sumocfg",
+        #                                 "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case _:
             print("incorrect mapSize Given")
     return json.load(jsonFileForSubArea)
