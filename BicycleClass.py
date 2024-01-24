@@ -48,8 +48,10 @@ class BicycleClass:
     def printData(self):
         if self.roadsCollected != 0:
             print(str(self.vehID) + ": " + str(self.amountOfDoubleDataSent) + " of " + str(self.roadsCollected) + ":" + str(len(self.roadsReceivedFromOthers)) + " is " + str(round(self.amountOfDoubleDataSent*100/self.roadsCollected)) + "%.")
+            return [self.amountOfDoubleDataSent, self.roadsCollected]
         else:
             print(str(self.vehID) + " no roads collected")
+            return [0,0]
         
     def recieveDesseminationData(self, dataFromOtherVehicle, vehIDOther):
         # print("veh " + self.vehID + " has recieved " + str(dataFromOtherVehicle))
@@ -59,9 +61,9 @@ class BicycleClass:
             self.connectedWithCars[vehIDOther] += 1
 
         for recievedRoadSegment in dataFromOtherVehicle:
-            self.roadsCollected +=1
             if recievedRoadSegment in self.roadsReceivedFromOthers:
                 for senderName in dataFromOtherVehicle[recievedRoadSegment]:
+                    self.roadsCollected +=1
                     if senderName not in self.roadsReceivedFromOthers[recievedRoadSegment]:
                         # If the road is already been recieved but is has been collected by another person origionally
                         self.roadsReceivedFromOthers[recievedRoadSegment].append(senderName)
@@ -71,8 +73,10 @@ class BicycleClass:
                         # if(self.vehID == "Janet_8"):
                             # print(str(self.vehID) + " double data recieved on " + senderName + " : " + recievedRoadSegment + "\n\t::" + str(self.roadsReceivedFromOthers) + "\n\t::" + str(dataFromOtherVehicle))
             else:
+                self.roadsCollected += len(dataFromOtherVehicle[recievedRoadSegment])
                 self.roadsReceivedFromOthers[recievedRoadSegment] = dataFromOtherVehicle[recievedRoadSegment]        
         self.roadsReceivedFromOthers = self.roadsReceivedFromOthers | dataFromOtherVehicle
+        # self.roadsReceivedFromOthers = self.roadsReceivedFromOthers | dataFromOtherVehicle
     
     # this is what the bike will disseminate
     # algorithm for disseminating the data

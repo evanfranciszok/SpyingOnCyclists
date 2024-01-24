@@ -51,7 +51,7 @@ def run(case, vehAmount, mapSize, seed):
         roadEdgePositions[edge] = traci.lane.getShape(str(edge) + "_0")[0]
     distancesBetweenBikes = {}
     
-    while traci.simulation.getMinExpectedNumber() > 0 and not endSimulation:
+    while traci.simulation.getMinExpectedNumber() > 0 and step < 3000:
         traci.simulationStep()
         
         traciActualBikesInNetwork = set(traci.vehicle.getIDList())
@@ -98,16 +98,24 @@ def run(case, vehAmount, mapSize, seed):
                         comparisonBikeObject.recieveDesseminationData(dataVeh, nameOfBike)
                         bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
         
-        print(str(round(mostIndexed[1]/len(roadEdgeValues)*100)) + '%')
+        # print(str(round(mostIndexed[1]/len(roadEdgeValues)*100)) + '%')
         
-        if mostIndexed[1] >= len(roadEdgeValues) or step >= 43200:
-            endSimulation = True
-            if step >= 43200:
-                # undetermined because the simulation took more than 12 (simulated) hours to complete
-                completionData.append([str(case), vehAmount, "undetermined", str(mapSize) ,seed])
-            else:
-                completionData.append([str(case), vehAmount, str(step), str(mapSize) ,seed])
+        # if mostIndexed[1] >= len(roadEdgeValues) or step >= 43200:
+        #     endSimulation = True
+        #     if step >= 43200:
+        #         # undetermined because the simulation took more than 12 (simulated) hours to complete
+        #         completionData.append([str(case), vehAmount, "undetermined", str(mapSize) ,seed])
+        #     else:
+        #         completionData.append([str(case), vehAmount, str(step), str(mapSize) ,seed])
         step += 1
+        
+    total = 0
+    double = 0    
+    for obj in bikeObjectsInNetwork:
+        data = bikeObjectsInNetwork[obj].printData()
+        double += data[0]
+        total += data[1]
+    completionData.append([str(case), vehAmount, str(mapSize) ,seed, double, total])
     traci.close()
     sys.stdout.flush()
 
@@ -173,18 +181,17 @@ if __name__ == "__main__":
     else:
         sumoBinary = checkBinary('sumo-gui')
 
-    dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','duration','name of map','seed'])
+    dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','name of map','seed', 'double data recieved', 'total data recieved'])
 
-    # looping through all the dissemination cases
     mapSize = Mapsize.SMALL
-    bikeAmounts = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25]
+    bikeAmounts = [5, 6, 8]
+    # seed = 11
     for seed in range(10,15):
-        for mapSize in Mapsize:
-            for vehAmount in bikeAmounts:
-                # for case in SimulationMode:
-                case = SimulationMode.Surrounding
+        # for mapSize in Mapsize:
+        for vehAmount in bikeAmounts:
+            for case in SimulationMode:
+            # case = SimulationMode.Surrounding
                 StartTraci(mapSize)
                 run(case, vehAmount, mapSize, seed)
                 dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                dataForCompletion.to_csv('dataLog/completion_SMALL_SURROUNDING.csv')
-    
+                dataForCompletion.to_csv('dataLog/doubleData.csv')    
