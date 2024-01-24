@@ -76,12 +76,12 @@ class BicycleClass:
     
     # this is what the bike will disseminate
     # algorithm for disseminating the data
-    def getDisseminationData(self, bikePosition, traci, roadEdgePositions):
+    def getDisseminationData(self):
         # return self.drivenOnRoads # case 0 (no method)
-        if self.disseminationCase is not SimulationMode.Surrounding:
-            return self.scramble(self.disseminationCase)
-        else:
-            return self.surroundingScramble(bikePosition, traci, roadEdgePositions)
+        # if self.disseminationCase is not SimulationMode.Surrounding:
+        return self.scramble(self.disseminationCase)
+        # else:
+        #     return self.surroundingScramble(bikePosition, traci, roadEdgePositions)
         
     def surroundingScramble(self, bikePosition, traci, roadEdgePositions):
         testSelf = list(self.drivenOnRoads)

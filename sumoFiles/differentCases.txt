@@ -5,11 +5,11 @@ Medium = 175
 --Large = 250
 
 # Testing case
-10 different seeds
+5 different seeds
 4 cases
-4 maps
+3 maps
 11 different amount of bikes
-10*4*4*9=1460 different simulation
+5*4*3*11=660 different simulation
 
 Small:
 # Generate map
