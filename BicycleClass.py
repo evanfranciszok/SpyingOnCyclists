@@ -1,5 +1,7 @@
 import random
 
+from SimulationMode import SimulationMode
+
 random.seed(10)
 disseminationAmount = 10
 
@@ -74,9 +76,32 @@ class BicycleClass:
     
     # this is what the bike will disseminate
     # algorithm for disseminating the data
-    def getDisseminationData(self):
+    def getDisseminationData(self, bikePosition, traci, roadEdgePositions):
         # return self.drivenOnRoads # case 0 (no method)
-        return self.scramble(self.disseminationCase)
+        if self.disseminationCase is not SimulationMode.Surrounding:
+            return self.scramble(self.disseminationCase)
+        else:
+            return self.surroundingScramble(bikePosition, traci, roadEdgePositions)
+        
+    def surroundingScramble(self, bikePosition, traci, roadEdgePositions):
+        testSelf = list(self.drivenOnRoads)
+        testOther = list(self.roadsReceivedFromOthers)
+        toBeDisseminatedData = {}
+        amountOfOwnData = disseminationAmount*0.5
+        
+        while len(toBeDisseminatedData) < amountOfOwnData and len(testSelf) > 0:
+            edge = random.choice(list(testSelf))
+            testSelf.remove(edge)
+            roadSegment = roadEdgePositions[edge]
+            if traci.simulation.getDistance2D(bikePosition[0], bikePosition[1], roadSegment[0], roadSegment[1], False, False) < 300:
+                toBeDisseminatedData[edge] = self.drivenOnRoads[str(edge)]
+        while len(toBeDisseminatedData) < disseminationAmount and len(testOther) > 0:
+            edge = random.choice(list(testOther))
+            testOther.remove(edge)
+            roadSegment = roadEdgePositions[edge]
+            if traci.simulation.getDistance2D(bikePosition[0], bikePosition[1], roadSegment[0], roadSegment[1], False, False) < 300:
+                toBeDisseminatedData[edge] = self.roadsReceivedFromOthers[str(edge)]
+        return toBeDisseminatedData
     
     def scramble(self, case):
         returnDict = {}

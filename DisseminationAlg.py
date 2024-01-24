@@ -46,6 +46,11 @@ def run(case, vehAmount, mapSize, seed):
     distancesBetweenBikes = {}
     endSimulation = False
     
+    roadEdgePositions = {}
+    for edge in roadEdgeValues:
+        roadEdgePositions[edge] = traci.lane.getShape(str(edge) + "_0")[0]
+    distancesBetweenBikes = {}
+    
     while traci.simulation.getMinExpectedNumber() > 0 and not endSimulation:
         traci.simulationStep()
         
@@ -88,8 +93,8 @@ def run(case, vehAmount, mapSize, seed):
                     distancesBetweenBikes[hashOfBikes] = distanceBetweenBikeAndComparisonBike
                     # 25 represents the distance between vehicles for dissemination in meters
                     if distanceBetweenBikeAndComparisonBike < 25.0:
-                        dataVeh = bikeObject.getDisseminationData()
-                        dataVehOther = comparisonBikeObject.getDisseminationData()
+                        dataVeh = bikeObject.getDisseminationData(bikePosition, traci, roadEdgePositions)
+                        dataVehOther = comparisonBikeObject.getDisseminationData(comparisonBikePosition, traci, roadEdgePositions)
                         comparisonBikeObject.recieveDesseminationData(dataVeh, nameOfBike)
                         bikeObject.recieveDesseminationData(dataVehOther, nameOfComparisonBike)
         
@@ -149,10 +154,10 @@ def StartTraci(mapsize):
         case Mapsize.SMALL:
             traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-        case Mapsize.MEDIUM:
+        case Mapsize.SMALL2:
             traci.start([sumoBinary, "-c", "sumoFiles/small2/small2.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
-        case Mapsize.LARGE:
+        case Mapsize.MEDIUM:
             traci.start([sumoBinary, "-c", "sumoFiles/medium/medium.sumocfg",
                                         "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case _:
@@ -171,14 +176,15 @@ if __name__ == "__main__":
     dataframeCompletionDuration = pd.DataFrame(columns=['name of dissemination case','number of bikes','duration','name of map','seed'])
 
     # looping through all the dissemination cases
-    mapSize = Mapsize.MEDIUM
+    mapSize = Mapsize.SMALL
     bikeAmounts = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25]
     for seed in range(10,15):
-    # seed = 10
-        for vehAmount in bikeAmounts:
-            for case in SimulationMode:
+        for mapSize in Mapsize:
+            for vehAmount in bikeAmounts:
+                # for case in SimulationMode:
+                case = SimulationMode.Surrounding
                 StartTraci(mapSize)
                 run(case, vehAmount, mapSize, seed)
                 dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                dataForCompletion.to_csv('dataLog/completionTimeMedium.csv')
+                dataForCompletion.to_csv('dataLog/completion_SMALL_SURROUNDING.csv')
     
