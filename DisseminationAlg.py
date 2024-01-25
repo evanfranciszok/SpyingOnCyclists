@@ -178,7 +178,7 @@ if __name__ == "__main__":
     # looping through all the dissemination cases
     mapSize = Mapsize.SMALL2
     bikeAmounts = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25]
-    for seed in range(10,15):
+    for seed in range(12,15):
         # for mapSize in Mapsize:
         for vehAmount in bikeAmounts:
             for case in SimulationMode:
