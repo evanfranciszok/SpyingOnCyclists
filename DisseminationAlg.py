@@ -169,10 +169,10 @@ def StartTraci(mapsize):
     # remove --start (starting the simulation automatically) and --quit-on-end (closes sumo on end of simulation) if this is unwanted behaviour
     jsonFileForSubArea = None
     match mapsize:
-        # case Mapsize.SMALL:
-        #     jsonFileForSubArea = open('sumoFiles/small/neighbourhood.json')
-        #     traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
-        #                                 "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
+        case Mapsize.SMALL:
+            jsonFileForSubArea = open('sumoFiles/small/neighbourhood.json')
+            traci.start([sumoBinary, "-c", "sumoFiles/small/small.sumocfg",
+                                        "--tripinfo-output", "tripinfo.xml", "--start" ,"--quit-on-end"])
         case Mapsize.SMALL2:
             jsonFileForSubArea = open('sumoFiles/small2/neighbourhood.json')
             traci.start([sumoBinary, "-c", "sumoFiles/small2/small2.sumocfg",
@@ -206,12 +206,13 @@ if __name__ == "__main__":
     # mapSize = Mapsize.SMALL
     bikeAmounts = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25]
     for seed in range(10,15):
-        for mapSize in Mapsize:
-            for vehAmount in bikeAmounts:
-                # for case in SimulationMode:
-                case = SimulationMode.Surrounding
-                roadSegmentsFromJson = StartTraci(mapSize)
-                run(case, vehAmount, mapSize, seed, roadSegmentsFromJson)
-                dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
-                dataForCompletion.to_csv('dataLog/percentage.csv')
+        # for mapSize in Mapsize:
+        mapSize = Mapsize.SMALL
+        for vehAmount in bikeAmounts:
+            # for case in SimulationMode:
+            case = SimulationMode.Surrounding
+            roadSegmentsFromJson = StartTraci(mapSize)
+            run(case, vehAmount, mapSize, seed, roadSegmentsFromJson)
+            dataForCompletion =pd.DataFrame(completionData, columns=dataframeCompletionDuration.columns)
+            dataForCompletion.to_csv('dataLog/percentageSmallSurrounding.csv')
     

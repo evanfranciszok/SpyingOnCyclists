@@ -1,0 +1,25 @@
+,name of dissemination case,number of bikes,name of map,seed,collective data collection in area,collected by bike_,Percentage belonging to bike,size of subarea (# edges),size of total map (# edges)
+0,SimulationMode.Surrounding,2,Mapsize.SMALL,10,74,43,58.1,44,302
+1,SimulationMode.Surrounding,3,Mapsize.SMALL,10,96,44,45.8,44,302
+2,SimulationMode.Surrounding,4,Mapsize.SMALL,10,116,44,37.9,44,302
+3,SimulationMode.Surrounding,5,Mapsize.SMALL,10,151,44,29.1,44,302
+4,SimulationMode.Surrounding,6,Mapsize.SMALL,10,195,44,22.6,44,302
+5,SimulationMode.Surrounding,8,Mapsize.SMALL,10,258,44,17.1,44,302
+6,SimulationMode.Surrounding,10,Mapsize.SMALL,10,317,44,13.9,44,302
+7,SimulationMode.Surrounding,12,Mapsize.SMALL,10,370,43,11.6,44,302
+8,SimulationMode.Surrounding,16,Mapsize.SMALL,10,489,44,9.0,44,302
+9,SimulationMode.Surrounding,20,Mapsize.SMALL,10,585,44,7.5,44,302
+10,SimulationMode.Surrounding,25,Mapsize.SMALL,10,707,44,6.2,44,302
+11,SimulationMode.Surrounding,2,Mapsize.SMALL,11,74,44,59.5,44,302
+12,SimulationMode.Surrounding,3,Mapsize.SMALL,11,110,43,39.1,44,302
+13,SimulationMode.Surrounding,4,Mapsize.SMALL,11,138,44,31.9,44,302
+14,SimulationMode.Surrounding,5,Mapsize.SMALL,11,170,43,25.3,44,302
+15,SimulationMode.Surrounding,6,Mapsize.SMALL,11,194,43,22.2,44,302
+16,SimulationMode.Surrounding,8,Mapsize.SMALL,11,244,44,18.0,44,302
+17,SimulationMode.Surrounding,10,Mapsize.SMALL,11,294,43,14.6,44,302
+18,SimulationMode.Surrounding,12,Mapsize.SMALL,11,364,44,12.1,44,302
+19,SimulationMode.Surrounding,16,Mapsize.SMALL,11,478,44,9.2,44,302
+20,SimulationMode.Surrounding,20,Mapsize.SMALL,11,607,43,7.1,44,302
+21,SimulationMode.Surrounding,25,Mapsize.SMALL,11,718,44,6.1,44,302
+22,SimulationMode.Surrounding,2,Mapsize.SMALL,12,65,43,66.2,44,302
+23,SimulationMode.Surrounding,3,Mapsize.SMALL,12,100,43,43.0,44,302
